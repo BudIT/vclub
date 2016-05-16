@@ -1,6 +1,6 @@
 import React from 'react';
 
-import console from 'core/debug';
+// import console from 'vclub/core/debug';
 
 
 const mediaEvents = [
@@ -10,7 +10,7 @@ const mediaEvents = [
   'stalled', /* 'suspend', */ 'timeupdate', 'volumechange', 'waiting',
 ];
 
-const noop = ()=> {};
+const noop = () => {};
 
 export default class Video extends React.Component {
 
@@ -69,12 +69,12 @@ export default class Video extends React.Component {
       this.currentVideoPos = videoEl.currentTime;
       this.props.onTimeUpdate(this.currentVideoPos);
     } else if (event.type === 'loadedmetadata') {
-      console.logVideoEvent(event);
+      // console.logVideoEvent(event);
       this.props.onLoadedMetadata({ duration: videoEl.duration });
     } else if (event.type === 'pause') {
-      console.logVideoEvent(event, videoEl.currentTime, this.props.playing);
+      // console.logVideoEvent(event, videoEl.currentTime, this.props.playing);
     } else {
-      console.logVideoEvent(event);
+      // console.logVideoEvent(event);
     }
   }
 
@@ -91,7 +91,7 @@ export default class Video extends React.Component {
       videoEl.play();
     } else if (!playing && !videoEl.paused) {
       videoEl.pause();
-      console.log('paused');
+      // console.log('paused');
     }
   }
 
