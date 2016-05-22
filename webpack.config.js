@@ -1,5 +1,7 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const TextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -17,6 +19,11 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+      {
+        test: /\.styl$/,
+        exclude: /node_modules/,
+        loader: TextPlugin.extract('style', 'css!postcss!stylus'),
+      },
     ],
   },
   resolve: {
@@ -30,5 +37,7 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       },
     }),
+    new TextPlugin('[name].bundle.css'),
   ],
+  postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
 };
