@@ -7,13 +7,16 @@
     "build": "webpack --colors --progress --optimize-minimize --optimize-occurence-order --optimize-dedupe --devtool sourcemap",
     "devloop": "webpack --colors --progress --watch --devtool eval --display-error-details",
     "storybook": "start-storybook -p 9001 -s ./public",
-    "start:dev": "http-server ./public -p 8844"
+    "start:dev": "http-server ./public -p 8844",
+    "start:server": "node --harmony ." 
   },
   "dependencies": {
     "babel-polyfill": "^6.8.0",
+    "express": "^4.13.4",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
+    "react-router": "^2.4.1",
     "redux": "^3.5.2"
   },
   "devDependencies": {
