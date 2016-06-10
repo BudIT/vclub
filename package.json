@@ -7,14 +7,16 @@
     "build": "webpack --colors --progress --optimize-minimize --optimize-occurence-order --optimize-dedupe --devtool sourcemap",
     "devloop": "webpack --colors --progress --watch --devtool eval --display-error-details",
     "storybook": "start-storybook -p 9001 -s ./public",
-    "start:dev": "http-server ./public -p 8844"
+    "start": "node ./dist/server.bundle.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.8.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
-    "redux": "^3.5.2"
+    "redux": "^3.5.2",
+    "socket.io": "^1.4.6",
+    "socket.io-client": "^1.4.6"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.26.0",
@@ -31,7 +33,6 @@
     "eslint-plugin-import": "^1.8.0",
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
-    "http-server": "^0.9.0",
     "stack-source-map": "^1.0.5",
     "webpack": "^1.13.0",
     "webpack-hot-middleware": "^2.10.0"
