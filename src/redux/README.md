@@ -135,10 +135,10 @@ const firstAction = first('value');
 // { type: 'first', payload: 'value'}
 
 const second = actionCreator('second', [
-  setMetaValue('field', 'another'),
+  withSideEffect(() => console.log('side effect')),
 ]);
 const secondAction = second('value');
-// { type: 'first', payload: 'value', meta: { field: 'another' } }
+// { type: 'first', payload: 'value', meta: { sideEffect: () => console.log('side effect') } }
 ```
 
 ### remote
