@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import console from 'vclub/core/debug';
-
 
 const mediaEvents = [
   'abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'encrypted', 'ended',
@@ -15,14 +13,17 @@ const noop = () => {};
 export default class Video extends React.Component {
 
   static propTypes = {
-    src: React.PropTypes.any.isRequired,
+    src: React.PropTypes.string.isRequired,
+    // eslint-disable-next-line react/no-unused-prop-types
     playing: React.PropTypes.bool.isRequired,
+    // eslint-disable-next-line react/no-unused-prop-types
     position: React.PropTypes.number.isRequired,
-    style: React.PropTypes.any,
-    className: React.PropTypes.any,
+    // eslint-disable-next-line react/forbid-prop-types
+    style: React.PropTypes.object,
+    className: React.PropTypes.string,
     onTimeUpdate: React.PropTypes.func.isRequired,
     onLoadedMetadata: React.PropTypes.func.isRequired,
-    onClick: React.PropTypes.any,
+    onClick: React.PropTypes.func,
   }
 
   static defaultProps = {
@@ -30,20 +31,11 @@ export default class Video extends React.Component {
     onLoadedMetadata: noop,
   }
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.currentVideoPos = 0;
-  }
-
-  componentWillMount() {
-  }
-
   componentDidMount() {
-    const videoEl = this.refs.video;
+    const video = this.videoNode;
 
     for (const mediaEvent of mediaEvents) {
-      videoEl.addEventListener(mediaEvent, ::this.onMediaEvent, true);
+      video.addEventListener(mediaEvent, ::this.onMediaEvent, true);
     }
 
     this.updateVideoElement(this.props);
@@ -54,44 +46,39 @@ export default class Video extends React.Component {
   }
 
   componentWillUnmount() {
-    const videoEl = this.refs.video;
+    const video = this.videoNode;
 
     for (const mediaEvent of mediaEvents) {
-      videoEl.removeEventListener(mediaEvent, ::this.onMediaEvent, true);
+      video.removeEventListener(mediaEvent, ::this.onMediaEvent, true);
     }
   }
 
   onMediaEvent(event) {
-    const videoEl = event.target;
+    const video = event.target;
 
     if (event.type === 'timeupdate') {
-      // console.log(event.type, videoEl.currentTime);
-      this.currentVideoPos = videoEl.currentTime;
+      this.currentVideoPos = video.currentTime;
       this.props.onTimeUpdate(this.currentVideoPos);
     } else if (event.type === 'loadedmetadata') {
-      // console.logVideoEvent(event);
-      this.props.onLoadedMetadata({ duration: videoEl.duration });
-    } else if (event.type === 'pause') {
-      // console.logVideoEvent(event, videoEl.currentTime, this.props.playing);
-    } else {
-      // console.logVideoEvent(event);
+      this.props.onLoadedMetadata({ duration: video.duration });
     }
   }
 
+  currentVideoPos = 0;
+
   updateVideoElement(props) {
-    const videoEl = this.refs.video;
+    const video = this.videoNode;
     const { playing, position } = props;
 
 
     if (this.currentVideoPos !== position) {
-      videoEl.currentTime = position;
+      video.currentTime = position;
     }
 
-    if (playing && videoEl.paused) {
-      videoEl.play();
-    } else if (!playing && !videoEl.paused) {
-      videoEl.pause();
-      // console.log('paused');
+    if (playing && video.paused) {
+      video.play();
+    } else if (!playing && !video.paused) {
+      video.pause();
     }
   }
 
@@ -99,8 +86,9 @@ export default class Video extends React.Component {
     const { onClick, src, style, className } = this.props;
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <video
-        ref="video"
+        ref={(el) => { this.videoNode = el; }}
         src={src}
         onClick={onClick}
         style={style}

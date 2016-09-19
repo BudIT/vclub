@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import clientActionBroker from 'vclub/redux/clientActionBroker';
 import sideEffectProcessor from 'vclub/redux/sideEffectProcessor';
-import ClubLayoutRoot from 'vclub/views/clubLayout/Container';
+import ClubLayout from 'vclub/views/clubLayout/Container';
 import reducer from 'vclub/reducers/club';
 import { auth } from 'vclub/actions/core';
 
@@ -23,7 +23,7 @@ const storeEnhancer = compose(
 
 const store = createStore(reducer, storeEnhancer);
 
-ioSocket.on('dispatch', (action) => store.dispatch(action));
+ioSocket.on('dispatch', action => store.dispatch(action));
 
 const storedAuth = null;
 
@@ -33,6 +33,6 @@ if (storedAuth) {
 
 render((
   <Provider store={store}>
-    <ClubLayoutRoot />
+    <ClubLayout />
   </Provider>
 ), document.getElementById('AppRoot'));

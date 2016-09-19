@@ -50,7 +50,7 @@ io.on('connection', (socket) => {
       store.dispatch(memberLeaveAction);
     });
 
-    socket.on('dispatch', (action) => store.dispatch(action));
+    socket.on('dispatch', action => store.dispatch(action));
 
     socket.emit('dispatch', initialize(store.getState()));
   });

@@ -1,15 +1,41 @@
-import actionCreator from 'vclub/redux/actionCreator';
-import actionTypePrefixer from 'vclub/redux/actionTypePrefixer';
-import { broadcast, withSideEffect } from 'vclub/redux/actionEnhancers';
+import { INITIALIZE, AUTH, MEMBER_ENTER, MEMBER_LEAVE } from 'vclub/constants/actionTypes';
 
 
-const $ = actionTypePrefixer('Core');
+export function inititalize(payload) {
+  return {
+    type: INITIALIZE,
+    payload,
+  };
+}
 
-export const initialize = actionCreator($('initialize'));
-export const auth = actionCreator($('auth'), [
-  withSideEffect((dispatch, authData, { ioSocket }) => {
-    ioSocket.emit('auth', authData);
-  }),
-]);
-export const memberEnter = actionCreator($('memberEnter'), [broadcast]);
-export const memberLeave = actionCreator($('memberLeave'), [broadcast]);
+export function auth(authData) {
+  return {
+    type: AUTH,
+    payload: authData,
+    meta: {
+      sideEffect: ({ ioSocket }) => {
+        ioSocket.emit('auth', authData);
+      },
+    },
+  };
+}
+
+export function memberEnter(member) {
+  return {
+    type: MEMBER_ENTER,
+    payload: member,
+    meta: {
+      broadcast: true,
+    },
+  };
+}
+
+export function memberLeave(memberId) {
+  return {
+    type: MEMBER_LEAVE,
+    payload: memberId,
+    meta: {
+      broadcast: true,
+    },
+  };
+}

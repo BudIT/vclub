@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function ClubLayoutRoot() {
+export default function ClubLayout() {
   return (
     <div>
       <header>HEADER</header>

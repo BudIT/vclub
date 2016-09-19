@@ -1,15 +1,19 @@
-import createReducer from 'vclub/redux/createReducer';
-
-import { auth } from 'vclub/actions/core';
+import { AUTH } from 'vclub/constants/actionTypes';
 
 
-export default createReducer({
-  [auth]: (atom) => ({
-    ...atom,
-    authenticating: true,
-  }),
-}, {
+const InitialData = {
   authenticated: false,
   authenticating: false,
   currentRoom: 'chat',
-});
+};
+
+export default function dataReducer(state = InitialData, action) {
+  if (action.type === AUTH) {
+    return {
+      ...state,
+      authenticating: true,
+    };
+  }
+
+  return state;
+}
