@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Navigation from 'vclub/components/Navigation/Navigation.js'
 
 export default function ClubLayout() {
   return (
@@ -8,6 +9,7 @@ export default function ClubLayout() {
       <main>
         Content will be there
       </main>
+      <Navigation />
       <footer>FOOTER</footer>
     </div>
   );
