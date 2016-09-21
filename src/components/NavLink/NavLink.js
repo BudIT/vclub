@@ -1,18 +1,20 @@
-import React from 'react'
+import React from 'react';
 
-import styles from './style.css'
+import styles from './style.css';
 
-const NavLink = (props) => {
+function NavLink(props) {
   // check for only one child
-  const {link} = props
 
   return (
-    <a
-      href={link}
-    >
+    <a className={styles.a}>
       {props.children}
     </a>
-  )
+  );
 }
 
-export default NavLink
+NavLink.propTypes = {
+  children: React.PropTypes.node,
+};
+
+export default NavLink;
+

@@ -1,15 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-import styles from './style.css'
+import styles from './style.css';
 
-const Nav = (props) => {
+function Nav(props) {
   // check for only one child
   return (
-    <ul>
+    <ul className={styles.ul}>
       {props.children.map(child => <li>{child}</li>)}
     </ul>
-  )
+  );
 }
 
-export default Nav
+Nav.propTypes = {
+  children: React.PropTypes.arrayOf(React.PropTypes.node),
+};
+
+export default Nav;
 

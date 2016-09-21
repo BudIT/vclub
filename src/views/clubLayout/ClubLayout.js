@@ -1,7 +1,7 @@
 import React from 'react';
 
-import NavLink from 'vclub/components/NavLink/NavLink'
-import Nav from 'vclub/components/Nav/Nav'
+import NavLink from 'vclub/components/NavLink/NavLink';
+import Nav from 'vclub/components/Nav/Nav';
 
 export default function ClubLayout() {
   return (
