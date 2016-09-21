@@ -1,5 +1,7 @@
-const path = require('path');
-const webpack = require('webpack');
+const path        = require('path');
+const webpack     = require('webpack');
+const autoreset   = require('postcss-autoreset')
+
 
 const DEV = process.env.NODE_ENV !== 'production';
 const GLOBALS = {
@@ -30,9 +32,12 @@ module.exports = [
         {
           test: /\.css/,
           exclude: /node_modules/,
-          loaders: ['style', 'css'],
+          loaders: ['style', 'css?modules&importLoaders=1', 'postcss-loader'],
         }
       ],
+    },
+    postcss: function() {
+      return [autoreset]
     },
     resolve: {
       alias: {
