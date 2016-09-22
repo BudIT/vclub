@@ -6,5 +6,4 @@ npm-debug.log
 # VSCode config file
 jsconfig.json
 .DS_Store
-vclub.iml
 coverage
