@@ -29,13 +29,14 @@ export default class Video extends React.Component {
   static defaultProps = {
     onTimeUpdate: noop,
     onLoadedMetadata: noop,
+    position: 0,
   }
 
   componentDidMount() {
     const video = this.videoNode;
 
     for (const mediaEvent of mediaEvents) {
-      video.addEventListener(mediaEvent, ::this.onMediaEvent, true);
+      video.addEventListener(mediaEvent, this.onMediaEvent, true);
     }
 
     this.updateVideoElement(this.props);
@@ -49,11 +50,11 @@ export default class Video extends React.Component {
     const video = this.videoNode;
 
     for (const mediaEvent of mediaEvents) {
-      video.removeEventListener(mediaEvent, ::this.onMediaEvent, true);
+      video.removeEventListener(mediaEvent, this.onMediaEvent, true);
     }
   }
 
-  onMediaEvent(event) {
+  onMediaEvent = (event) => {
     const video = event.target;
 
     if (event.type === 'timeupdate') {
