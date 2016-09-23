@@ -1,9 +1,17 @@
 import React from 'react';
 
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
+
 import NavLink from 'vclub/components/NavLink/NavLink';
 import Nav from 'vclub/components/Nav/Nav';
 
-export default function ClubLayout() {
+
+const enhance = compose(
+  connect(state => ({ state })),
+);
+
+function ClubLayout() {
   return (
     <div>
       <header>
@@ -22,3 +30,5 @@ export default function ClubLayout() {
     </div>
   );
 }
+
+export default enhance(ClubLayout);

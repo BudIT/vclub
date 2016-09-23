@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import clientActionBroker from 'vclub/redux/clientActionBroker';
 import sideEffectProcessor from 'vclub/redux/sideEffectProcessor';
-import ClubLayout from 'vclub/views/clubLayout/Container';
+import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
 import reducer from 'vclub/reducers/club';
 import { auth } from 'vclub/actions/core';
 
