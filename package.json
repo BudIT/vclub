@@ -6,12 +6,13 @@
     "lint": "eslint ./src",
     "build": "webpack --colors --progress --optimize-minimize --optimize-occurence-order --optimize-dedupe --devtool sourcemap",
     "devloop": "webpack --colors --progress --watch --devtool eval --display-error-details",
-    "storybook": "start-storybook -p 9001 -s ./public",
+    "storybook": "start-storybook -p 9001 -s ./dist/public",
     "start": "node ./dist/server.bundle.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "classnames": "^2.2.5",
+    "express": "^4.14.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
@@ -41,6 +42,7 @@
     "postcss-loader": "^0.13.0",
     "stack-source-map": "^1.0.5",
     "style-loader": "^0.13.1",
+    "updeep": "^0.16.1",
     "webpack": "^1.13.2",
     "webpack-hot-middleware": "^2.12.2"
   }

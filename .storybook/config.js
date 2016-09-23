@@ -1,9 +1,13 @@
-import { configure } from '@kadira/storybook';
+import { configure, setAddon } from '@kadira/storybook';
+import reduxStory from './addons/reduxStory';
+
+
+setAddon(reduxStory);
 
 function loadStories() {
-  /* eslint-disable global-require */
-  require('vclub/stories/views/clubLayout/ClubLayout');
-  /* eslint-enable global-require */
+  const storiesContext = require.context('vclub/stories', true, /Stories\.js$/);
+
+  storiesContext.keys().sort().forEach(storiesContext);
 }
 
 configure(loadStories, module);
