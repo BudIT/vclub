@@ -9,8 +9,9 @@
     "node": true,
   },
   "rules": {
-    "react/jsx-filename-extension": [2, {
+    "react/jsx-filename-extension": ["error", {
       "extensions": [".js", ".jsx"]
     }],
+    "arrow-parens": "off",
   },
 }

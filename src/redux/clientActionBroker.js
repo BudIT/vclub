@@ -9,7 +9,7 @@ function resetRemoteFlag(action) {
 }
 
 export default function clientActionBroker(ioSocket) {
-  return (/* store */) => next => action => {
+  return (/* store */) => (next) => (action) => {
     const remote = action.meta && action.meta.remote;
 
     if (remote === true) {

@@ -9,7 +9,7 @@ function resetBroadcastFlag(action) {
 }
 
 export default function serverActionBroker(io) {
-  return (/* store */) => next => action => {
+  return (/* store */) => (next) => (action) => {
     if (!action.meta) {
       return next(action);
     }
