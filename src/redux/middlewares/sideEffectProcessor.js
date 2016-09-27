@@ -1,6 +1,5 @@
 export default function sideEffectProcessor(options = {}) {
   return (store) => {
-    const dispatch = store.dispatch;
     const context = { ...options.context, store };
 
     return (next) => (action) => {
@@ -9,7 +8,7 @@ export default function sideEffectProcessor(options = {}) {
       next(action);
 
       if (sideEffect) {
-        sideEffect(dispatch, action.payload, context);
+        sideEffect(context, action);
       }
     };
   };
