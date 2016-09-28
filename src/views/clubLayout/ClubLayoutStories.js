@@ -1,8 +1,9 @@
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 
-import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
 import initialState from 'vclub/redux/initialState';
+import ClubLayout from './ClubLayout';
 
 
 const book = storiesOf('views.clubLayout.ClubLayout', module);

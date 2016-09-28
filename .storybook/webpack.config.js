@@ -6,8 +6,8 @@ module.exports = {
       {
         test: /.css$/,
         loaders: ['style', 'css?modules&importLoaders=1'],
-      }
-    ]
+      },
+    ],
   },
   resolve: {
     alias: {
