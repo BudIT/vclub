@@ -4,11 +4,13 @@ import { render } from 'react-dom';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import clientActionBroker from 'vclub/redux/clientActionBroker';
-import sideEffectProcessor from 'vclub/redux/sideEffectProcessor';
 import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
-import reducer from 'vclub/reducers/club';
-import { auth } from 'vclub/actions/core';
+
+import clientActionBroker from 'vclub/redux/middlewares/clientActionBroker';
+import sideEffectProcessor from 'vclub/redux/middlewares/sideEffectProcessor';
+import reducer from 'vclub/redux/clubReducer';
+import initialState from 'vclub/redux/initialClubState';
+import { auth } from 'vclub/redux/club/auth';
 
 
 const ioSocket = io({ path: '/vclub-socket', forceNew: true });
@@ -21,11 +23,14 @@ const storeEnhancer = compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );
 
-const store = createStore(reducer, storeEnhancer);
+const store = createStore(reducer, initialState, storeEnhancer);
 
 ioSocket.on('dispatch', action => store.dispatch(action));
 
-const storedAuth = null;
+const storedAuth = {
+  name: 'Den',
+  master: true,
+};
 
 if (storedAuth) {
   store.dispatch(auth(storedAuth));
