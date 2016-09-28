@@ -1,4 +1,4 @@
-import initialState from 'vclub/redux/initialState';
+import initialState from 'vclub/redux/initialClubState';
 
 
 export const AUTH = 'club/auth/auth';
@@ -23,5 +23,5 @@ export default function reducer(state, action) {
     };
   }
 
-  return state || initialState.club.auth;
+  return state || initialState.auth;
 }

@@ -2,13 +2,13 @@
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 
-import initialState from 'vclub/redux/initialState';
+import initialState from 'vclub/redux/initialClubState';
 import ClubLayout from './ClubLayout';
 
 
 const book = storiesOf('views.clubLayout.ClubLayout', module);
 
-book.setInitialState(initialState.club);
+book.setInitialState(initialState);
 
 book.addReduxStory('Default', dispatch => (
   <ClubLayout dispatch={dispatch} />

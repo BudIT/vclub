@@ -9,7 +9,7 @@ import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
 import clientActionBroker from 'vclub/redux/middlewares/clientActionBroker';
 import sideEffectProcessor from 'vclub/redux/middlewares/sideEffectProcessor';
 import reducer from 'vclub/redux/clubReducer';
-import initialState from 'vclub/redux/initialState';
+import initialState from 'vclub/redux/initialClubState';
 import { auth } from 'vclub/redux/club/auth';
 
 
@@ -23,7 +23,7 @@ const storeEnhancer = compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );
 
-const store = createStore(reducer, initialState.club, storeEnhancer);
+const store = createStore(reducer, initialState, storeEnhancer);
 
 ioSocket.on('dispatch', action => store.dispatch(action));
 

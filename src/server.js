@@ -10,7 +10,7 @@ import sideEffectProcessor from 'vclub/redux/middlewares/sideEffectProcessor';
 import { initialize } from 'vclub/redux/club/init';
 import { memberEnter, memberLeave } from 'vclub/redux/club/members';
 import reducer from 'vclub/redux/clubReducer';
-import initialState from 'vclub/redux/initialState';
+import initialState from 'vclub/redux/initialClubState';
 
 
 const serverPort = process.env.PORT || 3000;
@@ -24,7 +24,7 @@ const storeEnhancer = compose(
   sideEffectProcessor({ context: { ioServer: io } })),
 );
 
-const store = createStore(reducer, initialState.club, storeEnhancer);
+const store = createStore(reducer, initialState, storeEnhancer);
 
 app.set('port', serverPort);
 app.use(express.static(publicDir));

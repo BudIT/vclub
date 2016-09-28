@@ -1,4 +1,4 @@
-import initialState from 'vclub/redux/initialState';
+import initialState from 'vclub/redux/initialClubState';
 
 
 const MEMBER_ENTER = 'club/members/member-enter';
@@ -38,5 +38,5 @@ export default function reducer(state, action) {
     return state.filter(member => member.id !== memberId);
   }
 
-  return state || initialState.club.members;
+  return state || initialState.members;
 }
