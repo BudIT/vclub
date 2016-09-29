@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Form from 'react-formal';
 import yup from 'yup';
-import styles from './style.css';
+
+import styles from './AuthPage.css';
 
 class AuthPage extends Component {
     constructor () {
         super();
 
         this.schema = yup.object({
-            name: yup.string()
+                name: yup.string()
                 .required(`Пожалуйста, укажите Ваше имя`),
         });
     }
