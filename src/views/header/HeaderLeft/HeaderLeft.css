@@ -1,0 +1,29 @@
+.ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  background-color: #FFD00B;
+  flex: 1;
+}
+
+.a {
+  color: #33363A;
+  text-decoration: none;
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 22px;
+  transition: 0.2s;
+  display: inline-block;
+  font-family: 'Rubik', helvetica, sans-serif;
+}
+
+.aCurrent {
+  composes: a;
+  text-decoration: underline;
+}
+
+.a:hover {
+  background-color: #FFAA00;
+}
