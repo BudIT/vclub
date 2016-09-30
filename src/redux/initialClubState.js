@@ -5,4 +5,10 @@ export default {
     authenticating: false,
     user: null, // { id: String, name: String, master: Boolean }
   },
+  rooms: {
+    currentRoom: 'CHAT',
+  },
+  ui: {
+    showMemberPanel: false,
+  },
 };
