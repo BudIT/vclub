@@ -6,7 +6,7 @@
     "lint": "eslint ./src",
     "build": "webpack --colors --progress --optimize-minimize --optimize-occurence-order --optimize-dedupe --devtool sourcemap",
     "devloop": "webpack --colors --progress --watch --devtool eval --display-error-details",
-    "storybook": "start-storybook -p 9001 -s ./dist/public",
+    "storybook": "start-storybook -p 9001 -s .storybook",
     "start": "node ./dist/server.bundle.js"
   },
   "dependencies": {
@@ -42,6 +42,7 @@
     "eslint-plugin-react": "^6.2.2",
     "postcss-autoreset": "^1.1.5",
     "postcss-loader": "^0.13.0",
+    "postcss-normalize": "^0.3.0",
     "stack-source-map": "^1.0.5",
     "style-loader": "^0.13.1",
     "updeep": "^0.16.1",

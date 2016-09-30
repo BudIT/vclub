@@ -1,6 +1,7 @@
 const path        = require('path');
 const webpack     = require('webpack');
 const autoreset   = require('postcss-autoreset')
+const normalize   = require('postcss-normalize')
 
 
 const DEV = process.env.NODE_ENV !== 'production';
@@ -37,7 +38,7 @@ module.exports = [
       ],
     },
     postcss: function() {
-      return [autoreset]
+      return [autoreset, normalize]
     },
     resolve: {
       alias: {
