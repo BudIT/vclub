@@ -3,9 +3,7 @@ import React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
-import NavLink from 'vclub/components/NavLink/NavLink';
-import Nav from 'vclub/components/Nav/Nav';
-
+import Header from '../header/Header';
 
 const enhance = compose(
   connect(state => ({ state })),
@@ -14,15 +12,7 @@ const enhance = compose(
 function ClubLayout() {
   return (
     <div>
-      <header>
-        <Nav>
-          <NavLink>Sharing</NavLink>
-          <NavLink>Video</NavLink>
-          <NavLink>Chat</NavLink>
-          <NavLink>Whiteboard</NavLink>
-          <NavLink>Menu</NavLink>
-        </Nav>
-      </header>
+      <Header />
       <main>
         Content will be there
       </main>
