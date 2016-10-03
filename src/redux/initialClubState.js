@@ -11,6 +11,13 @@ export default {
   ui: {
     showMemberPanel: false,
   },
+  forms: {
+    login: {
+      name: '',
+      master: false,
+      remember: true,
+    },
+  },
 };
 
 // PropTypes, make it as object to export probably

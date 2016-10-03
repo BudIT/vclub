@@ -15,14 +15,14 @@ const enhance = compose(
 
 function ClubLayout(props) {
   const {
-    authenticated, currentRoom,
+    authenticated, currentRoom, dispatch,
   } = props;
 
   return (
     <div>
       <main>
         {authenticated === false
-          ? <AuthPage dispatch={props.dispatch} />
+          ? <AuthPage dispatch={dispatch} />
           : <AuthedLayout currentRoom={currentRoom} />
         }
       </main>
@@ -33,6 +33,7 @@ function ClubLayout(props) {
 ClubLayout.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   currentRoom: PropTypes.string.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
 };
 
 export default enhance(ClubLayout);
