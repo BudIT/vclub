@@ -1,10 +1,11 @@
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 
-import AuthPage from 'vclub/views/authPage/AuthPage';
+import AuthPage from './AuthPage';
 
-const auth = storiesOf('AuthPageStories', module);
+const book = storiesOf('AuthPage', module);
 
-auth.add('default view', () => (
-    <AuthPage />
+book.addReduxStory('default view', () => (
+  <AuthPage />
 ));

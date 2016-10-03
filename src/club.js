@@ -27,10 +27,7 @@ const store = createStore(reducer, initialState, storeEnhancer);
 
 ioSocket.on('dispatch', action => store.dispatch(action));
 
-const storedAuth = {
-  name: 'Den',
-  master: true,
-};
+const storedAuth = null;
 
 if (storedAuth) {
   store.dispatch(auth(storedAuth));

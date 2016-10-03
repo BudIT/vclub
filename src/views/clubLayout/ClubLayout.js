@@ -4,6 +4,7 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
 import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
+import AuthPage from 'vclub/views/authPage/AuthPage';
 
 const enhance = compose(
   connect(state => ({
@@ -21,7 +22,7 @@ function ClubLayout(props) {
     <div>
       <main>
         {authenticated === false
-          ? 'Authenctication'
+          ? <AuthPage dispatch={props.dispatch} />
           : <AuthedLayout currentRoom={currentRoom} />
         }
       </main>

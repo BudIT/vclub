@@ -1,57 +1,46 @@
 import React, { Component } from 'react';
-import Form from 'react-formal';
-import yup from 'yup';
+import { Control, Form, Field, actions } from 'react-redux-form';
 
-import styles from './AuthPage.css';
+// import styles from 'AuthPage.css';
+
 
 class AuthPage extends Component {
-    constructor () {
-        super();
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+  };
 
-        this.schema = yup.object({
-                name: yup.string()
-                .required(`Пожалуйста, укажите Ваше имя`),
-        });
-    }
+  handleSubmit(e) {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    dispatch(actions.submit('login'));
+  }
 
-    render () {
-        return (
-            <div className={styles.form_group}>
-                <span>Имя</span>
+  render() {
+    return (
+      <Form model="login" onSubmit={(e) => this.handleSubmit(e)}>
 
-            <Form className={styles.form}
-                  schema={this.schema}
-            >
-                <div>
-                    <Form.Field name='name'/>
-                    <Form.Message for='name'/>
-                </div>
+        <div className="form_group">
+          <label htmlFor="name">Имя:</label>
+          <Control.text model=".name" id="name" required />
+        </div>
 
-                <div className={styles.input_group}>
-                    <label>
-                        <input
-                               type="checkbox"
-                               value=""
-                               onChange=""
-                        /> Ведущий
-                    </label>
+        <Field className="form_group">
+          <label htmlFor="master">
+            <Control.checkbox model=".master" id="master" />
+            Ведущий
+          </label>
 
-                    <label>
-                        <input
-                               type="checkbox"
-                               value=""
-                               onChange=""
-                        /> Запомнить
-                    </label>
-                </div>
+          <label htmlFor="remember">
+            <Control.checkbox model=".remember" id="remember" />
+            Запомнить
+          </label>
+        </Field>
 
-                <Form.Button type="submit" className={styles.btn}>
-                    Войти
-                </Form.Button>
-            </Form>
-            </div>
-        );
-    }
+        <button type="submit">Войти</button>
+      </Form>
+    );
+  }
 }
 
 export default AuthPage;
+
