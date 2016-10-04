@@ -1,53 +1,80 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react';
 
-import style from './HeaderRight.css'
+import compose from 'recompose/compose';
+import { withHandlers } from 'recompose';
+
+import style from './HeaderRight.css';
+
+const enhance = compose(
+  withHandlers({
+    onToggleMemberPanel: props => () => {
+      props.dispatch(props.toggleMemberPanel());
+    },
+    onLogOut: props => () => {
+      props.dispatch(props.logOut());
+    },
+  })
+);
 
 // sign out
 function HeaderRight(props) {
-  console.log(props)
   const {
     numberOfMembers,
 
-    logOut,
-    toggleMemberPanel,
-
-    dispatch,
-  } = props
+    onLogOut,
+    onToggleMemberPanel,
+  } = props;
 
   return (
     <ul className={style.ul}>
-      <li className={style.li}
-        onClick={dispatch.bind(undefined, toggleMemberPanel())}
+      <li
+        className={style.li}
       >
-        <a className={style.a} href="#">&#9977; {numberOfMembers}</a>
+        <button
+          className={style.a}
+          onClick={onToggleMemberPanel}
+        >
+          &#9977; {numberOfMembers}
+        </button>
       </li>
       <li className={style.li}>
-        <a className={style.a} href="#">&#9776;</a>
+        <button
+          className={style.a}
+        >
+          &#9776;
+        </button>
         <div className={style.dropdownContent}>
-          <a href="#"
-            onClick={dispatch.bind(undefined, logOut())}
+          <button
+            className={style.a}
+            onClick={onLogOut}
           >
             Log Out
-          </a>
-          <a href="#">Smth Else</a>
-          <a href="#">Third Opt.</a>
+          </button>
+          <button
+            className={style.a}
+          >
+            Smth Else
+          </button>
+          <button
+            className={style.a}
+          >
+            Third Opt.
+          </button>
         </div>
       </li>
     </ul>
-  )
+  );
 }
 
 HeaderRight.propTypes = {
-  numberOfMembers:  PropTypes.number.isRequired,
+  numberOfMembers: PropTypes.number.isRequired,
 
-  logOut:           PropTypes.func.isRequired,
-  toggleMemberPanel:PropTypes.func.isRequired,
-
-  dispatch:         PropTypes.func.isRequired,
-}
+  onLogOut: PropTypes.func.isRequired,
+  onToggleMemberPanel: PropTypes.func.isRequired,
+};
 
 HeaderRight.defaultProps = {
   numberOfMembers: 1,
-}
+};
 
-export default HeaderRight
+export default enhance(HeaderRight);

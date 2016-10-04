@@ -4,7 +4,7 @@ import { storiesOf } from '@kadira/storybook';
 
 import initialState from 'vclub/redux/initialClubState';
 
-import Header          from 'vclub/views/header/Header';
+import Header from 'vclub/views/header/Header';
 
 const book = storiesOf('views.header.Header', module);
 
