@@ -1,0 +1,14 @@
+.ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #FFD00B;
+  flex: 1;
+}
+
+.li {
+  color: black;
+}
