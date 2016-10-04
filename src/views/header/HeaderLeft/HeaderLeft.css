@@ -8,7 +8,9 @@
   flex: 1;
 }
 
-.a {
+.a,
+.button
+{
   color: #33363A;
   text-decoration: none;
   text-align: center;
@@ -17,6 +19,11 @@
   transition: 0.2s;
   display: inline-block;
   font-family: 'Rubik', helvetica, sans-serif;
+  background-color: inherit;
+  cursor: pointer;
+  border-style: none;
+  background:none!important;
+  outline: none;
 }
 
 .aCurrent {

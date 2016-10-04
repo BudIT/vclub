@@ -5,7 +5,7 @@ const TOGGLE_MEMBER_PANEL = 'club/ui/toggle-member-panel';
 export function toggleMemberPanel() {
   return {
     type: TOGGLE_MEMBER_PANEL,
-  }
+  };
 }
 
 export default function reducer(state, action) {
@@ -14,8 +14,8 @@ export default function reducer(state, action) {
       return {
         ...state,
         showMemberPanel: !state.showMemberPanel,
-      }
+      };
     default:
-      return state || initialState.ui
+      return state || initialState.ui;
   }
 }

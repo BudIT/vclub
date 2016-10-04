@@ -52,12 +52,15 @@ io.on('connection', (socket) => {
     if (user.master) {
       socket.join('masters');
     }
-    socket.on('disconnect', () => {
+
+    const exit = () => {
       const memberLeaveAction = memberLeave(user.id);
 
       socket.broadcast.emit('dispatch', memberLeaveAction);
       store.dispatch(memberLeaveAction);
-    });
+    };
+    socket.on('disconnect', exit);
+    socket.on('logOut', exit);
 
     socket.on('dispatch', action => store.dispatch(action));
 

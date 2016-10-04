@@ -1,47 +1,70 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes, Children } from 'react';
 
-import style from './HeaderLeft.css'
+import compose from 'recompose/compose';
+import { withHandlers } from 'recompose';
+
+import style from './HeaderLeft.css';
+
+const enhance = compose(
+  withHandlers({
+    onChangeRoom: props => (room) => {
+      props.dispatch(props.changeRoom(room));
+    },
+  })
+);
 
 // changeRoom
 function HeaderLeft(props) {
+
+  console.log("headerleft")
+  console.log(props)
   let i = -1;
   const {
-    dispatch,
-
-    changeRoom,
+    onChangeRoom,
 
     rooms,
     currentRoom,
-  } = props
+  } = props;
 
-  const getStyle = (currentRoom, linkRoom) => {
-    return currentRoom === linkRoom ? style.aCurrent : style.a
+  // return different style for tab if tab and room are the same
+  // see tab with underline in ui
+  function getStyle(room, tab) {
+    if (room === tab) {
+      return style.aCurrent;
+    }
+    return style.a;
   }
+
+  const tabs = React.Children.map(props.children, function renderChild(child) {
+    return (
+      <li
+        key={i.toString()}
+      >
+        <button
+          className={getStyle(currentRoom, rooms[++i])}
+          onClick={onChangeRoom.bind(undefined, rooms[i])}
+        >
+          {child}
+        </button>
+      </li>
+    );
+  });
 
   return (
     <ul className={style.ul}>
-      {props.children.map(child =>
-        <li
-          onClick={dispatch.bind(undefined, changeRoom(rooms[++i]))}
-          key={i.toString()}
-        >
-          <a className={getStyle(currentRoom, rooms[i])}>
-            {child}
-          </a>
-        </li>
-      )}
+      {tabs}
     </ul>
-  )
+  );
 }
 
 HeaderLeft.propTypes = {
-  rooms:        PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  currentRoom:  PropTypes.string.isRequired,
-  children:     PropTypes.arrayOf(React.PropTypes.node).isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currentRoom: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,
 
-  changeRoom:   PropTypes.func.isRequired,
+  onChangeRoom: PropTypes.func.isRequired,
 
-  dispatch:     PropTypes.func.isRequired,
-}
+  // dispatch: PropTypes.func.isRequired,
+};
 
-export default HeaderLeft
+export default enhance(HeaderLeft);
