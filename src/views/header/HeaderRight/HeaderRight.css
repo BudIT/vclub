@@ -12,7 +12,9 @@
 
 }
 
-.a {
+.a,
+.button
+{
   color: #33363A;
   text-decoration: none;
   text-align: center;
@@ -21,6 +23,11 @@
   transition: 0.2s;
   display: inline-block;
   font-family: 'Rubik', helvetica, sans-serif;
+  background-color: inherit;
+  cursor: pointer;
+  border-style: none;
+  background:none!important;
+  outline: none;
 }
 
 .dropdownContent {
@@ -39,11 +46,13 @@
   display: block;
 }
 
-.dropdownContent a:hover {
+.dropdownContent .a:hover {
+
   background-color: #FFAA00;
   border-right: 3px solid #33363A;
 }
 
 .li:hover .dropdownContent {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
