@@ -5,16 +5,39 @@ import { connect } from 'react-redux';
 
 import Header from '../header/Header';
 
+// rooms
+import ChatRoom from '../chatRoom/ChatRoom';
+import SharingRoom from '../sharingRoom/SharingRoom';
+import WhiteBoardRoom from '../whiteBoardRoom/WhiteBoardRoom';
+import VideoRoom from '../videoRoom/VideoRoom';
+
 const enhance = compose(
   connect(state => ({ state })),
 );
 
-function ClubLayout() {
+// ['SHARING', 'VIDEO', 'CHAT', 'WHITEBOARD']
+
+const displayRoom = (currentRoom) => {
+  switch (currentRoom) {
+    case 'CHAT':
+      return <ChatRoom />;
+    case 'SHARING':
+      return <SharingRoom />;
+    case 'VIDEO':
+      return <VideoRoom />;
+    case 'WHITEBOARD':
+      return <WhiteBoardRoom />;
+    default:
+      return <ChatRoom />;
+  }
+};
+
+function ClubLayout(props) {
   return (
     <div>
       <Header />
       <main>
-        Content will be there
+        {displayRoom(props.state.rooms.currentRoom)}
       </main>
       <footer>FOOTER</footer>
     </div>
