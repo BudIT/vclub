@@ -16,7 +16,6 @@ const enhance = compose(
   })
 );
 
-// sign out
 function HeaderRight(props) {
   const {
     numberOfMembers,
@@ -27,36 +26,34 @@ function HeaderRight(props) {
 
   return (
     <ul className={style.ul}>
-      <li
-        className={style.li}
-      >
+      <li>
         <button
-          className={style.a}
+          className={style.tab}
           onClick={onToggleMemberPanel}
         >
           &#9977; {numberOfMembers}
         </button>
       </li>
-      <li className={style.li}>
+      <li className={style.dropdown}>
         <button
-          className={style.a}
+          className={style.tab}
         >
           &#9776;
         </button>
         <div className={style.dropdownContent}>
           <button
-            className={style.a}
+            className={style.tab}
             onClick={onLogOut}
           >
             Log Out
           </button>
           <button
-            className={style.a}
+            className={style.tab}
           >
             Smth Else
           </button>
           <button
-            className={style.a}
+            className={style.tab}
           >
             Third Opt.
           </button>
