@@ -7,30 +7,3 @@
   background-color: #FFD00B;
   flex: 1;
 }
-
-.a,
-.button
-{
-  color: #33363A;
-  text-decoration: none;
-  text-align: center;
-  padding: 14px 16px;
-  font-size: 22px;
-  transition: 0.2s;
-  display: inline-block;
-  font-family: 'Rubik', helvetica, sans-serif;
-  background-color: inherit;
-  cursor: pointer;
-  border-style: none;
-  background:none!important;
-  outline: none;
-}
-
-.aCurrent {
-  composes: a;
-  text-decoration: underline;
-}
-
-.a:hover {
-  background-color: #FFAA00;
-}
