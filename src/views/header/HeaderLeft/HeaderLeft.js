@@ -1,54 +1,25 @@
 import React, { PropTypes, Children } from 'react';
 
-import compose from 'recompose/compose';
-import { withHandlers } from 'recompose';
+import HeaderTab from './HeaderTab/HeaderTab';
 
 import style from './HeaderLeft.css';
 
-const enhance = compose(
-  withHandlers({
-    onChangeRoom: props => (room) => {
-      props.dispatch(props.changeRoom(room));
-    },
-  })
-);
-
 // changeRoom
 function HeaderLeft(props) {
-
-  console.log("headerleft")
-  console.log(props)
-  let i = -1;
-  const {
-    onChangeRoom,
-
-    rooms,
-    currentRoom,
-  } = props;
+  // console.log("headerleft")
+  // console.log(props);
 
   // return different style for tab if tab and room are the same
   // see tab with underline in ui
-  function getStyle(room, tab) {
-    if (room === tab) {
-      return style.aCurrent;
-    }
-    return style.a;
-  }
 
-  const tabs = React.Children.map(props.children, function renderChild(child) {
-    return (
-      <li
-        key={i.toString()}
-      >
-        <button
-          className={getStyle(currentRoom, rooms[++i])}
-          onClick={onChangeRoom.bind(undefined, rooms[i])}
-        >
-          {child}
-        </button>
-      </li>
-    );
-  });
+  const tabs = Children.map(props.children, (roomName, index) => (
+    <HeaderTab
+      key={index.toString()}
+      {...props}
+    >
+      {roomName}
+    </HeaderTab>
+  ));
 
   return (
     <ul className={style.ul}>
@@ -58,13 +29,13 @@ function HeaderLeft(props) {
 }
 
 HeaderLeft.propTypes = {
-  rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  currentRoom: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,
+  // rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  // currentRoom: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 
-  onChangeRoom: PropTypes.func.isRequired,
+  // getChangeRoomHandlers: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
 
   // dispatch: PropTypes.func.isRequired,
 };
 
-export default enhance(HeaderLeft);
+export default HeaderLeft;

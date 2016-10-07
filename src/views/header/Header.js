@@ -41,17 +41,13 @@ function Header(props) {
   return (
     <div className={style.header}>
       <HeaderLeft
-        rooms={roomsNames}
         currentRoom={rooms.currentRoom}
 
         changeRoom={changeRoom}
 
         dispatch={dispatch}
       >
-        {'Sharing'}
-        {'Video'}
-        {'Chat'}
-        {'Whiteboard'}
+        { roomsNames }
       </HeaderLeft>
       <HeaderRight
         numberOfMembers={members.length}
