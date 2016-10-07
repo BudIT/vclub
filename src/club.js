@@ -2,6 +2,7 @@ import React from 'react';
 import io from 'socket.io-client';
 import { render } from 'react-dom';
 import { createStore, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
@@ -10,7 +11,7 @@ import clientActionBroker from 'vclub/redux/middlewares/clientActionBroker';
 import sideEffectProcessor from 'vclub/redux/middlewares/sideEffectProcessor';
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
-import { auth } from 'vclub/redux/club/auth';
+import { restoreAuth } from 'vclub/redux/club/auth';
 
 
 const ioSocket = io({ path: '/vclub-socket', forceNew: true });
@@ -18,7 +19,8 @@ const ioSocket = io({ path: '/vclub-socket', forceNew: true });
 const storeEnhancer = compose(
   applyMiddleware(
     clientActionBroker(ioSocket),
-    sideEffectProcessor({ context: { ioSocket } })
+    sideEffectProcessor({ context: { ioSocket } }),
+    thunk
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );
@@ -27,11 +29,8 @@ const store = createStore(reducer, initialState, storeEnhancer);
 
 ioSocket.on('dispatch', action => store.dispatch(action));
 
-const storedAuth = null;
+store.dispatch(restoreAuth());
 
-if (storedAuth) {
-  store.dispatch(auth(storedAuth));
-}
 
 render((
   <Provider store={store}>
