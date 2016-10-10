@@ -16,13 +16,12 @@ export function auth(authData) {
   };
 }
 
-export function logOut(authData) {
+export function logOut() {
   return {
     type: LOG_OUT,
-    payload: authData,
     meta: {
       sideEffect: ({ ioSocket }) => {
-        ioSocket.emit('logOut', authData);
+        ioSocket.emit('logOut');
       },
     },
   };
@@ -33,6 +32,14 @@ export default function reducer(state, action) {
     return {
       ...state,
       authenticating: true,
+    };
+  }
+
+  if (action.type === LOG_OUT) {
+    return {
+      authenticated: false,
+      authenticating: false,
+      user: null,
     };
   }
 
