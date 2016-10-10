@@ -15,10 +15,12 @@ export default function reducer(state, action) {
       if (state.currentRoom === action.payload) {
         return state;
       }
+
       return {
         ...state,
         currentRoom: action.payload,
       };
+
     default:
       return state || initialState.rooms;
   }
