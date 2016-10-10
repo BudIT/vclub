@@ -44,7 +44,7 @@
 
 .dropdownContent .tab:hover {
   background-color: #FFAA00;
-  border-right: 2px solid #33363A;
+  /*border-right: 2px solid #33363A;*/
 }
 
 .dropdown:hover .dropdownContent {
