@@ -1,32 +1,35 @@
 import React, { PropTypes } from 'react';
-
+import Transition from 'react-motion-ui-pack';
 import style from './UserList.css';
 
 function UserList(props) {
   const {
-    numberOfMembers,
     members,
-    toggleMemberPanel,
-    dispatch,
   } = props;
 
   return (
-    <ul className={style.ul}>
-      <li className={style.li}>1</li>
-      <li className={style.li}>2</li>
-    </ul>
+    <div className={style.menu}>
+      <Transition
+        component="ul"
+        enter={{
+          height: 'auto',
+          opacity: 1,
+        }}
+        leave={{
+          height: 0,
+          opacity: 0,
+        }}
+      >
+        {members.map((result) => (
+          <li key={result.id} className={style.item}>{result.name}</li>
+        ))}
+      </Transition>
+    </div>
   );
 }
 
 UserList.propTypes = {
-  numberOfMembers: PropTypes.number.isRequired,
-  members: PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  toggleMemberPanel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
-};
-
-UserList.defaultProps = {
-  numberOfMembers: 1,
+  members: PropTypes.arrayOf(React.PropTypes.object).isRequired,
 };
 
 export default UserList;

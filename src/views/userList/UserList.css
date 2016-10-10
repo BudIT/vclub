@@ -1,14 +1,16 @@
-.ul {
+.li {
+  color: black;
+}
+
+.menu {
+  position: absolute;
+  right: 1px;
   list-style-type: none;
+  width: 250px;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background-color: #FFD00B;
-  flex: 1;
-}
-
-.li {
-  color: black;
 }
