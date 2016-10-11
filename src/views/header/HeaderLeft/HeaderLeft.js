@@ -1,41 +1,51 @@
-import React, { PropTypes, Children } from 'react';
+import React, { PropTypes } from 'react';
 
 import HeaderTab from './HeaderTab/HeaderTab';
 
 import style from './HeaderLeft.css';
 
-// changeRoom
-function HeaderLeft(props) {
-  // console.log("headerleft")
-  // console.log(props);
+function tab(roomName, currentRoomName, index, dispatch) {
+  if (roomName === currentRoomName) {
+    return (
+      <HeaderTab
+        isCurrentTab
+        key={index.toString()}
+        dispatch={dispatch}
+      >
+        {roomName}
+      </HeaderTab>
+    );
+  }
 
-  // return different style for tab if tab and room are the same
-  // see tab with underline in ui
-
-  const tabs = Children.map(props.children, (roomName, index) => (
+  return (
     <HeaderTab
+      isCurrentTab={false}
       key={index.toString()}
-      {...props}
+      dispatch={dispatch}
     >
       {roomName}
     </HeaderTab>
-  ));
+  );
+}
+
+// changeRoom
+function HeaderLeft(props) {
+  const {
+    roomsNames, currentRoomName,
+    dispatch,
+  } = props;
 
   return (
     <ul className={style.ul}>
-      {tabs}
+      {roomsNames.map((roomName, index) => tab(roomName, currentRoomName, index, dispatch))}
     </ul>
   );
 }
 
 HeaderLeft.propTypes = {
-  // rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  // currentRoom: PropTypes.string.isRequired,
-  children: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-
-  // getChangeRoomHandlers: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
-
-  // dispatch: PropTypes.func.isRequired,
+  currentRoomName: PropTypes.string.isRequired,
+  roomsNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default HeaderLeft;

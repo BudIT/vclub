@@ -1,47 +1,38 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
-import Header from '../header/Header';
-
-// rooms
-import ChatRoom from '../chatRoom/ChatRoom';
-import SharingRoom from '../sharingRoom/SharingRoom';
-import WhiteBoardRoom from '../whiteBoardRoom/WhiteBoardRoom';
-import VideoRoom from '../videoRoom/VideoRoom';
+import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
 
 const enhance = compose(
-  connect(state => ({ state })),
+  connect(state => ({
+    authenticated: state.auth.authenticated,
+    currentRoom: state.ui.currentRoom,
+  })),
 );
 
-// ['SHARING', 'VIDEO', 'CHAT', 'WHITEBOARD']
-
-const displayRoom = (currentRoom) => {
-  switch (currentRoom) {
-    case 'CHAT':
-      return <ChatRoom />;
-    case 'SHARING':
-      return <SharingRoom />;
-    case 'VIDEO':
-      return <VideoRoom />;
-    case 'WHITEBOARD':
-      return <WhiteBoardRoom />;
-    default:
-      return <ChatRoom />;
-  }
-};
-
 function ClubLayout(props) {
+  const {
+    authenticated, currentRoom,
+  } = props;
+
   return (
     <div>
-      <Header />
       <main>
-        {displayRoom(props.state.rooms.currentRoom)}
+        {authenticated === false
+          ? 'Authenctication'
+          : <AuthedLayout currentRoom={currentRoom} />
+        }
       </main>
       <footer>FOOTER</footer>
     </div>
   );
 }
+
+ClubLayout.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+  currentRoom: PropTypes.string.isRequired,
+};
 
 export default enhance(ClubLayout);

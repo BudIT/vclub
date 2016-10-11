@@ -3,22 +3,22 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { withHandlers } from 'recompose';
 
+import { changeRoom } from 'vclub/redux/club/rooms';
+
 import style from './HeaderTab.css';
 
 const enhance = compose(
   withHandlers({
     // array of handlers
     onClick: props => () =>
-      props.dispatch(props.changeRoom(props.children)),
+      props.dispatch(changeRoom(props.children)),
   })
 );
 
 // changeRoom
 function HeaderTab(props) {
   const {
-    children,
-    currentRoom,
-
+    children, isCurrentTab,
     onClick,
   } = props;
 
@@ -26,7 +26,7 @@ function HeaderTab(props) {
     <li>
       <button
         onClick={onClick}
-        className={children === currentRoom ? style.tabCurrent : style.tab}
+        className={isCurrentTab ? style.tabCurrent : style.tab}
       >
         {children}
       </button>
@@ -35,9 +35,8 @@ function HeaderTab(props) {
 }
 
 HeaderTab.propTypes = {
-  // should be only one child
   children: PropTypes.element.isRequired,
-  currentRoom: PropTypes.string.isRequired,
+  isCurrentTab: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
