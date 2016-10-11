@@ -3,15 +3,19 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { withHandlers } from 'recompose';
 
+// actions
+import { logOut } from 'vclub/redux/club/auth';
+import { toggleMemberPanel } from 'vclub/redux/club/ui';
+
 import style from './HeaderRight.css';
 
 const enhance = compose(
   withHandlers({
     onToggleMemberPanel: props => () => {
-      props.dispatch(props.toggleMemberPanel());
+      props.dispatch(toggleMemberPanel());
     },
     onLogOut: props => () => {
-      props.dispatch(props.logOut());
+      props.dispatch(logOut());
     },
   })
 );
@@ -19,9 +23,7 @@ const enhance = compose(
 function HeaderRight(props) {
   const {
     numberOfMembers,
-
-    onLogOut,
-    onToggleMemberPanel,
+    onLogOut, onToggleMemberPanel,
   } = props;
 
   return (
@@ -65,7 +67,6 @@ function HeaderRight(props) {
 
 HeaderRight.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
-
   onLogOut: PropTypes.func.isRequired,
   onToggleMemberPanel: PropTypes.func.isRequired,
 };
