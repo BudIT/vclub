@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { combineForms } from 'react-redux-form';
+import { reducer as formReducer } from 'redux-form';
+
 
 import initialState from './initialClubState';
 
@@ -16,7 +17,7 @@ const baseReducer = combineReducers({
   members: membersReducer,
   rooms: roomsReducer,
   ui: uiReducer,
-  forms: combineForms(initialState.forms, 'forms'),
+  form: (initialState, formReducer),
 });
 
 export default initHOReducer(baseReducer);

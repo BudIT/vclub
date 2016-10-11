@@ -5,7 +5,6 @@ export const AUTH = 'club/auth/auth';
 export const LOG_OUT = 'club/auth/log-out';
 export const RESTORE_AUTH = 'club/auth/restoreAuth';
 
-
 export function auth(authData, remember = false) {
   return {
     type: AUTH,

@@ -27,6 +27,7 @@ input
     font-size: 20px;
     padding: 5px;
     color: rgb(255, 133, 51);
+    margin-top: 20px;
 }
 
 .auth
@@ -43,15 +44,16 @@ input
 {
     display: flex;
     flex-direction: column;
-    font-family: sans-serif;
     font-size: 18px;
     padding: 20px;
     width: 25vw;
+    height: 50vh;
     line-height: 1.75em;
     background: rgba(255, 255, 255, .8);
     border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 3px;
     color: rgba(0, 0, 0, .8);
+    margin-top: 7%;
 }
 
 h2
@@ -155,7 +157,7 @@ input:focus
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
-    width: 15rem;
+    /*width: 15rem;*/
 }
 h3
 {

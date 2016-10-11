@@ -11,12 +11,10 @@ export default {
   ui: {
     showMemberPanel: false,
   },
-  forms: {
-    login: {
-      name: '',
-      master: false,
-      remember: true,
-    },
+  form: {
+    name: '',
+    master: false,
+    remember: true,
   },
 };
 

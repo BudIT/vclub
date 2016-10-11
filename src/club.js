@@ -2,7 +2,7 @@ import React from 'react';
 import io from 'socket.io-client';
 import { render } from 'react-dom';
 import { createStore, compose, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+
 import { Provider } from 'react-redux';
 
 import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
@@ -20,7 +20,6 @@ const storeEnhancer = compose(
   applyMiddleware(
     clientActionBroker(ioSocket),
     sideEffectProcessor({ context: { ioSocket } }),
-    thunk
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );
@@ -30,7 +29,6 @@ const store = createStore(reducer, initialState, storeEnhancer);
 ioSocket.on('dispatch', action => store.dispatch(action));
 
 store.dispatch(restoreAuth());
-
 
 render((
   <Provider store={store}>
