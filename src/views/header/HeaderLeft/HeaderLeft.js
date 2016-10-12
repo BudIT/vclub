@@ -4,28 +4,30 @@ import HeaderTab from './HeaderTab/HeaderTab';
 
 import style from './HeaderLeft.css';
 
-function tab(roomName, currentRoomName, index, dispatch) {
-  if (roomName === currentRoomName) {
+function tabHOF(currentRoomName, dispatch) {
+  return function tab(roomName, index) {
+    if (roomName === currentRoomName) {
+      return (
+        <HeaderTab
+          isCurrentTab
+          key={index.toString()}
+          dispatch={dispatch}
+        >
+          {roomName}
+        </HeaderTab>
+      );
+    }
+
     return (
       <HeaderTab
-        isCurrentTab
+        isCurrentTab={false}
         key={index.toString()}
         dispatch={dispatch}
       >
         {roomName}
       </HeaderTab>
     );
-  }
-
-  return (
-    <HeaderTab
-      isCurrentTab={false}
-      key={index.toString()}
-      dispatch={dispatch}
-    >
-      {roomName}
-    </HeaderTab>
-  );
+  };
 }
 
 // changeRoom
@@ -35,9 +37,11 @@ function HeaderLeft(props) {
     dispatch,
   } = props;
 
+  const tab = tabHOF(currentRoomName, dispatch);
+
   return (
     <ul className={style.ul}>
-      {roomsNames.map((roomName, index) => tab(roomName, currentRoomName, index, dispatch))}
+      {roomsNames.map((roomName, index) => tab(roomName, index))}
     </ul>
   );
 }
