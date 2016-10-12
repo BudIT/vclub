@@ -25,7 +25,6 @@ function ClubLayout(props) {
           : <AuthedLayout currentRoom={currentRoom} />
         }
       </main>
-      <footer>FOOTER</footer>
     </div>
   );
 }
