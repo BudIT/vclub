@@ -1,34 +1,37 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
-import NavLink from 'vclub/components/NavLink/NavLink';
-import Nav from 'vclub/components/Nav/Nav';
-
+import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
 
 const enhance = compose(
-  connect(state => ({ state })),
+  connect(state => ({
+    authenticated: state.auth.authenticated,
+    currentRoom: state.ui.currentRoom,
+  })),
 );
 
-function ClubLayout() {
+function ClubLayout(props) {
+  const {
+    authenticated, currentRoom,
+  } = props;
+
   return (
     <div>
-      <header>
-        <Nav>
-          <NavLink>Sharing</NavLink>
-          <NavLink>Video</NavLink>
-          <NavLink>Chat</NavLink>
-          <NavLink>Whiteboard</NavLink>
-          <NavLink>Menu</NavLink>
-        </Nav>
-      </header>
       <main>
-        Content will be there
+        {authenticated === false
+          ? 'Authenctication'
+          : <AuthedLayout currentRoom={currentRoom} />
+        }
       </main>
-      <footer>FOOTER</footer>
     </div>
   );
 }
+
+ClubLayout.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+  currentRoom: PropTypes.string.isRequired,
+};
 
 export default enhance(ClubLayout);

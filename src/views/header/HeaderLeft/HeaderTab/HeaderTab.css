@@ -1,0 +1,28 @@
+.tab
+{
+  color: #33363A;
+  text-decoration: none;
+  text-align: center;
+  font-size: 22px;
+  font-family: 'Rubik', helvetica, sans-serif;
+
+  padding: 14px 16px;
+  transition: 0.2s;
+  display: inline-block;
+
+  background-color: inherit;
+  cursor: pointer;
+
+  border-style: none;
+  outline: none;
+}
+
+.tabCurrent {
+  composes: tab;
+  text-decoration: underline;
+}
+
+.tab:hover {
+  background-color: #FFAA00;
+  /*text-decoration: line-through;*/
+}
