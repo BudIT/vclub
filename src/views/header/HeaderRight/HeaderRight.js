@@ -49,16 +49,6 @@ function HeaderRight(props) {
           >
             Log Out
           </button>
-          <button
-            className={style.tab}
-          >
-            Smth Else
-          </button>
-          <button
-            className={style.tab}
-          >
-            Third Opt.
-          </button>
         </div>
       </li>
     </ul>
