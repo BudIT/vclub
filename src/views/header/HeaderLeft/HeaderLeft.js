@@ -21,7 +21,7 @@ function HeaderLeft(props) {
         >
           {roomName}
         </HeaderTab>
-      )}
+      ))}
     </ul>
   );
 }
