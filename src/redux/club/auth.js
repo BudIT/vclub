@@ -36,11 +36,7 @@ export default function reducer(state, action) {
   }
 
   if (action.type === LOG_OUT) {
-    return {
-      authenticated: false,
-      authenticating: false,
-      user: null,
-    };
+    return initialState.auth;
   }
 
   return state || initialState.auth;
