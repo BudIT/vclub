@@ -15,6 +15,7 @@ const GLOBALS = {
 module.exports = [
   // Client config
   {
+    name: 'client',
     entry: {
       // site: path.resolve(__dirname, 'src/site.js'),
       club: './src/club.js',
@@ -41,15 +42,13 @@ module.exports = [
       return [autoreset, normalize]
     },
     resolve: {
-      alias: {
-        vclub: path.resolve(__dirname, 'src'),
-      },
     },
     plugins: [
       new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __CLIENT__: true })),
     ],
   },
   {
+    name: 'server',
     entry: {
       server: 'vclub/server',
     },

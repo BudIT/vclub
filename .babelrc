@@ -4,5 +4,13 @@
     "development": {
       "plugins": ["transform-react-jsx-source"]
     }
-  }
+  },
+  "plugins": [
+    "transform-object-rest-spread",
+    ["module-resolver", {
+      "alias": {
+        "vclub": "./src",
+      }
+    }]
+  ]
 }
