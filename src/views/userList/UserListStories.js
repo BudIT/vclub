@@ -17,7 +17,5 @@ book.addReduxStory('UserList', dispatch => (
 book.addReduxStory('UserListMoreMembers', dispatch => (
   <UserList dispatch={dispatch} />
 ), {
-  data: {
-    members: ['John Doe', 'Garry West'],
-  },
+  members: ['John Doe', 'Garry West'],
 });
