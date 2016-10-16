@@ -20,12 +20,13 @@ function UserList(props) {
           opacity: 0,
         }}
       >
-        {members.map((result) => (
-          <div key={result.id}>
+        {members.map(member => (
+          <div key={member.id}>
             <span className={style.icon}>
-              <i className={style.user}>{result.name.charAt(0)}</i>
+              <i className={style.user}>{member.name.charAt(0)}</i>
             </span>
-            {result.name}</div>
+            {member.name}
+          </div>
         ))}
       </Transition>
     </div>
@@ -37,4 +38,3 @@ UserList.propTypes = {
 };
 
 export default UserList;
-
