@@ -18,4 +18,4 @@ book.addReduxStory('UserListMoreMembers', dispatch => (
   <UserList dispatch={dispatch} />
 ), {
     members: [{ id: 0, name: 'Goshan' }],
-  });
+});
