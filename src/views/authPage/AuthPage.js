@@ -2,59 +2,82 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { auth, restoreAuth } from 'vclub/redux/club/auth';
 
+import { connect } from 'react-redux';
+
 import styles from './AuthPage.css';
 
 
+const validate = values => {
+  const errors = {};
+  if (!values.username) {
+    errors.username = 'Пожалуйста, введите Ваше имя !!!';
+  } else if (values.username.length > 15) {
+    errors.username = 'Имя должно быть 15 символов или меньше';
+  }
+  return errors;
+};
+
 const AuthPage = (props) => {
-  const handleSubmit = () => {
+  const {handleSubmit} = props;
+  const onSubmit = (data) => {
     const { dispatch } = props;
-    const action = auth({
-      name: name,
-      master: master,
-    }, remember);
+    const action = auth({ username, master }, remember);
     dispatch(action);
   };
+  const renderUsernameField = ({ input, type, meta: { touched, error } }) => (
+    <div>
+      <div>
+        <input
+          {...input}
+          placeholder="Имя..."
+          type={type}
+          className={styles.input_name}
+          autoFocus
+        />
+        {touched
+        && error
+        && <span className={styles.errors}>{error}</span>}
+      </div>
+    </div>
+  );
   return (
     <section className={styles.auth}>
-      <fieldset className={styles.form_group}>
-        <form
-          className={styles.form}
-          onSubmit={handleSubmit}
-        >
+      <form
+        className={styles.login}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <fieldset className={styles.form_group}>
           <div>
-            <label htmlFor="name" className={styles.input}>
-              <div>
-                <Field
-                  name="name"
-                  id="name"
-                  component="input"
-                  type="text"
-                  placeholder="Имя..."
-                />
-              </div>
-            </label>
+            <div>
+              <Field
+                name="username"
+                component={renderUsernameField}
+                type="text"
+                onFocus
+              />
+            </div>
           </div>
-          <div className={styles.checkbox_group}>
+          <div className={styles.check_container}>
             <div className={styles.round_checkbox}>
+              <Field
+                name="master"
+                id="master"
+                component="input"
+                type="checkbox"
+              />
               <label htmlFor="master">
-                <Field
-                  name="master"
-                  id="master"
-                  component="input"
-                  type="checkbox"
-                />
-                <h3>Ведущий</h3>
+                <h3 className={styles.label_h3}>Ведущий</h3>
               </label>
             </div>
             <div className={styles.round_checkbox}>
+              <Field
+                name="remember"
+                id="remember"
+                component="input"
+                type="checkbox"
+              />
               <label htmlFor="remember">
-                <Field
-                  name="remember"
-                  id="remember"
-                  component="input"
-                  type="checkbox"
-                />
-                <h3>Запомнить</h3>
+                <h3 className={styles.label_h3}>Запомнить</h3>
               </label>
             </div>
           </div>
@@ -64,13 +87,24 @@ const AuthPage = (props) => {
           >
             Войти
           </button>
-        </form>
-      </fieldset>
+        </fieldset>
+      </form>
     </section>
   );
 };
 
-export default reduxForm({
+const Initialize = reduxForm({
   form: 'auth',
+  initialValues: {
+    username: '',
+    master: false,
+    remember: true,
+  },
+  validate,
 })(AuthPage);
+
+export default connect(
+  state => ({ state })
+)(Initialize);
+
 
