@@ -9,7 +9,7 @@ import AuthPage from 'vclub/views/authPage/AuthPage';
 const enhance = compose(
   connect(state => ({
     authenticated: state.auth.authenticated,
-    currentRoom: state.ui.currentRoom,
+    currentRoom: state.rooms.currentRoom,
   })),
 );
 
