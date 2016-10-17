@@ -35,8 +35,9 @@ function HeaderTab(props) {
 }
 
 HeaderTab.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   isCurrentTab: PropTypes.bool.isRequired,
+  // recompose props
   onClick: PropTypes.func.isRequired,
 };
 
