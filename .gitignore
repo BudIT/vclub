@@ -5,3 +5,4 @@ npm-debug.log
 
 # VSCode config file
 jsconfig.json
+coverage
