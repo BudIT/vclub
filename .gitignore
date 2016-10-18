@@ -2,6 +2,9 @@ node_modules/
 npm-debug.log
 *.bundle.*
 .idea
-
+*.iml
 # VSCode config file
 jsconfig.json
+
+.DS_Store
+vclub.iml
