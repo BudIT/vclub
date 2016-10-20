@@ -1,58 +1,83 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { auth, restoreAuth } from 'vclub/redux/club/auth';
 
-import { connect } from 'react-redux';
+import { compose } from 'recompose/compose';
+import { withHandlers } from 'recompose/withHandlers';
+import { setPropTypes } from 'recompose/setPropTypes';
+
+import { auth } from 'vclub/redux/club/auth';
 
 import styles from './AuthPage.css';
 
 
 const validate = values => {
   const errors = {};
+
   if (!values.username) {
     errors.username = 'Пожалуйста, введите Ваше имя !!!';
   } else if (values.username.length > 15) {
     errors.username = 'Имя должно быть 15 символов или меньше';
   }
+
   return errors;
 };
 
-const AuthPage = (props) => {
-  const {handleSubmit} = props;
-  const onSubmit = (data) => {
-    const { dispatch } = props;
-    const action = auth({ username, master }, remember);
-    dispatch(action);
-  };
-  const renderUsernameField = ({ input, type, meta: { touched, error } }) => (
+// eslint-disable-next-line react/prop-types
+const AuthInputField = ({ input, type, placeholder, className, meta: { touched, error } }) => (
+  <div>
     <div>
-      <div>
-        <input
-          {...input}
-          placeholder="Имя..."
-          type={type}
-          className={styles.input_name}
-          autoFocus
-        />
-        {touched
-        && error
-        && <span className={styles.errors}>{error}</span>}
-      </div>
+      <input
+        {...input}
+        type={type}
+        placeholder={placeholder}
+        className={className}
+        autoFocus
+      />
+      {touched
+      && error
+      && <span className={styles.errors}>{error}</span>}
     </div>
-  );
+  </div>
+);
+
+const enhance = compose(
+  setPropTypes({
+    dispatch: React.PropTypes.func.isRequired,
+  }),
+  withHandlers({
+    onSubmit: (props) => (data) => {
+      const { dispatch } = props;
+      const { username, master, remember } = data;
+
+      dispatch(auth({ username, master }, remember));
+    },
+  }),
+  reduxForm({
+    form: 'auth',
+    initialValues: {
+      username: '',
+      master: false,
+      remember: true,
+    },
+    validate,
+  }),
+);
+
+const AuthPage = (props) => {
+  const { handleSubmit } = props;
+
   return (
     <section className={styles.auth}>
-      <form
-        className={styles.login}
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className={styles.login} onSubmit={handleSubmit}>
         <fieldset className={styles.form_group}>
           <div>
             <div>
               <Field
                 name="username"
-                component={renderUsernameField}
+                component={AuthInputField}
                 type="text"
+                placeholder="Имя..."
+                className={styles.input_name}
                 onFocus
               />
             </div>
@@ -93,18 +118,8 @@ const AuthPage = (props) => {
   );
 };
 
-const Initialize = reduxForm({
-  form: 'auth',
-  initialValues: {
-    username: '',
-    master: false,
-    remember: true,
-  },
-  validate,
-})(AuthPage);
+AuthPage.propTypes = {
+  handleSubmit: React.PropTypes.func.isRequired,
+};
 
-export default connect(
-  state => ({ state })
-)(Initialize);
-
-
+export default enhance(AuthPage);
