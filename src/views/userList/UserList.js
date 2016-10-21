@@ -7,29 +7,37 @@ function UserList(props) {
     members,
   } = props;
 
+  const sortedMembers = members.sort((a, b) => {
+    if (a.master < b.master) {
+      return 1;
+    }
+    if (a.master > b.master) {
+      return -1;
+    }
+    return 0;
+  });
+
   return (
-    <div className={style.menu}>
-      <Transition
-        component="ul"
-        enter={{
-          height: 'auto',
-          opacity: 1,
-        }}
-        leave={{
-          height: 0,
-          opacity: 0,
-        }}
-      >
-        {members.map(member => (
-          <div key={member.id}>
-            <span className={style.icon}>
-              <i className={style.user}>{member.name.charAt(0)}</i>
-            </span>
-            {member.name}
-          </div>
+    <Transition
+      className={style.menu}
+      component="div"
+      enter={{
+        opacity: 1,
+      }}
+      leave={{
+        height: 0,
+        opacity: 0,
+      }}
+    >
+      {sortedMembers.map(member => (
+        <span key={member.id}>
+          <span className={style.icon}>
+            <i className={style.user}>{member.name.charAt(0)}</i>
+          </span>
+          {member.name}
+        </span>
         ))}
-      </Transition>
-    </div>
+    </Transition>
   );
 }
 
