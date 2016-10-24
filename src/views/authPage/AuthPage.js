@@ -49,7 +49,7 @@ const enhance = compose(
       const { dispatch } = props;
       const { username, master, remember } = data;
 
-      dispatch(auth({ username, master }, remember));
+      dispatch(auth({ name: username, master }, remember));
     },
   }),
   reduxForm({
