@@ -12,6 +12,7 @@ export function auth(authData, remember = false) {
     meta: {
       sideEffect: ({ ioSocket }) => {
         ioSocket.emit('auth', authData);
+
         if (remember) {
           localStorage.setItem('name', authData.name);
           localStorage.setItem('master', authData.master);
@@ -43,6 +44,9 @@ export function logOut() {
     meta: {
       sideEffect: ({ ioSocket }) => {
         ioSocket.emit('logOut');
+
+        localStorage.removeItem('name');
+        localStorage.removeItem('master');
       },
     },
   };
