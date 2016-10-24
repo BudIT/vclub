@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import Transition from 'react-motion-ui-pack';
+import { createSelector } from 'reselect';
 import style from './UserList.css';
 
 function UserList(props) {
