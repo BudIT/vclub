@@ -19,6 +19,7 @@
     "react-redux": "^4.4.5",
     "recompose": "^0.20.2",
     "redux": "^3.6.0",
+    "redux-form": "^6.0.5",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
     "uuid": "^2.0.3"
@@ -52,6 +53,7 @@
     "stack-source-map": "^1.0.5",
     "style-loader": "^0.13.1",
     "updeep": "^0.16.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
     "webpack-hot-middleware": "^2.12.2"
   }
