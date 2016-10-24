@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import { compose } from 'recompose/compose';
-import { withHandlers } from 'recompose/withHandlers';
-import { setPropTypes } from 'recompose/setPropTypes';
+import compose from 'recompose/compose';
+import withHandlers from 'recompose/withHandlers';
+import setPropTypes from 'recompose/setPropTypes';
 
 import { auth } from 'vclub/redux/club/auth';
 
