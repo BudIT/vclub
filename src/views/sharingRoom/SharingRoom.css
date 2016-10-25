@@ -1,0 +1,89 @@
+.control_panel
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: yellow;
+    height: 40px;
+    line-height: 40px;
+}
+.member
+{
+    display: flex;
+    flex-direction: row;
+}
+.member_item
+{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.members_btn
+{
+    line-height: 20px;
+    border-top: 1px solid #f7c497;
+    background: #d4ce65;
+    background: -webkit-gradient(linear, left top, left bottom, from(#9c7d3e), to(#d4ce65));
+    padding: 5px 7px;
+    margin: 10px;
+    -webkit-border-radius: 39px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    text-align: center;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: #d9eef7;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.members_btn:hover
+{
+    color: #fff;
+    cursor: pointer;
+    background: #d6a765;
+    background: -webkit-gradient(linear, left top, left bottom, from(#9c883e), to(#d6a765));
+}
+
+.members_btn:active
+{
+    border-top-color: #5c511b;
+    background: #5c511b;
+}
+
+.container_ball
+{
+    justify-content: center;
+}
+
+.bnt_ball
+{
+    background: 0;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: 23px;
+    margin-top: 5px;
+    margin-right: 15px;
+}
+
+.bnt_ball:active
+{
+    opacity: .8;
+}
+
+.members_btn:focus,
+.bnt_ball:focus
+{
+    outline: none;
+}
+select
+{
+    color: white;
+    font-size: 14px;
+    background: darkorange;
+    border: 1px solid saddlebrown;
+    outline: none;
+}
