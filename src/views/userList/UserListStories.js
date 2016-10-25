@@ -17,6 +17,16 @@ const usersWithMaster = [
   { id: 3, name: '綾波レイ', master: false },
 ];
 
+const usersWithFewMasters = [
+  { id: 0, name: 'Misato', master: false },
+  { id: 1, name: 'Simon', master: false },
+  { id: 2, name: 'Jack London', master: true },
+  { id: 3, name: 'Master', master: true },
+  { id: 4, name: 'And another master', master: true },
+  { id: 5, name: 'Not master', master: false },
+  { id: 6, name: 'Harry West', master: false },
+];
+
 storiesOf('UserList', module)
   .addDecorator((story) => (
     <div>
@@ -25,4 +35,5 @@ storiesOf('UserList', module)
   ))
   .add('without props', () => (<UserList members={[]} />))
   .add('with users', () => (<UserList members={users} />))
-  .add('with users and masters', () => (<UserList members={usersWithMaster} />));
+  .add('with users and masters', () => (<UserList members={usersWithMaster} />))
+  .add('with users and few masters', () => (<UserList members={usersWithFewMasters} />));

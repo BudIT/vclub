@@ -1,22 +1,20 @@
-import React, { PropTypes } from 'react';
+import R from 'ramda';
+import React from 'react';
 import Transition from 'react-motion-ui-pack';
 import { createSelector } from 'reselect';
 import style from './UserList.css';
 
-function UserList(props) {
-  const {
-    members,
-  } = props;
+function sortMembers(a, b) {
+  return a.master < b.master ? 1 : -1;
+}
 
-  const sortedMembers = members.sort((a, b) => {
-    if (a.master < b.master) {
-      return 1;
-    }
-    if (a.master > b.master) {
-      return -1;
-    }
-    return 0;
-  });
+const getSortedMembers = createSelector(
+  props => props.members,
+  members => R.sort(sortMembers, members)
+);
+
+function UserList(props) {
+  const sortedMembers = getSortedMembers(props);
 
   return (
     <Transition
@@ -30,20 +28,21 @@ function UserList(props) {
         opacity: 0,
       }}
     >
-      {sortedMembers.map(member => (
-        <span key={member.id}>
-          <span className={style.icon}>
-            <i className={style.user}>{member.name.charAt(0)}</i>
+      {sortedMembers.length === 0
+        ? <span>No members</span>
+        : sortedMembers.map(member => (
+          <span key={member.id}>
+            <span className={style.icon}>
+              <i className={style.user}>{member.name.charAt(0)}</i>
+            </span>
+            {member.master === true
+              ? <b className={style.master}>{member.name}</b>
+              : member.name
+            }
           </span>
-          {member.name}
-        </span>
         ))}
     </Transition>
   );
 }
-
-UserList.propTypes = {
-  members: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-};
 
 export default UserList;

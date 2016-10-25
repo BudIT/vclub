@@ -27,3 +27,7 @@
   align-self: center;
   width: 100%;
 }
+
+.master {
+  font-weight: bold;
+}
