@@ -42,6 +42,9 @@ module.exports = [
       return [autoreset, normalize]
     },
     resolve: {
+      alias: {
+        vclub: path.resolve(__dirname, 'src'),
+      },
     },
     plugins: [
       new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __CLIENT__: true })),
