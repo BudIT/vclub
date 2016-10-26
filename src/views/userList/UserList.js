@@ -1,33 +1,48 @@
-import React, { PropTypes } from 'react';
-
+import R from 'ramda';
+import React from 'react';
+import Transition from 'react-motion-ui-pack';
+import { createSelector } from 'reselect';
 import style from './UserList.css';
 
+function sortMembers(a, b) {
+  return a.master < b.master ? 1 : -1;
+}
+
+const getSortedMembers = createSelector(
+  props => props.members,
+  members => R.sort(sortMembers, members)
+);
+
 function UserList(props) {
-  const {
-    numberOfMembers,
-    members,
-    toggleMemberPanel,
-    dispatch,
-  } = props;
+  const sortedMembers = getSortedMembers(props);
 
   return (
-    <ul className={style.ul}>
-      <li className={style.li}>1</li>
-      <li className={style.li}>2</li>
-    </ul>
+    <Transition
+      className={style.menu}
+      component="div"
+      enter={{
+        opacity: 1,
+      }}
+      leave={{
+        height: 0,
+        opacity: 0,
+      }}
+    >
+      {sortedMembers.length === 0
+        ? <span>No members</span>
+        : sortedMembers.map(member => (
+          <span key={member.id}>
+            <span className={style.icon}>
+              <i className={style.user}>{member.name.charAt(0)}</i>
+            </span>
+            {member.master === true
+              ? <b className={style.master}>{member.name}</b>
+              : member.name
+            }
+          </span>
+        ))}
+    </Transition>
   );
 }
 
-UserList.propTypes = {
-  numberOfMembers: PropTypes.number.isRequired,
-  members: PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  toggleMemberPanel: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
-};
-
-UserList.defaultProps = {
-  numberOfMembers: 1,
-};
-
 export default UserList;
-

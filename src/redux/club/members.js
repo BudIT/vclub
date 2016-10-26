@@ -28,7 +28,6 @@ export function memberLeave(memberId) {
 export default function reducer(state, action) {
   if (action.type === MEMBER_ENTER) {
     const member = action.payload;
-
     return [...state, member];
   }
 

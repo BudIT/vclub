@@ -1,23 +1,39 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 import React from 'react';
 import { storiesOf } from '@kadira/storybook';
+import UserList from './UserList';
 
-import initialState from 'vclub/redux/initialClubState';
+const users = [
+  { id: 0, name: 'Misato', master: false },
+  { id: 1, name: 'Simon', master: false },
+  { id: 2, name: 'Jack London', master: false },
+  { id: 3, name: '綾波レイ', master: false },
+];
 
-import UserList from 'vclub/views/userList/UserList';
+const usersWithMaster = [
+  { id: 0, name: 'Misato', master: false },
+  { id: 1, name: 'Simon', master: false },
+  { id: 2, name: 'Jack London', master: true },
+  { id: 3, name: '綾波レイ', master: false },
+];
 
-const book = storiesOf('views.userList.UserList', module);
+const usersWithFewMasters = [
+  { id: 0, name: 'Misato', master: false },
+  { id: 1, name: 'Simon', master: false },
+  { id: 2, name: 'Jack London', master: true },
+  { id: 3, name: 'Master', master: true },
+  { id: 4, name: 'And another master', master: true },
+  { id: 5, name: 'Not master', master: false },
+  { id: 6, name: 'Harry West', master: false },
+];
 
-book.setInitialState(initialState);
-
-book.addReduxStory('UserList', dispatch => (
-  <UserList dispatch={dispatch} />
-));
-
-book.addReduxStory('UserListMoreMembers', dispatch => (
-  <UserList dispatch={dispatch} />
-), {
-  data: {
-    members: ['John Doe', 'Garry West'],
-  },
-});
+storiesOf('UserList', module)
+  .addDecorator((story) => (
+    <div>
+      {story()}
+    </div>
+  ))
+  .add('without props', () => (<UserList members={[]} />))
+  .add('with users', () => (<UserList members={users} />))
+  .add('with users and masters', () => (<UserList members={usersWithMaster} />))
+  .add('with users and few masters', () => (<UserList members={usersWithFewMasters} />));

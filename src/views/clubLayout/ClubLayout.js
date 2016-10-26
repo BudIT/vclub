@@ -4,18 +4,21 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
 import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
+import UserList from '../userList/UserList';
 import AuthPage from 'vclub/views/authPage/AuthPage';
 
 const enhance = compose(
   connect(state => ({
     authenticated: state.auth.authenticated,
     currentRoom: state.rooms.currentRoom,
+    showMemberPanel: state.ui.showMemberPanel,
+    members: state.members,
   })),
 );
 
 function ClubLayout(props) {
   const {
-    authenticated, currentRoom, dispatch,
+    authenticated, currentRoom, members, showMemberPanel, dispatch
   } = props;
 
   return (
@@ -25,6 +28,10 @@ function ClubLayout(props) {
           ? <AuthPage dispatch={dispatch} />
           : <AuthedLayout currentRoom={currentRoom} />
         }
+        {showMemberPanel === true
+          ? <UserList members={members} />
+          : null
+        }
       </main>
     </div>
   );
@@ -33,6 +40,8 @@ function ClubLayout(props) {
 ClubLayout.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   currentRoom: PropTypes.string.isRequired,
+  members: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  showMemberPanel: PropTypes.bool.isRequired,
   dispatch: React.PropTypes.func.isRequired,
 };
 
