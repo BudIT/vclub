@@ -1,7 +1,7 @@
 const path        = require('path');
 const webpack     = require('webpack');
-const autoreset   = require('postcss-autoreset');
-const normalize   = require('postcss-normalize');
+const autoreset   = require('postcss-autoreset')
+const normalize   = require('postcss-normalize')
 
 
 const DEV = process.env.NODE_ENV !== 'production';
@@ -15,6 +15,7 @@ const GLOBALS = {
 module.exports = [
   // Client config
   {
+    name: 'client',
     entry: {
       // site: path.resolve(__dirname, 'src/site.js'),
       club: './src/club.js',
@@ -42,7 +43,7 @@ module.exports = [
             limit: 10240,
             name: '[name]-[hash:6].[ext]',
           },
-        }
+        } 
       ],
     },
     postcss: function() {
@@ -58,6 +59,7 @@ module.exports = [
     ],
   },
   {
+    name: 'server',
     entry: {
       server: 'vclub/server',
     },

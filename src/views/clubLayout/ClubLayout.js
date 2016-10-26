@@ -4,8 +4,8 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
 import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
-import UserList from '../userList/UserList';
 import AuthPage from 'vclub/views/authPage/AuthPage';
+import UserList from 'vclub/views/userList/UserList';
 
 const enhance = compose(
   connect(state => ({
@@ -18,7 +18,7 @@ const enhance = compose(
 
 function ClubLayout(props) {
   const {
-    authenticated, currentRoom, members, showMemberPanel, dispatch
+    authenticated, currentRoom, members, showMemberPanel, dispatch,
   } = props;
 
   return (
