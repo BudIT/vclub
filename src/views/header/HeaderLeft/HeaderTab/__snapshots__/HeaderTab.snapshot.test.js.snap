@@ -1,9 +1,0 @@
-exports[`test <HeaderTab /> renders correctly 1`] = `
-<li>
-  <button
-    className="tabCurrent"
-    onClick={[Function]}>
-    VIDEO
-  </button>
-</li>
-`;

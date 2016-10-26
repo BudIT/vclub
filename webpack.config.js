@@ -49,11 +49,6 @@ module.exports = [
     postcss: function() {
       return [autoreset, normalize]
     },
-    resolve: {
-      alias: {
-        vclub: path.resolve(__dirname, 'src'),
-      },
-    },
     plugins: [
       new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __CLIENT__: true })),
     ],
@@ -83,11 +78,6 @@ module.exports = [
           loader: 'babel-loader',
         },
       ],
-    },
-    resolve: {
-      alias: {
-        vclub: path.resolve(__dirname, 'src'),
-      },
     },
     plugins: [
       new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __SERVER__: true })),
