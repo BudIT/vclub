@@ -10,7 +10,7 @@ import HeaderRight from '../HeaderRight';
 
 const numberOfMembers = 5;
 
-test('HeaderRight calls passed function on click', () => {
+test('HeaderRight dispatch toggleMemberPanel action on click', () => {
   const dispatchSpy = jest.fn();
   const wrapper = mount(
     <HeaderRight
@@ -22,10 +22,24 @@ test('HeaderRight calls passed function on click', () => {
   const buttonToggleMemberPanel = wrapper.find('button').first();
   buttonToggleMemberPanel.simulate('click');
 
+  expect(dispatchSpy).toHaveBeenCalledTimes(1);
+  expect(dispatchSpy).toHaveBeenCalledWith(toggleMemberPanel());
+});
+
+test('HeaderRight dispatch logOut action on click', () => {
+  const dispatchSpy = jest.fn();
+  const wrapper = mount(
+    <HeaderRight
+      numberOfMembers={numberOfMembers}
+      dispatch={dispatchSpy}
+    />
+  );
+
   const buttonLogOut = wrapper.find('div.dropdownContent > button')
   buttonLogOut.simulate('click')
 
-  expect(true).toBe(true)
-  expect(dispatchSpy).toHaveBeenCalledTimes(2);
-  // expect(dispatchSpy).toHaveBeenCalledWith(toggleMemberPanel(), logOut());
+  const expectedAction = logOut()
+
+  expect(dispatchSpy).toHaveBeenCalledTimes(1);
+  expect(dispatchSpy.mock.calls[0][0].type).toBe(expectedAction.type)
 });
