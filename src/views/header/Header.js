@@ -1,10 +1,19 @@
 import React, { PropTypes } from 'react';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
 
 // subviews
 import HeaderRight from './HeaderRight/HeaderRight';
 import HeaderLeft from './HeaderLeft/HeaderLeft';
 
 import style from './Header.css';
+
+const enhance = compose(
+  connect(state => ({
+    numberOfMembers: state.members.length,
+    currentRoomName: state.rooms.currentRoom,
+  })),
+);
 
 function Header(props) {
   const roomsNames = ['SHARING', 'VIDEO', 'CHAT', 'WHITEBOARD'];
@@ -36,4 +45,4 @@ Header.propTypes = {
   currentRoomName: PropTypes.string.isRequired,
 };
 
-export default Header
+export default enhance(Header);
