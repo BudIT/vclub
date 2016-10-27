@@ -9,7 +9,7 @@
     "storybook": "start-storybook -p 9001 -s ./dist/public",
     "start": "node ./dist/server.bundle.js",
     "test": "jest",
-    "watch:test": "jest --watch",
+    "watch:test": "jest --watch --no-cache",
     "coverage:test": "jest --coverage"
   },
   "dependencies": {
