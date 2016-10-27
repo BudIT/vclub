@@ -34,3 +34,10 @@ test('reducer should handle CHANGE_ROOM', () => {
 
   expect(reducer(roomsInitialState, changeRoom(nextRoom))).toEqual(expectedState)
 })
+
+test('reducer should return the same state if action\'s payload already in the state', () => {
+  const { rooms: roomsInitialState } = initialState
+
+  const currentRoom = roomsInitialState.currentRoom
+  expect(reducer(roomsInitialState, changeRoom(currentRoom))).toBe(roomsInitialState)
+})
