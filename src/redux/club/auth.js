@@ -1,6 +1,5 @@
 import initialState from 'vclub/redux/initialClubState';
 
-
 export const AUTH = 'club/auth/auth';
 export const LOG_OUT = 'club/auth/log-out';
 export const RESTORE_AUTH = 'club/auth/restoreAuth';
@@ -10,7 +9,7 @@ export function auth(authData, remember = false) {
     type: AUTH,
     payload: authData,
     meta: {
-      sideEffect: ({ ioSocket }) => {
+      sideEffect: ({ ioSocket, localStorage }) => {
         ioSocket.emit('auth', authData);
 
         if (remember) {
@@ -26,7 +25,7 @@ export function restoreAuth() {
   return {
     type: RESTORE_AUTH,
     meta: {
-      sideEffect: ({ store }) => {
+      sideEffect: ({ store, localStorage }) => {
         const name = localStorage.getItem('name');
         const master = localStorage.getItem('master');
 
@@ -42,7 +41,7 @@ export function logOut() {
   return {
     type: LOG_OUT,
     meta: {
-      sideEffect: ({ ioSocket }) => {
+      sideEffect: ({ ioSocket, localStorage }) => {
         ioSocket.emit('logOut');
 
         localStorage.removeItem('name');
