@@ -5,7 +5,7 @@
 import { changeRoom } from 'vclub/redux/club/rooms';
 
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import HeaderTab from '../HeaderTab';
 
 const tabName = 'VIDEO';

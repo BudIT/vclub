@@ -1,3 +1,6 @@
+/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint-env jest */
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Header from '../Header';
