@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint ./src",
+    "autofix": "eslint ./src --fix",
     "build": "webpack --colors --progress --optimize-minimize --optimize-occurence-order --optimize-dedupe --devtool sourcemap",
     "devloop": "webpack --colors --progress --watch --devtool eval --display-error-details",
     "storybook": "start-storybook -p 9001 -s ./dist/public",
@@ -15,6 +16,7 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "classnames": "^2.2.5",
+    "eslint": "^3.8.1",
     "express": "^4.14.0",
     "ramda": "^0.22.1",
     "react": "^15.3.1",
@@ -24,8 +26,8 @@
     "react-redux": "^4.4.5",
     "recompose": "^0.20.2",
     "redux": "^3.6.0",
-    "reselect": "^2.5.4",
     "redux-form": "^6.0.5",
+    "reselect": "^2.5.4",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
     "uuid": "^2.0.3"
