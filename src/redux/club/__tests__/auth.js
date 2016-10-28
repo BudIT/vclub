@@ -24,10 +24,21 @@ test('logOut sideEffect works correctly', () => {
     emit: jest.fn(),
   };
 
-  action.meta.sideEffect({ ioSocket });
+  const localStorage = {
+    removeItem: jest.fn(),
+  };
+
+  action.meta.sideEffect({
+    ioSocket,
+    localStorage,
+  });
 
   expect(ioSocket.emit).toHaveBeenCalledWith('logOut');
   expect(ioSocket.emit).toHaveBeenCalledTimes(1);
+
+  expect(localStorage.removeItem).toHaveBeenCalledWith('name');
+  expect(localStorage.removeItem).toHaveBeenCalledWith('master');
+  expect(localStorage.removeItem).toHaveBeenCalledTimes(2);
 });
 
 test('reducer with logOut works correctly', () => {
