@@ -1,0 +1,62 @@
+exports[`test <Header /> renders correctly 1`] = `
+<div
+  className="header">
+  <ul
+    className="ul">
+    <li>
+      <button
+        className="tab"
+        onClick={[Function]}>
+        SHARING
+      </button>
+    </li>
+    <li>
+      <button
+        className="tabCurrent"
+        onClick={[Function]}>
+        VIDEO
+      </button>
+    </li>
+    <li>
+      <button
+        className="tab"
+        onClick={[Function]}>
+        CHAT
+      </button>
+    </li>
+    <li>
+      <button
+        className="tab"
+        onClick={[Function]}>
+        WHITEBOARD
+      </button>
+    </li>
+  </ul>
+  <ul
+    className="ul">
+    <li>
+      <button
+        className="tab"
+        onClick={[Function]}>
+        ⛹ 
+        5
+      </button>
+    </li>
+    <li
+      className="dropdown">
+      <button
+        className="tab">
+        ☰
+      </button>
+      <div
+        className="dropdownContent">
+        <button
+          className="tab"
+          onClick={[Function]}>
+          Log Out
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

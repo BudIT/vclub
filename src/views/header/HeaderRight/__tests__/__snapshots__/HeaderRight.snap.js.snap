@@ -1,0 +1,28 @@
+exports[`test <HeaderRight /> renders correctly 1`] = `
+<ul
+  className="ul">
+  <li>
+    <button
+      className="tab"
+      onClick={[Function]}>
+      ⛹ 
+      5
+    </button>
+  </li>
+  <li
+    className="dropdown">
+    <button
+      className="tab">
+      ☰
+    </button>
+    <div
+      className="dropdownContent">
+      <button
+        className="tab"
+        onClick={[Function]}>
+        Log Out
+      </button>
+    </div>
+  </li>
+</ul>
+`;

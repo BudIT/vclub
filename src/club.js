@@ -19,7 +19,7 @@ const ioSocket = io({ path: '/vclub-socket', forceNew: true });
 const storeEnhancer = compose(
   applyMiddleware(
     clientActionBroker(ioSocket),
-    sideEffectProcessor({ context: { ioSocket } }),
+    sideEffectProcessor({ context: { ioSocket, localStorage } }),
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );

@@ -1,6 +1,6 @@
 import initialState from 'vclub/redux/initialClubState';
 
-const TOGGLE_MEMBER_PANEL = 'club/ui/toggle-member-panel';
+export const TOGGLE_MEMBER_PANEL = 'club/ui/toggle-member-panel';
 
 export function toggleMemberPanel() {
   return {

@@ -1,6 +1,6 @@
 import initialState from 'vclub/redux/initialClubState';
 
-const CHANGE_ROOM = 'club/room/change-room';
+export const CHANGE_ROOM = 'club/room/change-room';
 
 export function changeRoom(newRoomName) {
   return {
