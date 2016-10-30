@@ -11,6 +11,11 @@ export default {
   ui: {
     showMemberPanel: false,
   },
+  sharingRoom: {
+    ballPosition: null, // modified initialClubState.js, add sharingRoom
+    done: [],
+    isSelected: false,
+  },
 };
 
 // PropTypes, make it as object to export probably

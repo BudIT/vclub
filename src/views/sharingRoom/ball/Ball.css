@@ -1,0 +1,25 @@
+.container_ball
+{
+    justify-content: center;
+}
+
+.btn_ball
+{
+    background: 0;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: 23px;
+    margin-top: 5px;
+    margin-right: 15px;
+}
+
+.btn_ball:active
+{
+    opacity: .8;
+}
+
+.btn_ball:focus
+{
+    outline: none;
+}
