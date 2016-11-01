@@ -28,10 +28,7 @@ function ClubLayout(props) {
           ? <AuthPage dispatch={dispatch} />
           : <AuthedLayout currentRoom={currentRoom} />
         }
-        {showMemberPanel === true
-          ? <UserList members={members} />
-          : null
-        }
+        {showMemberPanel && <UserList members={members} />}
       </main>
     </div>
   );

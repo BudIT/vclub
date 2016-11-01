@@ -45,4 +45,14 @@ function UserList(props) {
   );
 }
 
+/*eslint-disable */
+UserList.propTypes = {
+  members: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    name: React.PropTypes.string.isRequired,
+    master: React.PropTypes.bool.isRequired,
+  })).isRequired,
+};
+/*eslint-enable */
+
 export default UserList;
