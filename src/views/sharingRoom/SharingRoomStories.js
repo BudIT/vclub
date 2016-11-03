@@ -61,7 +61,7 @@ book.addReduxStory('A ball in the first user', dispatch => (
     },
   });
 
-book.addReduxStory('A user with the label done', dispatch => (
+book.addReduxStory('User with the label done', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   members,

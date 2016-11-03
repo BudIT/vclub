@@ -1,8 +1,21 @@
-const IS_SELECTED = 'club/sharing/is-select';
+// import initialState from 'vclub/redux/initialClubState';
 
-export function isSelected(memberName) {
+const PASS_BALL = 'club/sharing/pass-ball';
+
+export function passBall(memberId) {
   return {
-    type: IS_SELECTED,
-    payload: memberName,
+    type: PASS_BALL,
+    payload: memberId,
   };
 }
+
+/*export default function reducer(state, action) {
+   return {
+   ...state,
+   members: [
+   ...state.IS_SELECTED,
+   payload
+   ]
+ }
+  return state || initialState.sharingRoom;
+}*/

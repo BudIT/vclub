@@ -18,8 +18,7 @@ const validate = values => {
   } else if (values.username.length > 15) {
     errors.username = 'Имя должно быть 15 символов или меньше';
   }
-
-  return errors;
+    return errors;
 };
 
 // eslint-disable-next-line react/prop-types
