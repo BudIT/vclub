@@ -44,6 +44,12 @@
     background: #5c511b;
 }
 
+.members_btn:disabled
+{
+    opacity: .5;
+    background: #5c511b;
+}
+
 .members_btn:focus
 {
     outline: none;

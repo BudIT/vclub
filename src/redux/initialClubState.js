@@ -12,9 +12,8 @@ export default {
     showMemberPanel: false,
   },
   sharingRoom: {
-    ballPosition: null, // modified initialClubState.js, add sharingRoom
+    ballPosition: null,
     done: [],
-    isSelected: false,
   },
 };
 
