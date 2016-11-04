@@ -1,5 +1,5 @@
 import R from 'ramda';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Transition from 'react-motion-ui-pack';
 import { createSelector } from 'reselect';
 import style from './UserList.css';
@@ -29,7 +29,7 @@ function UserList(props) {
       }}
     >
       {sortedMembers.length === 0
-        ? <span>No members</span>
+        ? <span key={0}>No members</span>
         : sortedMembers.map(member => (
           <span key={member.id}>
             <span className={style.icon}>
@@ -47,10 +47,10 @@ function UserList(props) {
 
 /*eslint-disable */
 UserList.propTypes = {
-  members: React.PropTypes.arrayOf(React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
-    name: React.PropTypes.string.isRequired,
-    master: React.PropTypes.bool.isRequired,
+  members: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    master: PropTypes.bool.isRequired,
   })).isRequired,
 };
 /*eslint-enable */
