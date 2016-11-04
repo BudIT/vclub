@@ -5,8 +5,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import UserList from '../UserList';
 
-const emptyUsers = [];
-
 const users = [
   { id: 0, name: 'Misato', master: false },
   { id: 1, name: 'Simon', master: false },
@@ -33,7 +31,7 @@ const usersWithFewMasters = [
 
 test('<UserList /> without users', () => {
   const rendered = mount(
-    <UserList members={emptyUsers} />
+    <UserList members={[]} />
   );
   expect(rendered.html()).toMatchSnapshot();
 });
