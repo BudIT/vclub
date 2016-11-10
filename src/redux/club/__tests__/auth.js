@@ -5,10 +5,11 @@ import initialState from 'vclub/redux/initialClubState';
 
 import reducer, {
   LOG_OUT, logOut,
-  // AUTH, auth,
+  AUTH, auth,
 } from '../auth';
 
 // action creator
+// logOut
 test('logOut action creator creates proper action', () => {
   const action = logOut();
 
@@ -57,6 +58,88 @@ test('reducer with logOut works correctly', () => {
 
   expect(reducer(state, action)).toEqual(initialState.auth);
 });
+
+// auth
+test('auth action creator creates proper action', () => {
+  const action = auth({
+    name: 'test',
+    master: true,
+  }, false);
+
+  expect(action.type).toEqual(AUTH);
+  expect(action.payload.name).toBeDefined();
+  expect(action.payload.master).toBeDefined();
+  expect(action.meta.sideEffect).toBeDefined();
+});
+
+test('auth sideEffect works correctly with remember = true', () => {
+  const action = auth({
+    name: 'test',
+    master: true,
+  }, true);
+
+  // mock for ioSocket
+  const ioSocket = {
+    emit: jest.fn(),
+  };
+
+  const localStorage = {
+    setItem: jest.fn(),
+  };
+
+  action.meta.sideEffect({
+    ioSocket,
+    localStorage,
+  });
+
+  expect(ioSocket.emit).toHaveBeenCalledWith('auth', action.payload);
+  expect(ioSocket.emit).toHaveBeenCalledTimes(1);
+
+  expect(localStorage.setItem).toHaveBeenCalledWith('name', action.payload.name);
+  expect(localStorage.setItem).toHaveBeenCalledWith('master', action.payload.master);
+  expect(localStorage.setItem).toHaveBeenCalledTimes(2);
+});
+
+test('auth sideEffect works correctly with remember = false', () => {
+  const action = auth({
+    name: 'test',
+    master: true,
+  }, false);
+
+  // mock for ioSocket
+  const ioSocket = {
+    emit: jest.fn(),
+  };
+
+  const localStorage = {
+    setItem: jest.fn(),
+  };
+
+  action.meta.sideEffect({
+    ioSocket,
+    localStorage,
+  });
+
+  expect(ioSocket.emit).toHaveBeenCalledWith('auth', action.payload);
+  expect(ioSocket.emit).toHaveBeenCalledTimes(1);
+
+  expect(localStorage.setItem).toHaveBeenCalledTimes(0);
+});
+
+test('reducer with auth works correctly', () => {
+  // after logOut fired state must become initial
+  const state = {
+    ...initialState.auth,
+    authenticating: false,
+  };
+
+  const action = auth();
+
+  expect(reducer(state, action).authenticating).toEqual(true);
+});
+
+// restore auth
+
 
 // reducer
 test('reducer returns initial state', () => {
