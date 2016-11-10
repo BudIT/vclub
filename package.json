@@ -67,6 +67,7 @@
     "webpack-hot-middleware": "^2.12.2"
   },
   "jest": {
+    "testPathDirs": ["<rootDir>/src"],
     "moduleNameMapper": {
       "^vclub(.*)$": "<rootDir>/src$1",
       "^react-redux(.*)$": "<rootDir>/__mocks__/reactRedux.js",
