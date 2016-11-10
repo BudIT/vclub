@@ -18,7 +18,7 @@ const createProps = (touched, error) => ({
 
 const shallowRenderer = ReactTestUtils.createRenderer();
 
-test('<AuthInputField /> renders correctly #1', () => {
+test('<AuthInputField /> renders correctly when touched is false', () => {
   const props = createProps(false, 'some error');
   shallowRenderer.render(
     <AuthInputField
@@ -28,7 +28,7 @@ test('<AuthInputField /> renders correctly #1', () => {
   expect(shallowRenderer.getRenderOutput()).toMatchSnapshot();
 });
 
-test('<AuthInputField /> renders correctly #2', () => {
+test('<AuthInputField /> renders correctly when touched is true', () => {
   const props = createProps(true, undefined);
   shallowRenderer.render(
     <AuthInputField
