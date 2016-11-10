@@ -6,6 +6,7 @@ import initialState from 'vclub/redux/initialClubState';
 import reducer, {
   LOG_OUT, logOut,
   AUTH, auth,
+  RESTORE_AUTH, restoreAuth,
 } from '../auth';
 
 // action creator
@@ -139,7 +140,89 @@ test('reducer with auth works correctly', () => {
 });
 
 // restore auth
+test('restoreAuth action creator creates proper action', () => {
+  const action = restoreAuth();
 
+  expect(action.type).toEqual(RESTORE_AUTH);
+  expect(action.meta.sideEffect).toBeDefined();
+});
+
+test('restoreAuth sideEffect works correctly when we already have name in localStorage', () => {
+  const action = restoreAuth();
+
+  // mock for ioSocket
+  const store = {
+    dispatch: jest.fn(),
+  };
+
+  const localStorage = {
+    getItem: jest.fn(),
+  };
+
+  const returnValues = ['testName', 'testMaster'];
+
+  localStorage.getItem
+    .mockReturnValueOnce(returnValues[0])
+    .mockReturnValueOnce(returnValues[1]);
+
+  action.meta.sideEffect({
+    store,
+    localStorage,
+  });
+
+  // expect(store.dispatch).toHaveBeenCalledWith(auth({
+  //   name: returnValues[0],
+  //   master: returnValues[1],
+  // }));
+  expect(store.dispatch).toHaveBeenCalledTimes(1);
+
+  expect(localStorage.getItem).toHaveBeenCalledWith('name');
+  expect(localStorage.getItem).toHaveBeenCalledWith('master');
+  expect(localStorage.getItem).toHaveBeenCalledTimes(2);
+});
+
+test('restoreAuth sideEffect works correctly when we haven\'t name in localStorage', () => {
+  const action = restoreAuth();
+
+  // mock for ioSocket
+  const store = {
+    dispatch: jest.fn(),
+  };
+
+  const localStorage = {
+    getItem: jest.fn(),
+  };
+
+  const returnValues = [''];
+
+  localStorage.getItem
+    .mockReturnValueOnce(returnValues[0])
+    .mockReturnValueOnce(returnValues[1]);
+
+  action.meta.sideEffect({
+    store,
+    localStorage,
+  });
+
+  // expect(store.dispatch).toHaveBeenCalledWith(auth({
+  //   name: returnValues[0],
+  //   master: returnValues[1],
+  // }));
+  expect(store.dispatch).not.toHaveBeenCalled();
+
+  expect(localStorage.getItem).toHaveBeenCalledWith('name');
+  expect(localStorage.getItem).toHaveBeenCalledWith('master');
+  expect(localStorage.getItem).toHaveBeenCalledTimes(2);
+});
+
+test('reducer with restoreAuth returns previous state', () => {
+  const state = {
+    ...initialState.auth,
+  };
+
+  const action = restoreAuth();
+  expect(reducer(state, action)).toBe(state);
+});
 
 // reducer
 test('reducer returns initial state', () => {
