@@ -155,8 +155,13 @@ test('restoreAuth sideEffect works correctly when we already have name in localS
     dispatch: jest.fn(),
   };
 
+  const storage = {
+    name: 'testName',
+    master: true,
+  };
+
   const localStorage = {
-    getItem: jest.fn(),
+    getItem: jest.fn(elm => storage[elm]),
   };
 
   const returnValues = ['testName', 'testMaster'];
@@ -215,14 +220,6 @@ test('restoreAuth sideEffect works correctly when we haven\'t name in localStora
   expect(localStorage.getItem).toHaveBeenCalledTimes(2);
 });
 
-test('reducer with restoreAuth returns previous state', () => {
-  const state = {
-    ...initialState.auth,
-  };
-
-  const action = restoreAuth();
-  expect(reducer(state, action)).toBe(state);
-});
 
 // reducer
 test('reducer returns initial state', () => {
