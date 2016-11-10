@@ -68,8 +68,8 @@ test('auth action creator creates proper action', () => {
   }, false);
 
   expect(action.type).toEqual(AUTH);
-  expect(action.payload.name).toBeDefined();
-  expect(action.payload.master).toBeDefined();
+  expect(action.payload.name).toEqual('test');
+  expect(action.payload.master).toEqual(true);
   expect(action.meta.sideEffect).toBeDefined();
 });
 
