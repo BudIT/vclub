@@ -8,6 +8,12 @@ import Header from '../Header';
 const currentRoomName = 'VIDEO';
 const numberOfMembers = 5;
 
+jest.mock('react-redux', () => ({
+  connect() {
+    return elm => elm;
+  },
+}));
+
 test('<Header /> renders correctly', () => {
   const dispatchSpy = jest.fn();
   const rendered = renderer.create(
