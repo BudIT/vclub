@@ -1,0 +1,39 @@
+exports[`test <AuthInputField /> renders correctly #1 1`] = `
+<div>
+  <div>
+    <input
+      autoFocus={true}
+      className="name"
+      placeholder="placeholder"
+      type="text" />
+  </div>
+</div>
+`;
+
+exports[`test <AuthInputField /> renders correctly #2 1`] = `
+<div>
+  <div>
+    <input
+      autoFocus={true}
+      className="name"
+      placeholder="placeholder"
+      type="text" />
+  </div>
+</div>
+`;
+
+exports[`test <AuthInputField /> renders correctly #3 1`] = `
+<div>
+  <div>
+    <input
+      autoFocus={true}
+      className="name"
+      placeholder="placeholder"
+      type="text" />
+    <span
+      className="errors">
+      some error
+    </span>
+  </div>
+</div>
+`;
