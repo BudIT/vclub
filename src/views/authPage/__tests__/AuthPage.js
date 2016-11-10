@@ -8,8 +8,9 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 
-import AuthPageContainer from '../AuthPage';
 import { auth } from 'vclub/redux/club/auth';
+
+import AuthPageContainer from '../AuthPage';
 
 function createPage(subject) {
   return {
