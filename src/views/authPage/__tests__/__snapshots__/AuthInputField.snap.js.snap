@@ -1,4 +1,4 @@
-exports[`test <AuthInputField /> renders correctly #3 1`] = `
+exports[`test <AuthInputField /> renders correctly when error happens 1`] = `
 <div>
   <div>
     <input

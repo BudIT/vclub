@@ -6,11 +6,12 @@ import React from 'react';
 import { reducer as formReducer } from 'redux-form';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
 
 import { auth } from 'vclub/redux/club/auth';
 
-import AuthPageContainer from '../AuthPage';
+import AuthPageContainer, { AuthPage } from '../AuthPage';
 
 function createPage(subject) {
   return {
@@ -66,4 +67,13 @@ describe('<AuthPage /> container', () => {
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
     expect(dispatchSpy.mock.calls[0][0].type).toBe(expectedAction.type);
   });
+});
+
+test('<AuthPage /> component renders correctly', () => {
+  // const store = createStore(() => ({}));
+
+  const wrapper = shallow(
+    <AuthPage handleSubmit={jest.fn()} />
+  );
+  expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
