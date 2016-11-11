@@ -164,12 +164,6 @@ test('restoreAuth sideEffect works correctly when we already have name in localS
     getItem: jest.fn(elm => storage[elm]),
   };
 
-  const returnValues = ['testName', 'testMaster'];
-
-  localStorage.getItem
-    .mockReturnValueOnce(returnValues[0])
-    .mockReturnValueOnce(returnValues[1]);
-
   action.meta.sideEffect({
     store,
     localStorage,
@@ -195,14 +189,8 @@ test('restoreAuth sideEffect works correctly when we haven\'t name in localStora
   };
 
   const localStorage = {
-    getItem: jest.fn(),
+    getItem: jest.fn(() => null),
   };
-
-  const returnValues = [''];
-
-  localStorage.getItem
-    .mockReturnValueOnce(returnValues[0])
-    .mockReturnValueOnce(returnValues[1]);
 
   action.meta.sideEffect({
     store,
