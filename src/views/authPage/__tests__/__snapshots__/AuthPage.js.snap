@@ -1,0 +1,61 @@
+exports[`test <AuthPage /> component renders correctly 1`] = `
+<section
+  className="auth">
+  <form
+    className="login"
+    onSubmit={[Function]}>
+    <fieldset
+      className="form_group">
+      <div>
+        <div>
+          <Field
+            className="input_name"
+            component={[Function]}
+            name="username"
+            onFocus={true}
+            placeholder="Имя..."
+            type="text" />
+        </div>
+      </div>
+      <div
+        className="check_container">
+        <div
+          className="round_checkbox">
+          <Field
+            component="input"
+            id="master"
+            name="master"
+            type="checkbox" />
+          <label
+            htmlFor="master">
+            <h3
+              className="label_h3">
+              Ведущий
+            </h3>
+          </label>
+        </div>
+        <div
+          className="round_checkbox">
+          <Field
+            component="input"
+            id="remember"
+            name="remember"
+            type="checkbox" />
+          <label
+            htmlFor="remember">
+            <h3
+              className="label_h3">
+              Запомнить
+            </h3>
+          </label>
+        </div>
+      </div>
+      <button
+        className="btn"
+        type="submit">
+        Войти
+      </button>
+    </fieldset>
+  </form>
+</section>
+`;

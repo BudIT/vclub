@@ -6,6 +6,7 @@ import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
 
 import { auth } from 'vclub/redux/club/auth';
+import AuthInputField from './AuthInputField';
 
 import styles from './AuthPage.css';
 
@@ -21,24 +22,6 @@ const validate = values => {
 
   return errors;
 };
-
-// eslint-disable-next-line react/prop-types
-const AuthInputField = ({ input, type, placeholder, className, meta: { touched, error } }) => (
-  <div>
-    <div>
-      <input
-        {...input}
-        type={type}
-        placeholder={placeholder}
-        className={className}
-        autoFocus
-      />
-      {touched
-      && error
-      && <span className={styles.errors}>{error}</span>}
-    </div>
-  </div>
-);
 
 const enhance = compose(
   setPropTypes({
@@ -63,7 +46,7 @@ const enhance = compose(
   }),
 );
 
-const AuthPage = (props) => {
+export const AuthPage = (props) => {
   const { handleSubmit } = props;
 
   return (
