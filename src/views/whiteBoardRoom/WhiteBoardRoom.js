@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
 import figures from './figures';
+import ElementsPanel from './elementsPanel/ElementsPanel';
 
 // our figures
 const { BoardRect, BoardCircle, BoardLine } = figures;
