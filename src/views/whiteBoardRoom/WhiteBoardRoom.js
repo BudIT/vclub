@@ -140,10 +140,10 @@ class WhiteBoardRoom extends React.Component {
 
     return (
       <div>
-        <Stage width={700} height={700}>
+        <Stage width={window.innerWidth} height={window.innerHeight}>
           <ElementsPanel dispatch={dispatch} onClick={this.setNextFigureType} />
           <Layer>
-            <Rect x="90" y="0" width="700" height="700" fill="#90EE90" />
+            <Rect x="90" y="0" width={window.innerWidth} height={window.innerHeight} fill={backgroundColor} />
             {renderFigures(this.props.figures)}
             {renderFigures([this.state.figure])}
             <Rect
