@@ -1,12 +1,16 @@
 import React from 'react';
-import { Layer, Rect, Stage, Line, Circle, Group } from 'react-konva';
-import Konva from 'konva';
+import { Layer, Rect, Stage, Line, Circle } from 'react-konva';
 import R from 'ramda';
 
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
 import { addNewFigure } from 'vclub/redux/club/whiteboard';
+
+import figures from './figures';
+
+// our figures
+const { BoardRect, BoardCircle, BoardLine } = figures;
 
 const enhance = compose(
   connect(state => console.log(state) || ({
@@ -83,41 +87,12 @@ function ElementsPanel(props) {
 }
 
 function renderFigures(figures) {
-
-  const returnRect = ({ x, y, x1, y1, color }) =>
-    <Rect
-      x={x} y={y} width={x1 - x} height={y1 - y}
-      fill={color}
-      stroke={'#00008B'}
-      strokeWidth={4}
-    />;
-
-  const returnCircle = ({ x, y, x1, y1, color }) => {
-    // by Pifagor theorem
-    const radius = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
-
-    return (<Circle
-      x={x} y={y} radius={radius}
-      fill={color}
-      stroke={'#00008B'}
-      strokeWidth={4}
-    />);
-  };
-
-  const returnLine = ({ x, y, x1, y1, color }) =>
-    <Line
-      points={[x, y, x1, y1]}
-      stroke={color}
-      strokeWidth={15}
-      lineCap="round"
-    />;
-
   const typeNumberIsEqual = R.curry((typeNumber, elm) => elm.typeNumber === typeNumber);
 
   const returnFigure = R.cond([
-    [typeNumberIsEqual(1), returnRect],
-    [typeNumberIsEqual(2), returnLine],
-    [typeNumberIsEqual(3), returnCircle],
+    [typeNumberIsEqual(1), params => <BoardRect {...params} />],
+    [typeNumberIsEqual(2), params => <BoardLine {...params} />],
+    [typeNumberIsEqual(3), params => <BoardCircle {...params} />],
     [R.T, () => null],
   ]);
 
