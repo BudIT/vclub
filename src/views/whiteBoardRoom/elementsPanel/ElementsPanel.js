@@ -1,22 +1,6 @@
 import React, { PropTypes } from 'react';
-import {
-  Layer,
-  Rect, Line, Circle,
-} from 'react-konva';
-import offsetsHelpers from './offsets';
-import colors from '../colors/colors';
 
-const {
-  startCoordinates,
-  getCoordinatesForLowerElement,
-  getBorderCoordinates,
-} = offsetsHelpers;
-
-const {
-  backgroundColor,
-  borderColor,
-  backgroundColorHover,
-} = colors;
+import styles from './ElementsPanel.css';
 
 function ElementsPanel(props) {
   const { onClick } = props;
@@ -25,20 +9,34 @@ function ElementsPanel(props) {
   const onClickForLine = onClick.bind(undefined, 2);
   const onClickForEllipse = onClick.bind(undefined, 3);
 
-  const c1 = startCoordinates;
-  const c2 = getCoordinatesForLowerElement(c1);
-  const c3 = getCoordinatesForLowerElement(c2);
-
-  const bC = getBorderCoordinates(c3);
-
   return (
-    <Layer>
-      {/* first Rect for background purposes */}
-      <Rect x="0" y="0" width="90" height="700" fill={backgroundColor} />
+    <ul className={styles.panel}>
+      <li className={styles.element}>
+        <button onClick={onClickForRect} className={styles.button}>
+          {/* <svg viewBox="0 0 200 200">
+            <rect x="5" y="5" width="190" height="190" />
+          </svg> */}
+          Rect
+        </button>
+      </li>
+      <li className={styles.element}>
+        <button onClick={onClickForLine} className={styles.button}>
+          {/* <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="100" />
+          </svg> */}
+          Line
+        </button>
+      </li>
+      <li className={styles.element}>
+        <button onClick={onClickForEllipse} className={styles.button}>
+          Circ
+        </button>
+      </li>
+      {/* <Rect x="0" y="0" width="90" height="700" fill={backgroundColor} />
       <Rect
         x={c1.x} y={c1.y} width={c1.x1 - c1.x} height={c1.y1 - c1.y}
         fill={backgroundColorHover}
-        onClick={onClickForRect}
+        onClick=
         stroke={borderColor}
         strokeWidth={3}
       />
@@ -53,9 +51,8 @@ function ElementsPanel(props) {
         onClick={onClickForEllipse}
         stroke={borderColor}
         strokeWidth={3}
-      />
-      <Line points={[bC.x, bC.y, bC.x, bC.y1]} stroke={borderColor} strokeWidth={7} />
-    </Layer>
+      /> */}
+    </ul>
   );
 }
 

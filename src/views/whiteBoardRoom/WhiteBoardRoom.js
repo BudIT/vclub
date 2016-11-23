@@ -5,18 +5,11 @@ import { connect } from 'react-redux';
 
 import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
-import styles from './WhiteBoard.css'
+import styles from './WhiteBoardRoom.css';
 
 import ElementsPanel from './elementsPanel/ElementsPanel';
 
-import colors from './colors/colors';
-
 import WhiteBoard from './WhiteBoard';
-
-const {
-  backgroundColor,
-  getColor,
-} = colors;
 
 const enhance = compose(
   connect(state => console.log(state) || ({
@@ -25,21 +18,38 @@ const enhance = compose(
 );
 
 class WhiteBoardRoom extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      nextFigureType: null,
+    };
+
+    this.setNextFigureType = this.setNextFigureType.bind(this);
+  }
+
+  setNextFigureType(typeNumber) {
+    console.log("Type Number is set ") || console.log(typeNumber)
+    this.setState(prevState => ({
+      ...prevState,
+      nextFigureType: typeNumber,
+    }));
+  }
+
   render() {
     // console.log("Hello")
-    const { props } = this;
+    const { props, state } = this;
 
-    const {
-      dispatch, figures,
-    } = props;
-
+    const { dispatch, figures } = props;
+    const { nextFigureType } = state;
+    console.log("FIGURES");
+    console.log(figures);
     return (
-      // <ElementsPanel dispatch={dispatch} onClick={this.setNextFigureType} />
-      <div className={styles.whiteBoard}>
-        <p>Hello! </p>
+      <div className={styles.whiteBoardRoom}>
+        <ElementsPanel dispatch={dispatch} onClick={this.setNextFigureType} />
         <WhiteBoard
           dispatch={dispatch} addNewFigure={addNewFigure}
           figures={figures}
+          nextFigureType={nextFigureType}
         />
       </div>
     );

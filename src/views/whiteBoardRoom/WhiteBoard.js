@@ -13,6 +13,7 @@ import R from 'ramda';
 import boardFigures from './figures';
 
 import colors from './colors/colors';
+import styles from './WhiteBoard.css';
 
 // our figures
 const { BoardRect, BoardCircle, BoardLine } = boardFigures;
@@ -23,6 +24,7 @@ const {
 } = colors;
 
 function renderFigures(figuresParams) {
+  console.log(figuresParams);
   const typeNumberIsEqual = R.curry((typeNumber, elm) => elm.typeNumber === typeNumber);
 
   const returnFigure = R.cond([
@@ -51,7 +53,6 @@ class WhiteBoard extends React.Component {
       figure: {},
     };
 
-    this.setNextFigureType = this.setNextFigureType.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -66,12 +67,14 @@ class WhiteBoard extends React.Component {
 
     console.log(this.state)
     console.log(addNewFigure.toString());
-    dispatch(addNewFigure(figure));
-    this.setState(prevState => ({
-      ...prevState,
-      listenForMouseMove: false,
-      figure: {},
-    }));
+    if (this.props.nextFigureType !== null) {
+      dispatch(addNewFigure(figure));
+      this.setState(prevState => ({
+        ...prevState,
+        listenForMouseMove: false,
+        figure: {},
+      }));
+    }
   }
 
   onMouseDown(evt) {
@@ -80,7 +83,7 @@ class WhiteBoard extends React.Component {
       clientX, clientY,
     } } = evt;
 
-    if (this.state.nextFigureType !== null) {
+    if (this.props.nextFigureType !== null) {
       // console.log("listenForMouseMove");
       this.setState(prevState => ({
         ...prevState,
@@ -88,7 +91,7 @@ class WhiteBoard extends React.Component {
         listenForMouseMove: true,
         // set first coordinate of new figure
         figure: {
-          typeNumber: prevState.nextFigureType,
+          typeNumber: this.props.nextFigureType,
           x: clientX,
           y: clientY,
           x1: 0,
@@ -119,22 +122,16 @@ class WhiteBoard extends React.Component {
     }
   }
 
-  setNextFigureType(typeNumber) {
-    console.log("Type Number is set ") || console.log(typeNumber)
-    this.setState(prevState => ({
-      ...prevState,
-      nextFigureType: typeNumber,
-    }));
-  }
-
   render() {
     // console.log("Hello")
     const { props, state } = this;
     const { figures } = props;
     const { figure } = state;
-
+    console.log("NEXT FIGURE TYPE");
+    console.log(this.props.nextFigureType);
+    console.log("FIGURE");
     return (
-      <div>
+      <div className={styles.whiteBoard}>
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             <Rect x="0" y="0" width={window.innerWidth} height={window.innerHeight} fill={backgroundColor} />
