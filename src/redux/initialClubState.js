@@ -11,6 +11,18 @@ export default {
   ui: {
     showMemberPanel: false,
   },
+  chat: {
+    messages: [
+      { id: 1,
+        author: 'Yanis',
+        message: 'hello',
+      },
+      { id: 2,
+        author: 'Den',
+        message: 'hello!',
+      },
+    ],
+  }, // array of { id: number, name: string, date, message: string }
 };
 
 // PropTypes, make it as object to export probably
