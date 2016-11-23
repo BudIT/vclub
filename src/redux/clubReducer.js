@@ -8,6 +8,7 @@ import authReducer from './club/auth';
 import membersReducer from './club/members';
 import roomsReducer from './club/rooms';
 import uiReducer from './club/ui';
+import chatReducer from './club/chat';
 import sharingRoomReducer from './club/sharing';
 import whiteboardReducer from './club/whiteboard';
 
@@ -21,6 +22,7 @@ const baseReducer = composeReducers(
   scopeReducer('ui', uiReducer),
   scopeReducer('form', formReducer),
   scopeReducer('sharingRoom', sharingRoomReducer),
+  scopeReducer('chat', chatReducer),
   scopeReducer('media', mediaReducer),
   scopeReducer('rtc', rtcReducer),
   scopeReducer('whiteboard', whiteboardReducer),
