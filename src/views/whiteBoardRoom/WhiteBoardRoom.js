@@ -3,8 +3,6 @@ import React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
-import { addNewFigure } from 'vclub/redux/club/whiteboard';
-
 import styles from './WhiteBoardRoom.css';
 
 import ElementsPanel from './ElementsPanel/ElementsPanel';
@@ -47,7 +45,7 @@ class WhiteBoardRoom extends React.Component {
       <div className={styles.whiteBoardRoom}>
         <ElementsPanel dispatch={dispatch} onClick={this.setNextFigureType} />
         <WhiteBoard
-          dispatch={dispatch} addNewFigure={addNewFigure}
+          dispatch={dispatch}
           figures={figures}
           nextFigureType={nextFigureType}
         />

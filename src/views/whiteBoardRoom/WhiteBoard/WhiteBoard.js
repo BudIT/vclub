@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Layer, Rect, Stage } from 'react-konva';
 import { RECT, CIRC, LINE } from 'vclub/constants/whiteboardElements';
+import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
 // import compose from 'recompose/compose';
 // import { connect } from 'react-redux';
@@ -60,7 +61,6 @@ class WhiteBoard extends React.Component {
   }
 
   onMouseUp() {
-    const { addNewFigure } = this.props;
     console.log("mouse up");
 
     const { dispatch } = this.props;
@@ -154,7 +154,6 @@ class WhiteBoard extends React.Component {
 }
 
 WhiteBoard.propTypes = {
-  addNewFigure: PropTypes.func,
   dispatch: PropTypes.func,
   nextFigureType: PropTypes.number,
 };
