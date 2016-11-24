@@ -70,11 +70,10 @@ class WhiteBoard extends React.Component {
     console.log(addNewFigure.toString());
     if (this.props.nextFigureType !== null) {
       dispatch(addNewFigure(figure));
-      this.setState(prevState => ({
-        ...prevState,
+      this.setState({
         listenForMouseMove: false,
         figure: {},
-      }));
+      });
     }
   }
 

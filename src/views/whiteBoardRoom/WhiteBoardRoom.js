@@ -27,10 +27,9 @@ class WhiteBoardRoom extends React.Component {
 
   setNextFigureType(typeNumber) {
     console.log("Type Number is set ") || console.log(typeNumber)
-    this.setState(prevState => ({
-      ...prevState,
+    this.setState({
       nextFigureType: typeNumber,
-    }));
+    });
   }
 
   render() {
