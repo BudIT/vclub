@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Layer, Rect, Stage } from 'react-konva';
-import { RECT, CIRC, LINE } from 'vclub/__consts__/whiteboardElements';
+import { RECT, CIRC, LINE } from 'vclub/constants/whiteboardElements';
 
 // import compose from 'recompose/compose';
 // import { connect } from 'react-redux';
