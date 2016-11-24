@@ -80,26 +80,28 @@ class WhiteBoard extends React.Component {
 
   onMouseDown(evt) {
     // console.log("mouse down")
+    // console.log(evt);
+    const { nextFigureType } = this.props;
+
     const { evt: {
       clientX, clientY,
     } } = evt;
 
-    if (this.props.nextFigureType !== null) {
+    if (nextFigureType !== null) {
       // console.log("listenForMouseMove");
-      this.setState(prevState => ({
-        ...prevState,
+      this.setState({
         // now we listen for mouse move
         listenForMouseMove: true,
         // set first coordinate of new figure
         figure: {
-          typeNumber: this.props.nextFigureType,
+          typeNumber: nextFigureType,
           x: clientX,
           y: clientY,
           x1: 0,
           x2: 0,
           color: getColor(),
         },
-      }));
+      });
     }
   }
 
@@ -154,6 +156,7 @@ class WhiteBoard extends React.Component {
 WhiteBoard.propTypes = {
   addNewFigure: PropTypes.func,
   dispatch: PropTypes.func,
+  nextFigureType: PropTypes.number,
 };
 
 export default WhiteBoard;
