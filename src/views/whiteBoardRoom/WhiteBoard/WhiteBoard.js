@@ -84,7 +84,7 @@ class WhiteBoard extends React.Component {
     const { nextFigureType } = this.props;
 
     const { evt: {
-      clientX, clientY,
+      offsetX, offsetY,
     } } = evt;
 
     if (nextFigureType !== null) {
@@ -95,8 +95,8 @@ class WhiteBoard extends React.Component {
         // set first coordinate of new figure
         figure: {
           typeNumber: nextFigureType,
-          x: clientX,
-          y: clientY,
+          x: offsetX,
+          y: offsetY,
           x1: 0,
           x2: 0,
           color: getColor(),
@@ -107,18 +107,18 @@ class WhiteBoard extends React.Component {
 
   onMouseMove(evt) {
     const { evt: {
-      clientX, clientY,
+      offsetX, offsetY,
     } } = evt;
 
-    console.log(this.state.listenForMouseMove)
+    // console.log(this.state.listenForMouseMove)
     if (this.state.listenForMouseMove === true) {
       // console.log("move")
       this.setState(prevState => ({
         ...prevState,
         figure: {
           ...prevState.figure,
-          x1: clientX,
-          y1: clientY,
+          x1: offsetX,
+          y1: offsetY,
         },
       }));
       // console.log(this.state.figure);
