@@ -3,8 +3,9 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
-import MessageBox from 'vclub/views/chatRoom/MessageBox';
+import MessageBox from 'vclub/views/chatRoom/MessageBox/MessageBox';
 import UserList from 'vclub/views/userList/UserList';
+import InputBox from 'vclub/views/chatRoom/InputBox/InputBox';
 import styles from './ChatRoom.css';
 
 const enhance = compose(
@@ -20,6 +21,7 @@ function ChatRoom(props) {
     <section>
       <UserList members={members} />
       <MessageBox messages={messages} />
+      <InputBox />
     </section>
   );
 }
