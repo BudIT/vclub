@@ -10,9 +10,9 @@ import R from 'ramda';
 // import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // ! addNewFigure as props
 
-import boardFigures from './figures';
+import boardFigures from '../figures';
 
-import colors from './colors/colors';
+import colors from '../colors/colors';
 import styles from './WhiteBoard.css';
 
 // our figures

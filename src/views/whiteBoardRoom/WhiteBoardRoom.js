@@ -7,9 +7,9 @@ import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
 import styles from './WhiteBoardRoom.css';
 
-import ElementsPanel from './elementsPanel/ElementsPanel';
+import ElementsPanel from './ElementsPanel/ElementsPanel';
 
-import WhiteBoard from './WhiteBoard';
+import WhiteBoard from './WhiteBoard/WhiteBoard';
 
 const enhance = compose(
   connect(state => console.log(state) || ({
