@@ -11,18 +11,9 @@ import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // ! addNewFigure as props
 
-import boardFigures from '../figures';
-
-import colors from '../colors/colors';
+import { BoardRect, BoardCircle, BoardLine } from '../figures';
+import { backgroundColor, getColor } from '../colors';
 import styles from './WhiteBoard.css';
-
-// our figures
-const { BoardRect, BoardCircle, BoardLine } = boardFigures;
-
-const {
-  backgroundColor,
-  getColor,
-} = colors;
 
 function renderFigure(figureParam) {
   // null & undefined cases?

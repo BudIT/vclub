@@ -1,9 +1,3 @@
-import BoardRect from './BoardRect/BoardRect';
-import BoardCircle from './BoardCircle/BoardCircle';
-import BoardLine from './BoardLine/BoardLine';
-
-export default {
-  BoardRect,
-  BoardCircle,
-  BoardLine,
-};
+export BoardRect from './BoardRect/BoardRect';
+export BoardCircle from './BoardCircle/BoardCircle';
+export BoardLine from './BoardLine/BoardLine';

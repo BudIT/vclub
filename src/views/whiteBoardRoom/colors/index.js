@@ -1,8 +1,8 @@
 // background color
-const backgroundColor = '#FFD00B';
-const backgroundColorHover = '#FFAA00';
+export const backgroundColor = '#FFD00B';
+export const backgroundColorHover = '#FFAA00';
 // border color
-const borderColor = '#33363A';
+export const borderColor = '#33363A';
 // random colors
 const colors = [
   '#FE0000',
@@ -18,7 +18,7 @@ const colors = [
 ];
 
 let colorIndex = 0;
-const getColor = () => colors[colorIndex++ % colors.length];
+export const getColor = () => colors[colorIndex++ % colors.length];
 
 export default {
   backgroundColor,
