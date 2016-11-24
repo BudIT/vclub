@@ -17,6 +17,8 @@ import styles from './WhiteBoard.css';
 
 function renderFigure(figureParam) {
   // null & undefined cases?
+  if (figureParam === null) return null;
+
   const { typeNumber } = figureParam;
   switch (typeNumber) {
     case RECT:
@@ -48,19 +50,19 @@ class WhiteBoard extends React.Component {
   }
 
   onMouseUp = () => {
-    console.log("mouse up");
-
     const { dispatch } = this.props;
-    const { figure } = this.state;
+    const { figure, listenForMouseMove } = this.state;
 
-    console.log(this.state)
-    console.log(addNewFigure.toString());
-    if (this.props.nextFigureType !== null) {
-      dispatch(addNewFigure(figure));
+    const isEmpty = ({ x1, y1 }) => x1 === 0 || y1 === 0;
+
+    if (listenForMouseMove) {
       this.setState({
         listenForMouseMove: false,
         figure: null,
       });
+      if (!isEmpty(figure)) {
+        dispatch(addNewFigure(figure));
+      }
     }
   }
 
@@ -96,8 +98,10 @@ class WhiteBoard extends React.Component {
       offsetX, offsetY,
     } } = evt;
 
+    const { listenForMouseMove } = this.state;
+
     // console.log(this.state.listenForMouseMove)
-    if (this.state.listenForMouseMove === true) {
+    if (listenForMouseMove) {
       // console.log("move")
       this.setState(prevState => ({
         ...prevState,
@@ -116,9 +120,9 @@ class WhiteBoard extends React.Component {
     const { props, state } = this;
     const { figures } = props;
     const { figure } = state;
-    console.log("NEXT FIGURE TYPE");
-    console.log(this.props.nextFigureType);
-    console.log("FIGURE");
+    // console.log("NEXT FIGURE TYPE");
+    // console.log(this.props.nextFigureType);
+    // console.log("FIGURE");
     return (
       <div className={styles.whiteBoard}>
         <Stage width={window.innerWidth} height={window.innerHeight}>
