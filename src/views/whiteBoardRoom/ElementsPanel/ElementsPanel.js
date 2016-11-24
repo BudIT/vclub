@@ -15,12 +15,20 @@ const enhance = compose(
 );
 
 function ElementsPanel(props) {
-  const { onClickForRect, onClickForLine, onClickForCircle } = props;
+  const {
+    onClickForRect, onClickForLine, onClickForCircle,
+    nextFigureType,
+  } = props;
+
+  const gCN = (elm, nextFigureType) =>
+    elm === nextFigureType
+      ? styles.buttonCurrent
+      : styles.button;
 
   return (
     <ul className={styles.panel}>
       <li className={styles.element}>
-        <button onClick={onClickForRect} className={styles.button}>
+        <button onClick={onClickForRect} className={gCN(RECT, nextFigureType)}>
           <svg viewBox="0 0 200 200">
             <rect x="5" y="5" width="190" height="190" />
           </svg>
@@ -28,7 +36,7 @@ function ElementsPanel(props) {
         </button>
       </li>
       <li className={styles.element}>
-        <button onClick={onClickForLine} className={styles.button}>
+        <button onClick={onClickForLine} className={gCN(LINE, nextFigureType)}>
           <svg viewBox="0 0 200 200">
             <circle cx="100" cy="100" r="100" />
           </svg>
@@ -36,7 +44,7 @@ function ElementsPanel(props) {
         </button>
       </li>
       <li className={styles.element}>
-        <button onClick={onClickForCircle} className={styles.button}>
+        <button onClick={onClickForCircle} className={gCN(CIRC, nextFigureType)}>
           <svg viewBox="0 0 200 200">
             <line x1="20" y1="100" x2="200" y2="20" stroke="black" />
           </svg>
@@ -50,6 +58,7 @@ ElementsPanel.propTypes = {
   onClickForRect: PropTypes.func,
   onClickForLine: PropTypes.func,
   onClickForCircle: PropTypes.func,
+  nextFigureType: PropTypes.number,
 };
 
 export default enhance(ElementsPanel);

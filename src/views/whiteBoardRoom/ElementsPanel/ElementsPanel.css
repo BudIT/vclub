@@ -45,6 +45,11 @@
   overflow: hidden;
 }
 
+.buttonCurrent {
+  composes: button;
+  background-color: #C65A00;
+}
+
 .button:hover
 {
   background-color: #FFAA00;
