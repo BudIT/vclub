@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Layer, Rect, Stage } from 'react-konva';
-import R from 'ramda';
+import { RECT, CIRC, LINE } from 'vclub/__consts__/whiteboardElements';
 
 // import compose from 'recompose/compose';
 // import { connect } from 'react-redux';
@@ -23,18 +23,19 @@ const {
   getColor,
 } = colors;
 
-function renderFigures(figuresParams) {
-  console.log(figuresParams);
-  const typeNumberIsEqual = R.curry((typeNumber, elm) => elm.typeNumber === typeNumber);
-
-  const returnFigure = R.cond([
-    [typeNumberIsEqual(1), params => <BoardRect {...params} />],
-    [typeNumberIsEqual(2), params => <BoardLine {...params} />],
-    [typeNumberIsEqual(3), params => <BoardCircle {...params} />],
-    [R.T, () => null],
-  ]);
-
-  return R.map(returnFigure, figuresParams);
+function renderFigure(figureParam) {
+  // null & undefined cases?
+  const { typeNumber } = figureParam;
+  switch (typeNumber) {
+    case RECT:
+      return <BoardRect {...figureParam} />;
+    case CIRC:
+      return <BoardCircle {...figureParam} />;
+    case LINE:
+      return <BoardLine {...figureParam} />;
+    default:
+      return null;
+  }
 }
 
 class WhiteBoard extends React.Component {
@@ -135,8 +136,8 @@ class WhiteBoard extends React.Component {
         <Stage width={window.innerWidth} height={window.innerHeight}>
           <Layer>
             <Rect x="0" y="0" width={window.innerWidth} height={window.innerHeight} fill={backgroundColor} />
-            {renderFigures(figures)}
-            {renderFigures([figure])}
+            {figures.map(renderFigure)}
+            {renderFigure(figure)}
             <Rect
               x="0" y="0" width={window.innerWidth} height={window.innerHeight}
               onMouseMove={this.onMouseMove}
