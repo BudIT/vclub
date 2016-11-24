@@ -122,16 +122,15 @@ class WhiteBoard extends React.Component {
     return (
       <div className={styles.whiteBoard}>
         <Stage width={window.innerWidth} height={window.innerHeight}>
-          <Layer>
+          <Layer
+            listening
+            onMouseMove={this.onMouseMove}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
+          >
             <Rect x="0" y="0" width={window.innerWidth} height={window.innerHeight} fill={backgroundColor} />
             {figures.map(renderFigure)}
             {renderFigure(figure)}
-            <Rect
-              x="0" y="0" width={window.innerWidth} height={window.innerHeight}
-              onMouseMove={this.onMouseMove}
-              onMouseDown={this.onMouseDown}
-              onMouseUp={this.onMouseUp}
-            />
           </Layer>
         </Stage>
       </div>
