@@ -45,13 +45,9 @@ class WhiteBoard extends React.Component {
       // figures to render
       figure: {},
     };
-
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
   }
 
-  onMouseUp() {
+  onMouseUp = () => {
     console.log("mouse up");
 
     const { dispatch } = this.props;
@@ -68,7 +64,7 @@ class WhiteBoard extends React.Component {
     }
   }
 
-  onMouseDown(evt) {
+  onMouseDown = (evt) => {
     // console.log("mouse down")
     // console.log(evt);
     const { nextFigureType } = this.props;
@@ -95,7 +91,7 @@ class WhiteBoard extends React.Component {
     }
   }
 
-  onMouseMove(evt) {
+  onMouseMove = (evt) => {
     const { evt: {
       offsetX, offsetY,
     } } = evt;

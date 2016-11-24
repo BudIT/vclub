@@ -1,12 +1,10 @@
 import React from 'react';
-
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
 import styles from './WhiteBoardRoom.css';
 
 import ElementsPanel from './ElementsPanel/ElementsPanel';
-
 import WhiteBoard from './WhiteBoard/WhiteBoard';
 
 const enhance = compose(
@@ -21,11 +19,9 @@ class WhiteBoardRoom extends React.Component {
     this.state = {
       nextFigureType: null,
     };
-
-    this.setNextFigureType = this.setNextFigureType.bind(this);
   }
 
-  setNextFigureType(typeNumber) {
+  setNextFigureType = (typeNumber) => {
     console.log("Type Number is set ") || console.log(typeNumber)
     this.setState({
       nextFigureType: typeNumber,
