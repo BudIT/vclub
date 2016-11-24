@@ -3,7 +3,6 @@ import styles from './MessageBox.css';
 
 function MessageBox(props) {
   const { messages } = props;
-  console.log(props.messages)
   return (
     <div>
       {messages.length === 0
