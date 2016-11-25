@@ -38,7 +38,11 @@ class WhiteBoardRoom extends React.Component {
     console.log(figures);
     return (
       <div className={styles.whiteBoardRoom}>
-        <ElementsPanel dispatch={dispatch} onClick={this.setNextFigureType} />
+        <ElementsPanel
+          dispatch={dispatch}
+          onClick={this.setNextFigureType}
+          nextFigureType={nextFigureType}
+        />
         <WhiteBoard
           dispatch={dispatch}
           figures={figures}
