@@ -38,7 +38,7 @@ function ElementsPanel(props) {
       <li className={styles.element}>
         <button onClick={onClickForLine} className={gCN(LINE, nextFigureType)}>
           <svg viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="100" />
+            <line x1="20" y1="180" x2="180" y2="20" stroke="black" strokeWidth="20" />
           </svg>
           {/* Line */}
         </button>
@@ -46,7 +46,7 @@ function ElementsPanel(props) {
       <li className={styles.element}>
         <button onClick={onClickForCircle} className={gCN(CIRC, nextFigureType)}>
           <svg viewBox="0 0 200 200">
-            <line x1="20" y1="180" x2="180" y2="20" stroke="black" strokeWidth="20" />
+            <circle cx="100" cy="100" r="100" />
           </svg>
         </button>
       </li>
