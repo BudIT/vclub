@@ -46,10 +46,10 @@ const book = storiesOf('SharingRoom', module);
 book.setInitialState(initialState);
 
 book.addReduxStory('Initial state SharingRoom', dispatch => (
-  <SharingRoom dispatch={dispatch}  />
+  <SharingRoom dispatch={dispatch} />
   ), {
     auth: {
-      user:  members[0],
+      user: members[0],
     },
     members,
     sharingRoom: {
@@ -62,7 +62,7 @@ book.addReduxStory('First user has a ball', dispatch => (
   <SharingRoom dispatch={dispatch} />
   ), {
     auth: {
-      user:  members[1],
+      user: members[1],
     },
     members,
     sharingRoom: {
@@ -74,7 +74,7 @@ book.addReduxStory('User has a label completed', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user:  members[1],
+    user: members[1],
   },
   members,
   sharingRoom: {
@@ -86,7 +86,7 @@ book.addReduxStory('Shows the menu "Pass ball"', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user:  members[1],
+    user: members[1],
   },
   members,
   sharingRoom: {
@@ -99,7 +99,7 @@ book.addReduxStory('The time limit has expired', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user:  members[1],
+    user: members[1],
   },
   members,
   sharingRoom: {
@@ -113,7 +113,7 @@ book.addReduxStory('Shows the menu "Completes session"', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user:  members[1],
+    user: members[1],
   },
   members,
   sharingRoom: {

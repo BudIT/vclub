@@ -5,17 +5,13 @@ import styles from './Ball.css';
 
 function Ball(props) {
   const { ballPosition, members } = props;
-  const userIsOut = members.some(user => user.id === ballPosition);
-  console.log(userIsOut);
+  const userIsOut = members.every(user => user.id !== ballPosition);
+  const displayBall = userIsOut || ballPosition === null;
 
   return (
-    <div className={styles.container_ball}>
-      {ballPosition === null && (
-        <div>
-          {userIsOut || ballPosition === null && (
-            <button className={styles.btn_ball}>&#9918;</button>
-          )}
-        </div>
+    <div className={styles.containerBall}>
+      {displayBall && (
+        <button className={styles.btnBall}>&#9918;</button>
       )}
     </div>
   );
