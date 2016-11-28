@@ -6,6 +6,10 @@ export function changeRoom(newRoomName) {
   return {
     type: CHANGE_ROOM,
     payload: newRoomName,
+    meta: {
+      remote: true,
+      broadcast: true,
+    },
   };
 }
 
