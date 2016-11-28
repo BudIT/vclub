@@ -5,20 +5,12 @@ import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
 
 import { passBall } from 'vclub/redux/club/sharing';
+import { setUserMenuPosition } from 'vclub/redux/club/sharing';
+import { toggleBallMenu } from 'vclub/redux/club/sharing';
+import { completesSession } from 'vclub/redux/club/sharing';
+
 
 import styles from './Member.css';
-
-
-const currentUser = (props) => () => {
-  const {member, user} = props;
-
-  if(user.master = true) {
-    return <a href="" id={member.id}>Передать мяч</a>
-  } else if (user.id === member.id) {
-
-  }
-  return user
-};
 
 
 const enhance = compose(
@@ -34,27 +26,64 @@ const enhance = compose(
       name: PropTypes.string.isRequired,
       master: PropTypes.bool.isRequired,
     }).isRequired,
+    done: PropTypes.arrayOf(PropTypes.string).isRequired,
     ballPosition: PropTypes.string,
   }),
 
   withHandlers({
     onMemberClick: (props) => () => {
-      const {member, dispatch} = props;
-      dispatch(passBall(member.id));
-      currentUser
-      console.log(currentUser)
+      const { user
+        , member
+        , ballPosition
+        , showUserMenu
+        , dispatch
+      } = props;
+
+      if(ballPosition === member.id) {
+        return
+      }
+      if (user.master || user.id === ballPosition) {
+        dispatch(setUserMenuPosition(showUserMenu ? null : member.id));
+      }
+
     },
+
+    onPassBallClick: (props) => () => {
+      const { member, dispatch } = props;
+        dispatch(passBall(member.id));
+    },
+
+    onBallClick: (props) => () => {
+      const { dispatch } = props;
+        dispatch(toggleBallMenu(true));
+
+    },
+
+    onCompletesSessionClick: (props) => () => {
+      const { dispatch } = props;
+        dispatch(completesSession());
+    },
+
   }),
 );
 
 function Member(props) {
 
-  const { member, ballPosition, done, onMemberClick } = props;
+  const { member
+    , ballPosition
+    , done
+    , showUserMenu
+    , showBallMenu
+    , onPassBallClick
+    , onBallClick
+    , onMemberClick
+    , onCompletesSessionClick
+  } = props;
 
   const memberIsDone = done.includes(member.id);
 
   return (
-    <div>
+    <div className={styles.memberContainer}>
       <button
         disabled={memberIsDone}
         onClick={onMemberClick}
@@ -62,9 +91,39 @@ function Member(props) {
       >
         {member.name}
       </button>
-      {ballPosition === member.id && (
-        <button className={styles.btn_ball}>&#9918;</button>
+
+      {showUserMenu  && (
+        <div className={styles.hide_show_menu}>
+          <button
+            className={styles.hide_show_btn}
+            onClick= {onPassBallClick}
+          >
+            Передать мяч
+          </button>
+        </div>
       )}
+      {ballPosition === member.id && (
+        <div className={styles.ballMenu}>
+          <button
+            className={styles.btn_ball}
+            onClick={onBallClick}
+          >
+            &#9918;
+          </button>
+
+          {showBallMenu && (
+            <div className={styles.hide_show_menu}>
+              <button
+                className={styles.hide_show_btn}
+                onClick= {onCompletesSessionClick}
+              >
+                Завершить сеанс
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       {memberIsDone && (
         <button className={styles.btn_done}>&#10003;</button>
       )}
@@ -77,9 +136,15 @@ Member.propTypes = {
     id: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
   }).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    master: PropTypes.bool.isRequired,
+  }).isRequired,
   ballPosition: PropTypes.string,
-  done: PropTypes.array.isRequired,
+  done: PropTypes.arrayOf(PropTypes.string).isRequired,
   onMemberClick: PropTypes.func.isRequired,
+  onPassBallClick: PropTypes.func.isRequired,
 };
 
 export default enhance(Member);

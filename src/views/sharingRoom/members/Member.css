@@ -1,3 +1,9 @@
+.memberContainer
+{
+    display: flex;
+    flex-direction: row;
+    background: #484848;
+}
 .member
 {
     display: flex;
@@ -7,7 +13,7 @@
 {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
+    margin: 0;
 }
 
 .members_btn
@@ -48,6 +54,7 @@
 {
     opacity: .5;
     background: #5c511b;
+    cursor: not-allowed;
 }
 
 .members_btn:focus
@@ -80,6 +87,12 @@
     outline: none;
 }
 
+.ballMenu
+{
+    display: flex;
+    align-items: center;
+}
+
 .btn_done
 {
     background: 0;
@@ -88,4 +101,37 @@
     cursor: pointer;
     color: greenyellow;
     font-size: 23px;
+}
+
+/* hide_show_btn style*/
+
+.hide_show_menu
+{
+    display: flex;
+    align-items: center;
+}
+
+.hide_show_btn
+{
+    background: #4d5c69;
+    border: 0;
+    border-radius: 33px 0;
+    color: orange;
+    cursor: pointer;
+    display: flex;
+    font-family: sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 15px;
+    margin: 0 0 0 1.2em;
+}
+
+.hide_show_btn:hover
+{
+    text-decoration: underline;
+}
+
+.hide_show_btn:focus
+{
+    outline: none;
 }
