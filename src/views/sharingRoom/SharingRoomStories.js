@@ -46,27 +46,78 @@ const book = storiesOf('SharingRoom', module);
 book.setInitialState(initialState);
 
 book.addReduxStory('Initial state SharingRoom', dispatch => (
-  <SharingRoom dispatch={dispatch} />
+  <SharingRoom dispatch={dispatch}  />
   ), {
+    auth: {
+      user:  members[0],
+    },
     members,
+    sharingRoom: {
+      completesSession: members[0].master,
+    },
   }
 );
 
-book.addReduxStory('A ball in the first user', dispatch => (
+book.addReduxStory('First user has a ball', dispatch => (
   <SharingRoom dispatch={dispatch} />
   ), {
+    auth: {
+      user:  members[1],
+    },
     members,
     sharingRoom: {
       ballPosition: members[0].id,
     },
   });
 
-book.addReduxStory('User with the label done', dispatch => (
+book.addReduxStory('User has a label completed', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
+  auth: {
+    user:  members[1],
+  },
+  members,
+  sharingRoom: {
+    done: [members[0].id, members[3].id],
+  },
+});
+
+book.addReduxStory('Shows the menu "Pass ball"', dispatch => (
+  <SharingRoom dispatch={dispatch} />
+), {
+  auth: {
+    user:  members[1],
+  },
+  members,
+  sharingRoom: {
+    ballPosition: members[1].id,
+    userMenuPosition: members[5].id,
+  },
+});
+
+book.addReduxStory('The time limit has expired', dispatch => (
+  <SharingRoom dispatch={dispatch} />
+), {
+  auth: {
+    user:  members[1],
+  },
   members,
   sharingRoom: {
     ballPosition: members[1].id,
     done: [members[0].id, members[3].id],
+    timerStart: Date.now() - 300000,
+  },
+});
+
+book.addReduxStory('Shows the menu "Completes session"', dispatch => (
+  <SharingRoom dispatch={dispatch} />
+), {
+  auth: {
+    user:  members[1],
+  },
+  members,
+  sharingRoom: {
+    ballPosition: members[1].id,
+    showBallMenu: true,
   },
 });

@@ -22,7 +22,12 @@ const validate = values => {
 };
 
 // eslint-disable-next-line react/prop-types
-const AuthInputField = ({ input, type, placeholder, className, meta: { touched, error } }) => (
+const AuthInputField = ({ input
+  , type
+  , placeholder
+  , className
+  , meta: { touched, error }
+}) => (
   <div>
     <div>
       <input
