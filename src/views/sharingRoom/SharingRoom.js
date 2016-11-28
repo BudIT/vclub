@@ -4,12 +4,11 @@ import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import { connect } from 'react-redux';
 
+import { increment, decrement } from 'vclub/redux/club/sharing';
+
 import Ball from './ball/Ball';
 import Member from './members/Member';
 import Timer from './timer/Timer';
-
-import { increment } from 'vclub/redux/club/sharing';
-import { decrement } from 'vclub/redux/club/sharing';
 
 import styles from './SharingRoom.css';
 
@@ -41,7 +40,6 @@ const enhance = compose(
 );
 
 function SharingRoom(props) {
-
   const { members
     , user
     , ballPosition
@@ -60,8 +58,8 @@ function SharingRoom(props) {
   const showTimeControlBtn = user.master;
 
   return (
-    <section className={styles.master_menu}>
-      <header className={styles.control_panel}>
+    <section className={styles.masterMenu}>
+      <header className={styles.controlPanel}>
         <Ball
           ballPosition={ballPosition}
           members={members}
@@ -75,15 +73,15 @@ function SharingRoom(props) {
           />
         </div>
         {showTimeControlBtn && (
-          <div className={styles.timer_control}>
+          <div className={styles.timerControl}>
             <button
-              className={styles.btn_top}
+              className={styles.btnIncrement}
               onClick={onIncrementClick}
             >
               &#708;
             </button>
             <button
-              className={styles.btn_bottom}
+              className={styles.btnDecrement}
               onClick={onDecrementClick}
             >
               &#709;
@@ -93,21 +91,19 @@ function SharingRoom(props) {
       </header>
 
       <div className={styles.member}>
-        <div className={styles.member_item}>
-          {members.map((member) => (
-            <Member
-              key={member.id}
-              user={user}
-              member={member}
-              ballPosition={ballPosition}
-              done={done}
-              dispatch={dispatch}
-              onMemberClick = {onMemberClick}
-              showUserMenu={userMenuPosition === member.id}
-              showBallMenu={showBallMenu}
-            />
-          ))}
-        </div>
+        {members.map((member) => (
+          <Member
+            key={member.id}
+            user={user}
+            member={member}
+            ballPosition={ballPosition}
+            done={done}
+            dispatch={dispatch}
+            onMemberClick={onMemberClick}
+            showUserMenu={userMenuPosition === member.id}
+            showBallMenu={showBallMenu}
+          />
+        ))}
       </div>
     </section>
   );
@@ -118,7 +114,20 @@ SharingRoom.propTypes = {
     id: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
   }).isRequired).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    master: PropTypes.bool.isRequired,
+  }).isRequired,
   ballPosition: PropTypes.string,
+  userMenuPosition: PropTypes.string,
+  onMemberClick: PropTypes.string,
+  timerStart: PropTypes.number,
+  sessionDuration: PropTypes.number,
+  showBallMenu: PropTypes.bool,
+  expired: PropTypes.bool,
+  onIncrementClick: PropTypes.func,
+  onDecrementClick: PropTypes.func,
   done: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
 };

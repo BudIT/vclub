@@ -1,9 +1,9 @@
-.container_ball
+.containerBall
 {
     justify-content: center;
 }
 
-.btn_ball
+.btnBall
 {
     background: 0; /* url('icon-ball/362.gif') */
     border: 0;
@@ -14,12 +14,12 @@
     margin-right: 15px;
 }
 
-.btn_ball:active
+.btnBall:active
 {
     opacity: .8;
 }
 
-.btn_ball:focus
+.btnBall:focus
 {
     outline: none;
 }

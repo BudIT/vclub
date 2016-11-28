@@ -1,5 +1,5 @@
 import initialState from 'vclub/redux/initialClubState';
-import CHANGE_ROOM from 'vclub/redux/club/rooms';
+import { CHANGE_ROOM } from 'vclub/redux/club/rooms';
 
 export const PASS_BALL = 'club/sharing/pass-ball';
 export const SET_SHOW_USER_MENU_POSITION = 'club/sharing/set-show-user-menu-position';
@@ -46,8 +46,8 @@ export function setUserMenuPosition(memberId) {
     type: SET_SHOW_USER_MENU_POSITION,
     payload: memberId,
     meta: {
-      remote: true,
-      broadcast: true,
+      remote: false,
+      broadcast: false,
     },
   };
 }
@@ -56,6 +56,10 @@ export function toggleBallMenu(memberId) {
   return {
     type: TOGGLE_BALL_MENU,
     payload: memberId,
+    meta: {
+      remote: false,
+      broadcast: false,
+    },
   };
 }
 
@@ -63,8 +67,8 @@ export function completesSession() {
   return {
     type: COMPLETES_SESSION,
     meta: {
-      remote: true,
-      broadcast: true,
+      remote: false,
+      broadcast: false,
     },
   };
 }
@@ -80,7 +84,7 @@ export default function reducer(state, action) {
       };
 
     case DECREMENT_TIMER_MINUTES:
-      if(state.sessionDuration <= 60) {
+      if (state.sessionDuration <= 60) {
         return state;
       }
       return {

@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-
-//import className from 'classnames';
+import React, { Component, PropTypes } from 'react';
 
 import styles from './Timer.css';
 
@@ -8,26 +6,25 @@ import styles from './Timer.css';
 function getElapsedTime(startTime, duration) {
   const now = Date.now();
   const timeDiff = Math.floor((now - startTime) / 1000);
-
-    return duration - timeDiff;
+  return duration - timeDiff;
 }
 
-function prependZero (val) {
-  return val < 10 ? `0${val}` : `${val}`
+function prependZero(val) {
+  return val < 10 ? `0${val}` : `${val}`;
 }
 
 class Timer extends Component {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      if(this.props.startTime) {
+      if (this.props.startTime) {
         this.forceUpdate();
       }
-    }, 1000)
+    }, 1000);
   }
 
-  componentWillUnmount () {
-    clearInterval(this.interval)
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
@@ -55,8 +52,13 @@ class Timer extends Component {
       <div className={className}>
         {currentMinutes}:{currentSeconds}
       </div>
-    )
+    );
   }
 }
+
+Timer.propTypes = {
+  startTime: PropTypes.number,
+  duration: PropTypes.number,
+};
 
 export default Timer;
