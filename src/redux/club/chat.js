@@ -3,18 +3,16 @@ import initialState from 'vclub/redux/initialClubState';
 export const GET_MESSAGES = 'club/chat/get-messages';
 export const SEND_MESSAGE = 'club/chat/send-message';
 
-export function getMessages(messages) {
+export function getMessages() {
   return {
     type: GET_MESSAGES,
-    payload: messages,
   };
 }
 
-export function sendMessages(messages) {
-  console.log(123, messages)
+export function sendMessage(message) {
   return {
     type: SEND_MESSAGE,
-    payload: messages,
+    payload: message,
   };
 }
 
@@ -25,7 +23,11 @@ export default function reducer(state, action) {
         messages: state.chat.messages,
       };
     case SEND_MESSAGE:
-      return [...state, action.payload];
+      console.log('CHAT', action);
+      const message = action.payload;
+      return {
+        messages: [...state.messages, message],
+      };
     default:
       return state || initialState.chat;
   }

@@ -10,6 +10,7 @@ function MessageBox(props) {
         : messages.map(message => (
           <span key={message.id}>
             <div>
+              <span className={styles.message}>{message.date}</span>
               <span className={styles.author}>{message.author}</span>
               <span className={styles.message}>{message.message}</span>
             </div>
@@ -18,13 +19,14 @@ function MessageBox(props) {
     </div>
   );
 }
-
+/* eslint-disable */
 MessageBox.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     author: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
   }).isRequired).isRequired,
 };
-
+/* eslint-enable */
 export default MessageBox;
