@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Layer, Rect, Stage } from 'react-konva';
-import { RECT, CIRC, LINE } from 'vclub/constants/whiteboardElements';
+import { RECT, CIRC, LINE, ELLS } from 'vclub/constants/whiteboardElements';
 import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
 // import compose from 'recompose/compose';
@@ -11,7 +11,7 @@ import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // ! addNewFigure as props
 
-import { BoardRect, BoardCircle, BoardLine } from '../figures';
+import { BoardRect, BoardCircle, BoardLine, BoardEllipse } from '../figures';
 import { backgroundColor, getColor } from '../colors';
 import styles from './WhiteBoard.css';
 
@@ -27,6 +27,8 @@ function renderFigure(figureParam) {
       return <BoardCircle {...figureParam} />;
     case LINE:
       return <BoardLine {...figureParam} />;
+    case ELLS:
+      return <BoardEllipse {...figureParam} />;
     default:
       return null;
   }
