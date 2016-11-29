@@ -39,6 +39,5 @@ export default {
   whiteboard: {
     // any other params?
     figures: [],
-    currentFigure: 1,
   },
 };
