@@ -11,6 +11,10 @@ export function addNewFigure(figure) {
     payload: {
       figure,
     },
+    meta: {
+      remote: true,
+      broadcast: true,
+    },
   };
 }
 
