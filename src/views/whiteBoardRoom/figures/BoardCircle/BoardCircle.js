@@ -4,6 +4,9 @@ import propTypes from '../propTypes';
 
 const BoardCircle = ({ x, y, x1, y1, color }) => {
   // by Pifagor theorem
+  if (x1 === 0 && y1 === 0) {
+    return null;
+  }
   const radius = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
 
   return (<Circle

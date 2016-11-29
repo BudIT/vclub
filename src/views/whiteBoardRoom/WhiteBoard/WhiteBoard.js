@@ -88,7 +88,7 @@ class WhiteBoard extends React.Component {
           x: offsetX,
           y: offsetY,
           x1: 0,
-          x2: 0,
+          y1: 0,
           color: getColor(),
         },
       });
