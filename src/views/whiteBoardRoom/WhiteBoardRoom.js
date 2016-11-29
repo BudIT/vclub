@@ -8,7 +8,7 @@ import ElementsPanel from './ElementsPanel/ElementsPanel';
 import WhiteBoard from './WhiteBoard/WhiteBoard';
 
 const enhance = compose(
-  connect(state => console.log(state) || ({
+  connect(state => ({
     figures: state.whiteboard.figures,
   })),
 );
@@ -22,7 +22,7 @@ class WhiteBoardRoom extends React.Component {
   }
 
   setNextFigureType = (typeNumber) => {
-    console.log("Type Number is set ") || console.log(typeNumber)
+    // console.log("Type Number is set ") || console.log(typeNumber)
     this.setState({
       nextFigureType: typeNumber,
     });
@@ -34,8 +34,8 @@ class WhiteBoardRoom extends React.Component {
 
     const { dispatch, figures } = props;
     const { nextFigureType } = state;
-    console.log("FIGURES");
-    console.log(figures);
+    // console.log("FIGURES");
+    // console.log(figures);
     return (
       <div className={styles.whiteBoardRoom}>
         <ElementsPanel

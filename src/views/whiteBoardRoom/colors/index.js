@@ -18,7 +18,11 @@ const colors = [
 ];
 
 let colorIndex = 0;
-export const getColor = () => colors[colorIndex++ % colors.length];
+export const getColor = () => {
+  const nextColor = colors[colorIndex % colors.length];
+  colorIndex += 1;
+  return nextColor;
+};
 
 export default {
   backgroundColor,

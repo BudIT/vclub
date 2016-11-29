@@ -21,10 +21,11 @@ function ElementsPanel(props) {
     nextFigureType,
   } = props;
 
-  const gCN = (elm, nextFigureType) =>
-    elm === nextFigureType
+  function gCN(elm, nextFigType) {
+    return elm === nextFigType
       ? styles.buttonCurrent
       : styles.button;
+  }
 
   return (
     <ul className={styles.panel}>
