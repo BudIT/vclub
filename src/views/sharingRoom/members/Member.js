@@ -4,10 +4,11 @@ import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
 
-import { passBall
-  , setUserMenuPosition
-  , toggleBallMenu
-  , completesSession
+import {
+  passBall,
+  setUserMenuPosition,
+  toggleBallMenu,
+  completesSession,
 } from 'vclub/redux/club/sharing';
 
 import styles from './Member.css';
@@ -31,11 +32,12 @@ const enhance = compose(
 
   withHandlers({
     onMemberClick: (props) => () => {
-      const { user
-        , member
-        , ballPosition
-        , showUserMenu
-        , dispatch
+      const {
+        user,
+        member,
+        ballPosition,
+        showUserMenu,
+        dispatch,
       } = props;
 
       if (ballPosition === member.id) {
@@ -68,15 +70,16 @@ const enhance = compose(
 );
 
 function Member(props) {
-  const { member
-    , ballPosition
-    , done
-    , showUserMenu
-    , showBallMenu
-    , onPassBallClick
-    , onBallClick
-    , onMemberClick
-    , onCompletesSessionClick
+  const {
+    member,
+    ballPosition,
+    done,
+    showUserMenu,
+    showBallMenu,
+    onPassBallClick,
+    onBallClick,
+    onMemberClick,
+    onCompletesSessionClick,
   } = props;
 
   const memberIsDone = done.includes(member.id);

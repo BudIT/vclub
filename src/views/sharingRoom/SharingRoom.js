@@ -40,19 +40,20 @@ const enhance = compose(
 );
 
 function SharingRoom(props) {
-  const { members
-    , user
-    , ballPosition
-    , done
-    , dispatch
-    , userMenuPosition
-    , onMemberClick
-    , timerStart
-    , sessionDuration
-    , showBallMenu
-    , expired
-    , onIncrementClick
-    , onDecrementClick
+  const {
+    members,
+    user,
+    ballPosition,
+    done,
+    dispatch,
+    userMenuPosition,
+    onMemberClick,
+    timerStart,
+    sessionDuration,
+    showBallMenu,
+    expired,
+    onIncrementClick,
+    onDecrementClick,
   } = props;
 
   const showTimeControlBtn = user.master;
