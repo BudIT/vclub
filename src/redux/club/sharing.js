@@ -67,8 +67,8 @@ export function completesSession() {
   return {
     type: COMPLETES_SESSION,
     meta: {
-      remote: false,
-      broadcast: false,
+      remote: true,
+      broadcast: true,
     },
   };
 }
