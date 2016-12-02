@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
+    "borex-actions": "^0.1.0",
+    "borex-reducers": "^0.1.0",
     "eslint": "^3.8.1",
     "express": "^4.14.0",
     "ramda": "^0.22.1",
@@ -37,6 +39,7 @@
     "babel-eslint": "^6.1.2",
     "babel-jest": "^16.0.0",
     "babel-loader": "^6.2.5",
+    "babel-plugin-borex-autotype": "^0.1.0",
     "babel-plugin-transform-class-properties": "^6.11.5",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-react-jsx-source": "^6.9.0",
