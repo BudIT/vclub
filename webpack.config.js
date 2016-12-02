@@ -1,7 +1,8 @@
-const path        = require('path');
-const webpack     = require('webpack');
-const autoreset   = require('postcss-autoreset')
-const normalize   = require('postcss-normalize')
+const path = require('path');
+const webpack = require('webpack');
+const autoreset = require('postcss-autoreset')
+const normalize = require('postcss-normalize')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 const DEV = process.env.NODE_ENV !== 'production';
@@ -21,7 +22,7 @@ module.exports = [
       club: './src/club.js',
     },
     output: {
-      path: path.resolve(__dirname, 'dist/public'),
+      path: path.resolve(__dirname, 'dist', 'public'),
       filename: '[name].bundle.js',
     },
     module: {
@@ -37,13 +38,13 @@ module.exports = [
           loaders: ['style', 'css?modules&importLoaders=1', 'postcss-loader'],
         },
         {
-          test: /.(png|gif|jpe?g)(\?[a-z0-9=\.]+)?$/,
+          test: /\.(png|gif|jpe?g)(\?[a-z0-9=.]+)?$/,
           loader: 'url',
           query: {
             limit: 10240,
             name: '[name]-[hash:6].[ext]',
           },
-        } 
+        }
       ],
     },
     postcss: function() {
@@ -91,6 +92,9 @@ module.exports = [
     },
     plugins: [
       new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __SERVER__: true })),
+      new CopyWebpackPlugin([
+        { from: 'dist-files' },
+      ]),
     ],
   },
 ];
