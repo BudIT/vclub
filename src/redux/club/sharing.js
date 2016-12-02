@@ -45,10 +45,6 @@ export function setUserMenuPosition(memberId) {
   return {
     type: SET_SHOW_USER_MENU_POSITION,
     payload: memberId,
-    meta: {
-      remote: false,
-      broadcast: false,
-    },
   };
 }
 
@@ -56,10 +52,6 @@ export function toggleBallMenu(memberId) {
   return {
     type: TOGGLE_BALL_MENU,
     payload: memberId,
-    meta: {
-      remote: false,
-      broadcast: false,
-    },
   };
 }
 
