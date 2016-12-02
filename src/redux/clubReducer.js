@@ -1,6 +1,6 @@
-import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-
+import composeReducers from 'borex-reducers/utils/composeReducers';
+import scopeReducer from 'borex-reducers/utils/scopeReducer';
 
 import initHOReducer from './club/init';
 
@@ -10,14 +10,19 @@ import roomsReducer from './club/rooms';
 import uiReducer from './club/ui';
 import sharingRoomReducer from './club/sharing';
 
+import mediaReducer from './club/media';
+import rtcReducer from './club/rtc';
 
-const baseReducer = combineReducers({
-  auth: authReducer,
-  members: membersReducer,
-  rooms: roomsReducer,
-  ui: uiReducer,
-  form: formReducer,
-  sharingRoom: sharingRoomReducer,
-});
+
+const baseReducer = composeReducers(
+  scopeReducer('auth', authReducer),
+  scopeReducer('members', membersReducer),
+  scopeReducer('rooms', roomsReducer),
+  scopeReducer('ui', uiReducer),
+  scopeReducer('form', formReducer),
+  scopeReducer('sharingRoom', sharingRoomReducer),
+  scopeReducer('media', mediaReducer),
+  scopeReducer('rtc', rtcReducer),
+);
 
 export default initHOReducer(baseReducer);

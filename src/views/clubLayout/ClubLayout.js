@@ -13,13 +13,17 @@ const enhance = compose(
     currentRoom: state.rooms.currentRoom,
     showMemberPanel: state.ui.showMemberPanel,
     members: state.members,
+    rtc: state.rtc,
+    media: state.media,
   })),
 );
 
 function ClubLayout(props) {
   const {
-    authenticated, currentRoom, members, showMemberPanel, dispatch,
+    rtc, authenticated, currentRoom, members, showMemberPanel, dispatch, media,
   } = props;
+
+  const audioStreams = Object.keys(rtc.audioStreams).map(key => rtc.audioStreams[key]);
 
   return (
     <div>
@@ -29,6 +33,10 @@ function ClubLayout(props) {
           : <AuthedLayout currentRoom={currentRoom} />
         }
         {showMemberPanel && <UserList members={members} />}
+        {JSON.stringify(media)}
+        {audioStreams.map(stream => (
+          <audio ref={el => el && (el.srcObject = stream)} autoPlay controls />
+        ))}
       </main>
     </div>
   );

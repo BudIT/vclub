@@ -9,15 +9,20 @@ import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
 
 import clientActionBroker from 'vclub/redux/middlewares/clientActionBroker';
 import sideEffectProcessor from 'vclub/redux/middlewares/sideEffectProcessor';
+import rtcMiddleware from 'vclub/redux/middlewares/rtcMiddleware';
+
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
 import { restoreAuth } from 'vclub/redux/club/auth';
+
+import requestMediaDevices from 'vclub/rtc/requestMediaDevices';
 
 
 const ioSocket = io({ path: '/vclub-socket', forceNew: true });
 
 const storeEnhancer = compose(
   applyMiddleware(
+    rtcMiddleware(ioSocket),
     clientActionBroker(ioSocket),
     sideEffectProcessor({ context: { ioSocket, localStorage } }),
   ),
@@ -35,3 +40,5 @@ render((
     <ClubLayout />
   </Provider>
 ), document.getElementById('AppRoot'));
+
+requestMediaDevices(store);

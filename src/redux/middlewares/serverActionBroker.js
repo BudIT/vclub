@@ -17,7 +17,7 @@ export default function serverActionBroker(io) {
     const broadcast = !!action.meta.broadcast;
 
     if (broadcast) {
-      io.sockets.in('members').emit('dispatch', resetBroadcastFlag(action));
+      io.sockets.in('users').emit('dispatch', resetBroadcastFlag(action));
     }
 
     return next(action);

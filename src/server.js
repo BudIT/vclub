@@ -37,6 +37,8 @@ app.get('*', (req, res) => {
   res.redirect('/club');
 });
 
+const authSockets = {};
+
 io.on('connection', (socket) => {
   socket.on('auth', (authData) => {
     const user = {
@@ -46,8 +48,8 @@ io.on('connection', (socket) => {
     };
 
     store.dispatch(memberEnter(user));
-
-    socket.join('members');
+    authSockets[user.id] = socket;
+    socket.join('users');
 
     if (user.master) {
       socket.join('masters');
@@ -56,13 +58,30 @@ io.on('connection', (socket) => {
     const exit = () => {
       const memberLeaveAction = memberLeave(user.id);
 
-      socket.broadcast.emit('dispatch', memberLeaveAction);
+      delete authSockets[user.id];
+      socket.leave('users');
       store.dispatch(memberLeaveAction);
     };
     socket.on('disconnect', exit);
     socket.on('logOut', exit);
 
     socket.on('dispatch', action => store.dispatch(action));
+
+    socket.on('RTC.SDP', ({ userId, sdp }) => {
+      const remoteSocket = authSockets[userId];
+
+      if (!remoteSocket) return;
+
+      remoteSocket.emit('RTC.SDP', { userId: user.id, sdp });
+    });
+
+    socket.on('RTC.ICECandidate', ({ userId, candidate }) => {
+      const remoteSocket = authSockets[userId];
+
+      if (!remoteSocket) return;
+
+      remoteSocket.emit('RTC.ICECandidate', { userId: user.id, candidate });
+    });
 
     socket.emit('dispatch', initialize(store.getState(), user));
   });
