@@ -56,9 +56,9 @@ const enhance = compose(
     },
 
     onBallClick: (props) => () => {
-      const { dispatch, user } = props;
+      const { dispatch, user, showBallMenu, member } = props;
       if (user.master) {
-        dispatch(toggleBallMenu(true));
+        dispatch(toggleBallMenu(showBallMenu ? null : member.id));
       }
     },
 
