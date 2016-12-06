@@ -48,10 +48,10 @@ export function setUserMenuPosition(memberId) {
   };
 }
 
-export function toggleBallMenu(memberId) {
+export function toggleBallMenu(showMenu) {
   return {
     type: TOGGLE_BALL_MENU,
-    payload: memberId,
+    payload: showMenu,
   };
 }
 

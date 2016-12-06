@@ -2,19 +2,12 @@
 {
     display: flex;
     flex-direction: row;
-    background: #484848;
 }
 .member
 {
     display: flex;
     flex-direction: row;
 }
-/*.member_item*/
-/*{*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*margin: 0;*/
-/*}*/
 
 .membersBtn
 {
