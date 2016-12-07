@@ -1,3 +1,5 @@
+import 'webrtc-adapter';
+
 import React from 'react';
 import io from 'socket.io-client';
 import { render } from 'react-dom';

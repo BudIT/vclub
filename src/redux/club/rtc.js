@@ -35,7 +35,7 @@ export default createReducer(on => {
 
       return newPeers;
     }),
-    setIn('audioStreams', (userId, streams) => {
+    setIn('streams', (userId, streams) => {
       if (!streams[userId]) return streams;
 
       const newStreams = { ...streams };
@@ -46,5 +46,5 @@ export default createReducer(on => {
     rejectIn('passivePeers', (peerId, targetId) => peerId === targetId),
   );
 
-  on(addAudioStream, updateIn('audioStreams', ({ userId, stream }) => ({ [userId]: stream })));
+  on(addAudioStream, updateIn('streams', ({ userId, stream }) => ({ [userId]: stream })));
 });

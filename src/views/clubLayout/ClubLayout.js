@@ -19,11 +19,7 @@ const enhance = compose(
 );
 
 function ClubLayout(props) {
-  const {
-    rtc, authenticated, currentRoom, members, showMemberPanel, dispatch, media,
-  } = props;
-
-  const audioStreams = Object.keys(rtc.audioStreams).map(key => rtc.audioStreams[key]);
+  const { authenticated, currentRoom, members, showMemberPanel, dispatch } = props;
 
   return (
     <div>
@@ -33,10 +29,6 @@ function ClubLayout(props) {
           : <AuthedLayout currentRoom={currentRoom} />
         }
         {showMemberPanel && <UserList members={members} />}
-        {JSON.stringify(media)}
-        {audioStreams.map(stream => (
-          <audio ref={el => el && (el.srcObject = stream)} autoPlay controls />
-        ))}
       </main>
     </div>
   );

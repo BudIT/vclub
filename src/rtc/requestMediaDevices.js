@@ -1,9 +1,12 @@
 import { setAudioStream, setMediaRequestStatus } from 'vclub/redux/club/media';
+import {
+  MediaStatusDismissed, MediaStatusDenied, MediaStatusNoAudio, MediaStatusUnknown,
+} from 'vclub/constants/mediaStatus';
 
 
 const MediaRequestErrorsMap = {
-  PermissionDismissedError: 2,
-  PermissionDeniedError: 3,
+  PermissionDismissedError: MediaStatusDismissed,
+  PermissionDeniedError: MediaStatusDenied,
 };
 
 export default function requestMediaDevices(store) {
@@ -11,13 +14,13 @@ export default function requestMediaDevices(store) {
     const audioTracks = localStream.getAudioTracks();
 
     if (audioTracks.length === 0) {
-      store.dispatch(setMediaRequestStatus(4));
+      store.dispatch(setMediaRequestStatus(MediaStatusNoAudio));
       return;
     }
 
     store.dispatch(setAudioStream(localStream));
   }).catch(error => {
     const status = error.name && MediaRequestErrorsMap[error.name];
-    store.dispatch(setMediaRequestStatus(status || error.name));
+    store.dispatch(setMediaRequestStatus(status || MediaStatusUnknown, error.name));
   });
 }

@@ -8,8 +8,9 @@
   flex: 1;
 }
 
-.tab
-{
+.tab {
+  position: relative;
+
   color: #33363A;
   text-decoration: none;
   text-align: center;
@@ -31,6 +32,30 @@
 
 .tab:hover {
   background-color: #FFAA00;
+}
+
+.tabDisabled {
+  color: rgba(51, 54, 58, 0.5);
+  cursor: default;
+}
+
+.tabDisabled:hover {
+  background-color: transparent;
+}
+
+.errorMark {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  font-size: 16px;
+  font-family: 'Rubik', helvetica, sans-serif;
+  text-align: center;
+  width: 22px;
+  height: 22px;
+  line-height: 20px;
 }
 
 .dropdownContent {

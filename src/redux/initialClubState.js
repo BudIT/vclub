@@ -1,3 +1,6 @@
+import { MediaStatusPending } from 'vclub/constants/mediaStatus';
+
+
 export default {
   members: [], // array of { id: String, name: String, master: Boolean }
   auth: {
@@ -21,12 +24,12 @@ export default {
     expired: false,
   },
   media: {
-    status: 0, // 0 -requesting, 1 - ready, 2 - dismissed, 3 - denied, 4 - empty, 5 - UNKNOWN
+    status: MediaStatusPending,
     audioStream: null,
   },
   rtc: {
-    peers: {}, // ???
-    passivePeers: [], // ???
-    audioStreams: {},
+    peers: {},
+    passivePeers: [],
+    streams: {},
   },
 };

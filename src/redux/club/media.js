@@ -8,7 +8,7 @@ export const setMediaRequestStatus = actionCreator();
 
 export default createReducer(on => {
   on(setAudioStream,
-    setIn('audioStream'),
+    setIn('stream'),
     setIn('status', () => 1)
   );
 

@@ -20,8 +20,6 @@ const IceServers = [
   },
 ];
 
-const RTCPeerConnection = window.webkitRTCPeerConnection;
-
 export default function createRTCAPI(ioSocket, store) {
   function createPeerConnection(userId) {
     const { media } = store.getState();
@@ -29,7 +27,7 @@ export default function createRTCAPI(ioSocket, store) {
       iceServers: IceServers,
     });
 
-    peer.addStream(media.audioStream);
+    peer.addStream(media.stream);
 
     peer.onicecandidate = event => {
       if (!event.candidate) return;
@@ -56,7 +54,6 @@ export default function createRTCAPI(ioSocket, store) {
       peer.createOffer().then(localDesc => {
         peer.setLocalDescription(localDesc).then(() => {
           ioSocket.emit('RTC.SDP', { userId: member.id, sdp: localDesc });
-          console.log('send sdp', member.id, localDesc);
         });
       });
 
@@ -111,8 +108,6 @@ export default function createRTCAPI(ioSocket, store) {
       return;
     }
 
-    console.log('ICE got');
-
     peer.addIceCandidate(new RTCIceCandidate(candidate));
   });
 
@@ -135,7 +130,6 @@ export default function createRTCAPI(ioSocket, store) {
       peer.createAnswer().then(localDesc => {
         peer.setLocalDescription(localDesc).then(() => {
           ioSocket.emit('RTC.SDP', { userId, sdp: localDesc });
-          console.log('send sdp', userId, localDesc);
         });
       });
     });
