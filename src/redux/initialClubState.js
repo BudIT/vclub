@@ -11,6 +11,22 @@ export default {
   ui: {
     showMemberPanel: false,
   },
+  chat: {
+    messages: [
+      {
+        id: Date.now(),
+        author: 'Yanis',
+        date: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        message: 'hello',
+      },
+      {
+        id: Date.now(),
+        author: 'Den',
+        date: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        message: 'hello!',
+      },
+    ],
+  }, // array of { id: Number, author: String, date: String, message: String }
 };
 
 // PropTypes, make it as object to export probably
