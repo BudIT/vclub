@@ -22,6 +22,7 @@
     "borex-actions": "^0.1.0",
     "borex-reducers": "^0.1.0",
     "classnames": "^2.2.5",
+    "date-fns": "^1.15.1",
     "eslint": "^3.8.1",
     "express": "^4.14.0",
     "konva": "^1.2.2",

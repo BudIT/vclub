@@ -13,6 +13,10 @@ export function sendMessage(message) {
   return {
     type: SEND_MESSAGE,
     payload: message,
+    meta: {
+      remote: true,
+      broadcast: true,
+    },
   };
 }
 
@@ -23,10 +27,8 @@ export default function reducer(state, action) {
         messages: state.chat.messages,
       };
     case SEND_MESSAGE:
-      console.log('CHAT', action);
-      const message = action.payload;
       return {
-        messages: [...state.messages, message],
+        messages: [...state.messages, action.payload],
       };
     default:
       return state || initialState.chat;
