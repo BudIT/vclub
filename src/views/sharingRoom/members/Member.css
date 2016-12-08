@@ -90,10 +90,9 @@
 {
     background: 0;
     border: 0;
+    margin-left: -20px;
     padding: 0;
     cursor: pointer;
-    color: greenyellow;
-    font-size: 23px;
 }
 
 /* hide_show_btn style*/

@@ -11,6 +11,9 @@ import {
   completesSession,
 } from 'vclub/redux/club/sharing';
 
+import ball from '../ball/icon/tennis-ball.svg';
+import greenTick from './icon/green-tick.svg';
+
 import styles from './Member.css';
 
 const enhance = compose(
@@ -56,7 +59,7 @@ const enhance = compose(
     },
 
     onBallClick: (props) => () => {
-      const { dispatch, user, showBallMenu} = props;
+      const { dispatch, user, showBallMenu } = props;
       if (user.master) {
         dispatch(toggleBallMenu(!showBallMenu));
       }
@@ -110,7 +113,7 @@ function Member(props) {
             className={styles.btnBall}
             onClick={onBallClick}
           >
-            &#9918;
+            <img src={ball} alt="ball" width="30px" />
           </button>
 
           {showBallMenu && (
@@ -127,7 +130,9 @@ function Member(props) {
       )}
 
       {memberIsDone && (
-        <button className={styles.btnDone}>&#10003;</button>
+        <button className={styles.btnDone}>
+          <img src={greenTick} alt="green tick" width="60px" />
+        </button>
       )}
     </div>
   );
