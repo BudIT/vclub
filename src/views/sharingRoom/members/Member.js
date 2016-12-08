@@ -4,11 +4,15 @@ import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
 
-import { passBall
-  , setUserMenuPosition
-  , toggleBallMenu
-  , completesSession
+import {
+  passBall,
+  setUserMenuPosition,
+  toggleBallMenu,
+  completesSession,
 } from 'vclub/redux/club/sharing';
+
+import ball from '../ball/icon/tennis-ball.svg';
+import greenTick from './icon/green-tick.svg';
 
 import styles from './Member.css';
 
@@ -31,11 +35,12 @@ const enhance = compose(
 
   withHandlers({
     onMemberClick: (props) => () => {
-      const { user
-        , member
-        , ballPosition
-        , showUserMenu
-        , dispatch
+      const {
+        user,
+        member,
+        ballPosition,
+        showUserMenu,
+        dispatch,
       } = props;
 
       if (ballPosition === member.id) {
@@ -54,9 +59,9 @@ const enhance = compose(
     },
 
     onBallClick: (props) => () => {
-      const { dispatch, user } = props;
+      const { dispatch, user, showBallMenu } = props;
       if (user.master) {
-        dispatch(toggleBallMenu(true));
+        dispatch(toggleBallMenu(!showBallMenu));
       }
     },
 
@@ -68,15 +73,16 @@ const enhance = compose(
 );
 
 function Member(props) {
-  const { member
-    , ballPosition
-    , done
-    , showUserMenu
-    , showBallMenu
-    , onPassBallClick
-    , onBallClick
-    , onMemberClick
-    , onCompletesSessionClick
+  const {
+    member,
+    ballPosition,
+    done,
+    showUserMenu,
+    showBallMenu,
+    onPassBallClick,
+    onBallClick,
+    onMemberClick,
+    onCompletesSessionClick,
   } = props;
 
   const memberIsDone = done.includes(member.id);
@@ -107,7 +113,7 @@ function Member(props) {
             className={styles.btnBall}
             onClick={onBallClick}
           >
-            &#9918;
+            <img src={ball} alt="ball" width='30px' />
           </button>
 
           {showBallMenu && (
@@ -124,7 +130,9 @@ function Member(props) {
       )}
 
       {memberIsDone && (
-        <button className={styles.btnDone}>&#10003;</button>
+        <button className={styles.btnDone}>
+          <img src={greenTick} alt="green tick" width='60px' />
+        </button>
       )}
     </div>
   );

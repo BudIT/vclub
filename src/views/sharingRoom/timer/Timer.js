@@ -40,14 +40,9 @@ class Timer extends Component {
     const currentSeconds = prependZero(seconds);
     const currentMinutes = prependZero(minutes);
 
-    const expired = secondsElapsed < 0; // true
+    const expired = secondsElapsed < 0;
     const className = expired ? styles.timerExpired : styles.timer;
 
-    // if(expired) {
-    //   className = styles.timerExpired;
-    // } else {
-    //   className = styles.timer;
-    // }
     return (
       <div className={className}>
         {currentMinutes}:{currentSeconds}

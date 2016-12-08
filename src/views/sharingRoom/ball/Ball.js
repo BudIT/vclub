@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import ball from './icon/tennis-ball.svg';
+
 import styles from './Ball.css';
 
 
@@ -11,7 +13,9 @@ function Ball(props) {
   return (
     <div className={styles.containerBall}>
       {displayBall && (
-        <button className={styles.btnBall}>&#9918;</button>
+        <button className={styles.btnBall}>
+          <img src={ball} alt="ball" width='30px' />
+        </button>
       )}
     </div>
   );

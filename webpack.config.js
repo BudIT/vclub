@@ -37,7 +37,7 @@ module.exports = [
           loaders: ['style', 'css?modules&importLoaders=1', 'postcss-loader'],
         },
         {
-          test: /.(png|gif|jpe?g)(\?[a-z0-9=\.]+)?$/,
+          test: /.(svg|png|gif|jpe?g)(\?[a-z0-9=\.]+)?$/,
           loader: 'url',
           query: {
             limit: 10240,

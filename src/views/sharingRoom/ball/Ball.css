@@ -5,13 +5,11 @@
 
 .btnBall
 {
-    background: 0; /* url('icon-ball/362.gif') */
+    background: 0;
     border: 0;
     padding: 0;
     cursor: pointer;
-    font-size: 23px;
-    margin-top: 5px;
-    margin-right: 15px;
+    margin-right: .5em;
 }
 
 .btnBall:active
