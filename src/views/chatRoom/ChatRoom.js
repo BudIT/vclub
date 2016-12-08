@@ -3,21 +3,35 @@ import React, { Component, PropTypes } from 'react';
 import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import { connect } from 'react-redux';
+import format from 'date-fns/format';
+import { reset } from 'redux-form';
+import { sendMessage } from 'vclub/redux/club/chat';
 
 import MessageBox from 'vclub/views/chatRoom/MessageBox/MessageBox';
 import InputBox from 'vclub/views/chatRoom/InputBox/InputBox';
 import { turnOnMemberPanel } from 'vclub/redux/club/ui';
-import styles from './ChatRoom.css';
+// import styles from './ChatRoom.css';
 
 const enhance = compose(
   connect(state => ({
     messages: state.chat.messages,
+    username: state.auth.user.name,
   })),
     withHandlers({
       turnUsersPanel: props => () => {
         props.dispatch(turnOnMemberPanel());
       },
-    })
+      handleSubmit: (props) => (data) => {
+        const { dispatch } = props;
+        const { message } = data;
+        const author = props.username;
+
+        const id = Date.now();
+        const date = format(Date.now(), 'HH:mm');
+        dispatch(sendMessage({ id, author, date, message }));
+        dispatch(reset('chatMessage'));
+      },
+    }),
 );
 
 class ChatRoom extends Component {
@@ -26,11 +40,11 @@ class ChatRoom extends Component {
   }
 
   render() {
-    const { messages } = this.props;
+    const { messages, handleSubmit } = this.props;
     return (
       <section>
         <MessageBox messages={messages} />
-        <InputBox />
+        <InputBox onSubmit={handleSubmit} />
       </section>
     );
   }
@@ -45,6 +59,7 @@ ChatRoom.propTypes = {
     message: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   turnUsersPanel: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 /* eslint-enable */
 
