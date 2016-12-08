@@ -11,32 +11,13 @@ export default {
   ui: {
     showMemberPanel: false,
   },
+  sharingRoom: {
+    ballPosition: null,
+    done: [],
+    userMenuPosition: null,
+    showBallMenu: false,
+    timerStart: null,
+    sessionDuration: 300,
+    expired: false,
+  },
 };
-
-// PropTypes, make it as object to export probably
-
-// for members
-
-// members: PropTypes.arrayOf(PropTypes.shape({
-//   id: PropTypes.string.isRequired,
-//   name: PropTypes.string.isRequired,
-//   master: PropTypes.boolean.isRequired,
-// })).isRequired
-
-// for rooms
-
-// rooms: PropTypes.shape({
-//   currentRoom: PropTypes.string.isRequired,
-// }).isRequired
-
-// for ui
-
-// ui: PropTypes.shape({
-//   showMemberPanel: PropTypes.bool.isRequired,
-// }).isRequired
-
-// auth: PropTypes.shape({
-//   authenticated: PropTypes.bool.isRequired,
-//   authenticating: PropTypes.bool.isRequired,
-//   user: PropTypes.object.isRequired,
-// })

@@ -27,7 +27,7 @@ export function restoreAuth() {
     meta: {
       sideEffect: ({ store, localStorage }) => {
         const name = localStorage.getItem('name');
-        const master = localStorage.getItem('master');
+        const master = localStorage.getItem('master') === 'true';
 
         if (name) {
           store.dispatch(auth({ name, master }));

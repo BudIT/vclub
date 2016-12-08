@@ -1,0 +1,42 @@
+.timer
+{
+    background: #4d5c69;
+    border: 1px solid orange;
+    border-radius: 3px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: 0 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.timer::before
+{
+    content: '\023F3';
+}
+
+.timerExpired
+{
+    background: #b3bead;
+    border: 1px solid orange;
+    border-radius: 3px;
+    color: #b30000;
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: 0 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.timerExpired::before
+{
+    content: '\023F0';
+    padding-right: 5px;
+}
