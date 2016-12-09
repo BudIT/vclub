@@ -90,7 +90,6 @@
 {
     background: 0;
     border: 0;
-    margin-left: -20px;
     padding: 0;
     cursor: pointer;
 }
@@ -126,4 +125,8 @@
 .hideShowBtn:focus
 {
     outline: none;
+}
+
+.greenIcon {
+  fill: #2ad62a;
 }

@@ -18,6 +18,9 @@ export const addAudioStream = actionCreator(
   setPayload((userId, stream) => ({ userId, stream })),
 );
 
+export const setAllowedStreams = actionCreator();
+
+
 export default createReducer(on => {
   on(setPeers, setIn('peers'));
 
@@ -47,4 +50,6 @@ export default createReducer(on => {
   );
 
   on(addAudioStream, updateIn('streams', ({ userId, stream }) => ({ [userId]: stream })));
+
+  on(setAllowedStreams, setIn('allowedStreams'));
 });

@@ -73,6 +73,7 @@
     "rimraf": "^2.5.4",
     "stack-source-map": "^1.0.5",
     "style-loader": "^0.13.1",
+    "svg-sprite-loader": "0.0.31",
     "updeep": "^0.16.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",

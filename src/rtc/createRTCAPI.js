@@ -1,7 +1,14 @@
+import R from 'ramda';
+import { MediaStatusReady } from 'vclub/constants/mediaStatus';
+
 import { MEMBER_ENTER, MEMBER_LEAVE } from 'vclub/redux/club/members';
 import { INITIALIZE } from 'vclub/redux/club/init';
+import { setAudioStream } from 'vclub/redux/club/media';
+import {
+  setPeers, addPeer, removePeer, addAudioStream, setAllowedStreams,
+} from 'vclub/redux/club/rtc';
 
-import { setPeers, addPeer, removePeer, addAudioStream } from 'vclub/redux/club/rtc';
+import { ByRoomSelectors, DefaultStreamsSelector } from './allowedStreamsSelectors';
 
 
 const IceServers = [
@@ -27,7 +34,9 @@ export default function createRTCAPI(ioSocket, store) {
       iceServers: IceServers,
     });
 
-    peer.addStream(media.stream);
+    if (media.stream) {
+      peer.addStream(media.stream);
+    }
 
     peer.onicecandidate = event => {
       if (!event.candidate) return;
@@ -83,8 +92,48 @@ export default function createRTCAPI(ioSocket, store) {
     }
   }
 
+  function setupStream(stream, peers) {
+    R.values(peers).forEach(peer => {
+      peer.addStream(stream);
+    });
+  }
+
+  function manageAllowedStreams() {
+    const state = store.getState();
+    const { rooms, rtc } = store.getState();
+
+    const roomSelector = ByRoomSelectors[rooms.currentRoom];
+    const selector = roomSelector || DefaultStreamsSelector;
+    const newStreams = selector(state);
+
+    if (newStreams !== rtc.allowedStreams) {
+      store.dispatch(setAllowedStreams(newStreams));
+    }
+  }
+
+  function manageStreamState() {
+    const { auth, media, rtc } = store.getState();
+
+    if (media.status !== MediaStatusReady) {
+      return;
+    }
+
+    const userId = auth.user.id;
+    const hasAllowedStream = rtc.allowedStreams.includes(userId);
+    const shouldBeEnabled = !media.muted && hasAllowedStream;
+    const track = media.stream.getAudioTracks()[0];
+
+    if (track.enabled !== shouldBeEnabled) {
+      track.enabled = shouldBeEnabled;
+    }
+  }
+
   function dispatch(action) {
-    const { members, rtc } = store.getState();
+    const { media, members, rtc, auth } = store.getState();
+
+    if (!auth.authenticated) {
+      return;
+    }
 
     if (action.type === INITIALIZE) {
       initPeers(members);
@@ -97,6 +146,13 @@ export default function createRTCAPI(ioSocket, store) {
     if (action.type === MEMBER_LEAVE) {
       destroyPeer(action.payload, rtc);
     }
+
+    if (action.type === setAudioStream.type) {
+      setupStream(media.stream, rtc.peers);
+    }
+
+    manageAllowedStreams();
+    manageStreamState();
   }
 
   ioSocket.on('RTC.ICECandidate', ({ userId, candidate }) => {
@@ -104,7 +160,7 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = rtc.peers[userId];
 
     if (!peer) {
-      console.log('ICE-JOIN race');
+      // track this place 'ICE-JOIN race'
       return;
     }
 
@@ -118,7 +174,7 @@ export default function createRTCAPI(ioSocket, store) {
     const isPassive = passivePeers.includes(userId);
 
     if (!peer) {
-      console.log('SDP-JOIN race');
+      // track this place 'SDP-JOIN race'
       return;
     }
 

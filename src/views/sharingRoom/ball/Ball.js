@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
-import ball from './icon/tennis-ball.svg';
+import SvgIcon from 'vclub/components/icons/SvgIcon';
 
+import ballIcon from './icon/tennis-ball.svg';
 import styles from './Ball.css';
 
 
@@ -14,7 +15,7 @@ function Ball(props) {
     <div className={styles.containerBall}>
       {displayBall && (
         <button className={styles.btnBall}>
-          <img src={ball} alt="ball" width="30px" />
+          <SvgIcon glyph={ballIcon} size={30} />
         </button>
       )}
     </div>

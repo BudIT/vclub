@@ -1,6 +1,6 @@
-export const MediaStatusPending = 0;
-export const MediaStatusReady = 1;
-export const MediaStatusDismissed = 2;
-export const MediaStatusDenied = 3;
-export const MediaStatusNoAudio = 4;
-export const MediaStatusUnknown = 1000;
+export const MediaStatusPending = 'PENDING';
+export const MediaStatusReady = 'READY';
+export const MediaStatusDismissed = 'DISMISSED';
+export const MediaStatusDenied = 'DENIED';
+export const MediaStatusNoAudio = 'NOAUDIO';
+export const MediaStatusUnknown = 'UNKNOWN';

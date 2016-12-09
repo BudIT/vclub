@@ -1,5 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-env jest */
+import { ChatRoomType, MediaRoomType } from 'vclub/constants/roomTypes';
 import initialState from 'vclub/redux/initialClubState';
 import reducer, {
   CHANGE_ROOM, changeRoom,
@@ -7,7 +8,7 @@ import reducer, {
 
 // action creator
 test('changeRoom action creates proper action', () => {
-  const nextRoom = 'CHAT';
+  const nextRoom = ChatRoomType;
   const expectedAction = {
     type: CHANGE_ROOM,
     payload: nextRoom,
@@ -25,9 +26,9 @@ test('reducer returns initial state', () => {
 test('reducer should handle CHANGE_ROOM', () => {
   const { rooms: roomsInitialState } = initialState;
 
-  let nextRoom = 'CHAT';
-  if (roomsInitialState.currentRoom === 'CHAT') {
-    nextRoom = 'VIDEO';
+  let nextRoom = ChatRoomType;
+  if (roomsInitialState.currentRoom === ChatRoomType) {
+    nextRoom = MediaRoomType;
   }
 
   const expectedState = {

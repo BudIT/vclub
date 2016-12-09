@@ -3,13 +3,14 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { withHandlers } from 'recompose';
 
-import cx from 'classnames';
-
 // actions
 import { logOut } from 'vclub/redux/club/auth';
 import { toggleMemberPanel } from 'vclub/redux/club/ui';
 
 import style from './HeaderRight.css';
+
+import MediaButton from './MediaButton/MediaButton';
+
 
 const enhance = compose(
   withHandlers({
@@ -24,24 +25,14 @@ const enhance = compose(
 
 function HeaderRight(props) {
   const {
-    numberOfMembers, mediaStatus,
+    numberOfMembers,
     onLogOut, onToggleMemberPanel,
   } = props;
-  const microphoneDisabled = mediaStatus !== 1;
-  const microphoneError = microphoneDisabled && mediaStatus !== 0;
 
   return (
     <ul className={style.ul}>
       <li>
-        <button
-          className={cx(style.tab, microphoneDisabled && style.tabDisabled)}
-          disabled={microphoneDisabled}
-        >
-          {'\uD83C\uDFA4'}
-          {microphoneError && (
-            <span className={style.errorMark}>&#10071;</span>
-          )}
-        </button>
+        <MediaButton className={style.tab} />
       </li>
       <li>
         <button
@@ -72,7 +63,6 @@ function HeaderRight(props) {
 
 HeaderRight.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
-  mediaStatus: PropTypes.number.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onToggleMemberPanel: PropTypes.func.isRequired,
 };

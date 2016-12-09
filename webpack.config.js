@@ -38,13 +38,20 @@ module.exports = [
           loaders: ['style', 'css?modules&importLoaders=1', 'postcss-loader'],
         },
         {
-          test: /\.(svg|png|gif|jpe?g)(\?[a-z0-9=.]+)?$/,
+          test: /\.(png|gif|jpe?g)(\?[a-z0-9=.]+)?$/,
           loader: 'url',
           query: {
             limit: 10240,
             name: '[name]-[hash:6].[ext]',
           },
-        }
+        },
+        {
+          test: /\.svg$/,
+          loader: 'svg-sprite',
+          query: {
+            name: '[name]-[hash]',
+          },
+        },
       ],
     },
     postcss: function() {

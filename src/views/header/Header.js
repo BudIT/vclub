@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
+import {
+  ChatRoomType, WhiteboardRoomType, SharingRoomType, MediaRoomType,
+} from 'vclub/constants/roomTypes';
+
 // subviews
 import HeaderRight from './HeaderRight/HeaderRight';
 import HeaderLeft from './HeaderLeft/HeaderLeft';
@@ -12,16 +16,15 @@ const enhance = compose(
   connect(state => ({
     numberOfMembers: state.members.length,
     currentRoomName: state.rooms.currentRoom,
-    mediaStatus: state.media.status,
   })),
 );
 
 function Header(props) {
-  const roomsNames = ['SHARING', 'VIDEO', 'CHAT', 'WHITEBOARD'];
+  const roomsNames = [ChatRoomType, SharingRoomType, MediaRoomType, WhiteboardRoomType];
 
   const {
     dispatch,
-    numberOfMembers, currentRoomName, mediaStatus,
+    numberOfMembers, currentRoomName,
   } = props;
 
 
@@ -34,7 +37,6 @@ function Header(props) {
       />
       <HeaderRight
         numberOfMembers={numberOfMembers}
-        mediaStatus={mediaStatus}
         dispatch={dispatch}
       />
     </div>
@@ -45,7 +47,6 @@ Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
   numberOfMembers: PropTypes.number.isRequired,
   currentRoomName: PropTypes.string.isRequired,
-  mediaStatus: PropTypes.number.isRequired,
 };
 
 export default enhance(Header);

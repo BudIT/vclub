@@ -15,6 +15,7 @@ export default function requestMediaDevices(store) {
 
     if (audioTracks.length === 0) {
       store.dispatch(setMediaRequestStatus(MediaStatusNoAudio));
+
       return;
     }
 
