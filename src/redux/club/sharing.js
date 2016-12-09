@@ -19,17 +19,17 @@ export const decrement = actionCreator(
 );
 export const passBall = actionCreator(
   'passBall',
-  setPayload((memberId) => (memberId)), // ?????????????
+  setPayload((memberId) => (memberId)), // ???
   setMetaStatic('remote', true),
   setMetaStatic('broadcast', true)
 );
 export const setUserMenuPosition = actionCreator(
   'setUserMenuPosition',
-  setPayload((memberId) => (memberId)) // ?????????????
+  setPayload((memberId) => (memberId)) // ???
 );
 export const toggleBallMenu = actionCreator(
   'toggleBallMenu',
-  setPayload((showBallMenu) => (showBallMenu)) // ?????????????
+  setPayload((showBallMenu) => (showBallMenu)) // ???
 );
 export const completesSession = actionCreator(
   'completesSession',
@@ -93,121 +93,3 @@ export default createReducer((on) => {
     return initialState.sharingRoom;
   });
 });
-
-// export function increment() {
-//   return {
-//     type: INCREMENT_TIMER_MINUTES,
-//     meta: {
-//       remote: true,
-//       broadcast: true,
-//     },
-//   };
-// }
-
-// export function decrement() {
-//   return {
-//     type: DECREMENT_TIMER_MINUTES,
-//     meta: {
-//       remote: true,
-//       broadcast: true,
-//     },
-//   };
-// }
-
-// export function passBall(memberId) {
-//   return {
-//     type: PASS_BALL,
-//     payload: memberId,
-//     meta: {
-//       remote: true,
-//       broadcast: true,
-//     },
-//   };
-// }
-
-// export function setUserMenuPosition(memberId) {
-//   return {
-//     type: SET_SHOW_USER_MENU_POSITION,
-//     payload: memberId,
-//   };
-// }
-
-// export function toggleBallMenu(showBallMenu) {
-//   return {
-//     type: TOGGLE_BALL_MENU,
-//     payload: showBallMenu,
-//   };
-// }
-
-// export function completesSession() {
-//   return {
-//     type: COMPLETES_SESSION,
-//     meta: {
-//       remote: true,
-//       broadcast: true,
-//     },
-//   };
-// }
-
-
-// export default function reducer(state, action) {
-//   switch (action.type) {
-//
-//     case increment.type:
-//       return {
-//         ...state,
-//         sessionDuration: state.sessionDuration + 60,
-//       };
-//
-//     case decrement.type:
-//       if (state.sessionDuration <= 60) {
-//         return state;
-//       }
-//       return {
-//         ...state,
-//         sessionDuration: state.sessionDuration - 60,
-//       };
-//
-//     case passBall.type:
-//       if (state.ballPosition === action.payload) {
-//         return state;
-//       }
-//
-//       return {
-//         ...state,
-//         ballPosition: action.payload,
-//         timerStart: Date.now(),
-//         userMenuPosition: null,
-//         done: [...state.done, state.ballPosition],
-//       };
-//
-//     case setUserMenuPosition.type:
-//       if (state.userMenuPosition === action.payload) {
-//         return state;
-//       }
-//
-//       return {
-//         ...state,
-//         userMenuPosition: action.payload,
-//       };
-//
-//     case toggleBallMenu.type:
-//       if (state.showBallMenu === action.payload) {
-//         return state;
-//       }
-//
-//       return {
-//         ...state,
-//         showBallMenu: action.payload,
-//       };
-//
-//     case completesSession.type:
-//       return initialState.sharingRoom;
-//
-//     case changeRoom.type:
-//       return initialState.sharingRoom;
-//
-//     default:
-//       return state || initialState.sharingRoom;
-//   }
-// }

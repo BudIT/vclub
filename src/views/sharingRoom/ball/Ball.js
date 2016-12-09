@@ -14,7 +14,7 @@ function Ball(props) {
     <div className={styles.containerBall}>
       {displayBall && (
         <button className={styles.btnBall}>
-          <img src={ball} alt="ball" width='30px' />
+          <img src={ball} alt="ball" width="30px" />
         </button>
       )}
     </div>

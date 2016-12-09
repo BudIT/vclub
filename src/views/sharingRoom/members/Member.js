@@ -113,7 +113,7 @@ function Member(props) {
             className={styles.btnBall}
             onClick={onBallClick}
           >
-            <img src={ball} alt="ball" width='30px' />
+            <img src={ball} alt="ball" width="30px" />
           </button>
 
           {showBallMenu && (
@@ -131,7 +131,7 @@ function Member(props) {
 
       {memberIsDone && (
         <button className={styles.btnDone}>
-          <img src={greenTick} alt="green tick" width='60px' />
+          <img src={greenTick} alt="green tick" width="60px" />
         </button>
       )}
     </div>
