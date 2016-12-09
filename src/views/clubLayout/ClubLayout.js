@@ -13,8 +13,6 @@ const enhance = compose(
     currentRoom: state.rooms.currentRoom,
     showMemberPanel: state.ui.showMemberPanel,
     members: state.members,
-    rtc: state.rtc,
-    media: state.media,
   })),
 );
 
