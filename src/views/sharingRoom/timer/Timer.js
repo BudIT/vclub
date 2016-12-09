@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
+import ServerTime from 'vclub/utils/ServerTime';
+
 import styles from './Timer.css';
 
 
 function getElapsedTime(startTime, duration) {
-  const now = Date.now();
-  const timeDiff = Math.floor((now - startTime) / 1000);
+  const timeDiff = Math.floor((ServerTime.elapsedFrom(startTime)) / 1000);
   return duration - timeDiff;
 }
 

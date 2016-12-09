@@ -85,6 +85,13 @@ io.on('connection', (socket) => {
 
     socket.emit('dispatch', initialize(store.getState(), user));
   });
+
+  socket.on('time:request', clientStartTime => {
+    socket.emit('time:response', {
+      clientStartTime,
+      serverTime: Date.now(),
+    });
+  });
 });
 
 httpServer.listen(app.get('port'), () => {

@@ -18,6 +18,7 @@ import initialState from 'vclub/redux/initialClubState';
 import { restoreAuth } from 'vclub/redux/club/auth';
 
 import requestMediaDevices from 'vclub/rtc/requestMediaDevices';
+import ServerTime from 'vclub/utils/ServerTime';
 
 
 const ioSocket = io({ path: '/vclub-socket', forceNew: true });
@@ -34,6 +35,16 @@ const storeEnhancer = compose(
 const store = createStore(reducer, initialState, storeEnhancer);
 
 ioSocket.on('dispatch', action => store.dispatch(action));
+
+ioSocket.on('time:response', data => {
+  const duration = Date.now() - data.clientStartTime;
+  const clientEventTime = data.clientStartTime + (duration / 2);
+  const diff = data.serverTime - clientEventTime;
+
+  ServerTime.setDiff(diff);
+});
+
+ioSocket.emit('time:request', Date.now());
 
 store.dispatch(restoreAuth());
 

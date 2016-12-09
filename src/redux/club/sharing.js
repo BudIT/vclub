@@ -1,3 +1,5 @@
+import ServerTime from 'vclub/utils/ServerTime';
+
 import initialState from 'vclub/redux/initialClubState';
 import { CHANGE_ROOM } from 'vclub/redux/club/rooms';
 
@@ -92,7 +94,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         ballPosition: action.payload,
-        timerStart: Date.now(),
+        timerStart: ServerTime.now(),
         userMenuPosition: null,
         done: [...state.done, state.ballPosition],
       };
