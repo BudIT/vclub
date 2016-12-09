@@ -12,6 +12,7 @@ const enhance = compose(
   connect(state => ({
     numberOfMembers: state.members.length,
     currentRoomName: state.rooms.currentRoom,
+    user: state.auth.user,
   })),
 );
 
@@ -20,7 +21,9 @@ function Header(props) {
 
   const {
     dispatch,
-    numberOfMembers, currentRoomName,
+    numberOfMembers,
+    currentRoomName,
+    user,
   } = props;
 
 
@@ -29,6 +32,7 @@ function Header(props) {
       <HeaderLeft
         currentRoomName={currentRoomName}
         roomsNames={roomsNames}
+        user={user}
         dispatch={dispatch}
       />
       <HeaderRight
@@ -43,6 +47,11 @@ Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
   numberOfMembers: PropTypes.number.isRequired,
   currentRoomName: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    master: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default enhance(Header);
