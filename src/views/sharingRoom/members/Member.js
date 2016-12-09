@@ -11,8 +11,10 @@ import {
   completesSession,
 } from 'vclub/redux/club/sharing';
 
-import ball from '../ball/icon/tennis-ball.svg';
-import greenTick from './icon/green-tick.svg';
+import SvgIcon from 'vclub/components/icons/SvgIcon';
+
+import ballIcon from '../ball/icon/tennis-ball.svg';
+import doneIcon from './icon/ic_done_black_24px.svg';
 
 import styles from './Member.css';
 
@@ -113,7 +115,7 @@ function Member(props) {
             className={styles.btnBall}
             onClick={onBallClick}
           >
-            <img src={ball} alt="ball" width="30px" />
+            <SvgIcon glyph={ballIcon} />
           </button>
 
           {showBallMenu && (
@@ -131,7 +133,7 @@ function Member(props) {
 
       {memberIsDone && (
         <button className={styles.btnDone}>
-          <img src={greenTick} alt="green tick" width="60px" />
+          <SvgIcon className={styles.greenIcon} glyph={doneIcon} />
         </button>
       )}
     </div>

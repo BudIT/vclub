@@ -1,3 +1,7 @@
+import { MediaStatusPending } from 'vclub/constants/mediaStatus';
+import { ChatRoomType } from 'vclub/constants/roomTypes';
+
+
 export default {
   members: [], // array of { id: String, name: String, master: Boolean }
   auth: {
@@ -6,7 +10,7 @@ export default {
     user: null, // { id: String, name: String, master: Boolean }
   },
   rooms: {
-    currentRoom: 'CHAT',
+    currentRoom: ChatRoomType,
   },
   ui: {
     showMemberPanel: false,
@@ -19,5 +23,17 @@ export default {
     timerStart: null,
     sessionDuration: 300,
     expired: false,
+  },
+  media: {
+    muted: false,
+    status: MediaStatusPending,
+    stream: null,
+    errorName: null,
+  },
+  rtc: {
+    peers: {},
+    passivePeers: [],
+    streams: {},
+    allowedStreams: [],
   },
 };

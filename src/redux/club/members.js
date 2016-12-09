@@ -1,8 +1,8 @@
 import initialState from 'vclub/redux/initialClubState';
 
 
-const MEMBER_ENTER = 'club/members/member-enter';
-const MEMBER_LEAVE = 'club/members/member-leave';
+export const MEMBER_ENTER = 'club/members/member-enter';
+export const MEMBER_LEAVE = 'club/members/member-leave';
 
 
 export function memberEnter(member) {

@@ -17,9 +17,7 @@ const enhance = compose(
 );
 
 function ClubLayout(props) {
-  const {
-    authenticated, currentRoom, members, showMemberPanel, dispatch,
-  } = props;
+  const { authenticated, currentRoom, members, showMemberPanel, dispatch } = props;
 
   return (
     <div>

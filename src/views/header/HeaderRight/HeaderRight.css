@@ -8,8 +8,9 @@
   flex: 1;
 }
 
-.tab
-{
+.tab {
+  position: relative;
+
   color: #33363A;
   text-decoration: none;
   text-align: center;
@@ -29,7 +30,7 @@
   border-right: 2px solid transparent;
 }
 
-.tab:hover {
+.tab:not([disabled]):hover {
   background-color: #FFAA00;
 }
 

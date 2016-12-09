@@ -9,6 +9,9 @@ import { toggleMemberPanel } from 'vclub/redux/club/ui';
 
 import style from './HeaderRight.css';
 
+import MediaButton from './MediaButton/MediaButton';
+
+
 const enhance = compose(
   withHandlers({
     onToggleMemberPanel: props => () => {
@@ -28,6 +31,9 @@ function HeaderRight(props) {
 
   return (
     <ul className={style.ul}>
+      <li>
+        <MediaButton className={style.tab} />
+      </li>
       <li>
         <button
           className={style.tab}

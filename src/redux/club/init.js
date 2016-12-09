@@ -1,4 +1,4 @@
-const INITIALIZE = 'club/init/initialize';
+export const INITIALIZE = 'club/init/initialize';
 
 export function initialize(serverState, user) {
   return {
@@ -15,7 +15,9 @@ export default function hoReducer(reducer) {
       serverState.auth.authenticating = false;
       serverState.auth.user = user;
 
-      return serverState;
+      delete serverState.media;
+
+      return { ...state, ...serverState };
     }
 
     return reducer(state, action);

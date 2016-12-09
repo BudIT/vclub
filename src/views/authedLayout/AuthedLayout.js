@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 
-// import compose from 'recompose/compose';
-// import { connect } from 'react-redux';
+import {
+  ChatRoomType, WhiteboardRoomType, SharingRoomType, MediaRoomType,
+} from 'vclub/constants/roomTypes';
 
+import AudioStreams from 'vclub/views/audioStreams/AudioStreams';
 import Header from 'vclub/views/header/Header';
 
 // rooms
@@ -11,17 +13,16 @@ import SharingRoom from 'vclub/views/sharingRoom/SharingRoom';
 import WhiteBoardRoom from 'vclub/views/whiteBoardRoom/WhiteBoardRoom';
 import VideoRoom from 'vclub/views/videoRoom/VideoRoom';
 
-// const enhance = compose();
 
 const room = (currentRoom) => {
   switch (currentRoom) {
-    case 'CHAT':
+    case ChatRoomType:
       return <ChatRoom />;
-    case 'SHARING':
+    case SharingRoomType:
       return <SharingRoom />;
-    case 'VIDEO':
+    case MediaRoomType:
       return <VideoRoom />;
-    case 'WHITEBOARD':
+    case WhiteboardRoomType:
       return <WhiteBoardRoom />;
     default:
       return 'Not implemented';
@@ -35,6 +36,7 @@ function AuthedLayout(props) {
 
   return (
     <div>
+      <AudioStreams />
       <Header />
       { room(currentRoom) }
     </div>
