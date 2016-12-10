@@ -41,11 +41,11 @@ export function logOut() {
   return {
     type: LOG_OUT,
     meta: {
-      sideEffect: ({ ioSocket, localStorage }) => {
-        ioSocket.emit('logOut');
-
+      sideEffect: ({ localStorage }) => {
         localStorage.removeItem('name');
         localStorage.removeItem('master');
+
+        document.location.reload();
       },
     },
   };
@@ -57,10 +57,6 @@ export default function reducer(state, action) {
       ...state,
       authenticating: true,
     };
-  }
-
-  if (action.type === LOG_OUT) {
-    return initialState.auth;
   }
 
   return state || initialState.auth;

@@ -55,15 +55,13 @@ io.on('connection', (socket) => {
       socket.join('masters');
     }
 
-    const exit = () => {
+    socket.on('disconnect', () => {
       const memberLeaveAction = memberLeave(user.id);
 
       delete authSockets[user.id];
       socket.leave('users');
       store.dispatch(memberLeaveAction);
-    };
-    socket.on('disconnect', exit);
-    socket.on('logOut', exit);
+    });
 
     socket.on('dispatch', action => store.dispatch(action));
 
