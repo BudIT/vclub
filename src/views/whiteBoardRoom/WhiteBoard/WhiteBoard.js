@@ -11,7 +11,7 @@ import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // import { addNewFigure } from 'vclub/redux/club/whiteboard';
 // ! addNewFigure as props
 
-import { BoardRect, BoardCircle, BoardLine, BoardEllipse } from '../figures';
+import { BoardRect, BoardCircle, BoardLine, BoardEllipse, BoardText } from '../figures';
 import { backgroundColor, getColor } from '../colors';
 import styles from './WhiteBoard.css';
 
@@ -29,6 +29,8 @@ function renderFigure(figureParam) {
       return <BoardLine {...figureParam} />;
     case ELLS:
       return <BoardEllipse {...figureParam} />;
+    case TEXT:
+      return <BoardText {...figureParam} />
     default:
       return null;
   }
