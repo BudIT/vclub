@@ -50,6 +50,8 @@ class WhiteBoard extends React.Component {
       listenForMouseMove: false,
       // figures to render
       figure: {},
+      layerHeight: window.innerHeight,
+      layerWidth: window.innerWidth,
     };
   }
 
@@ -97,6 +99,15 @@ class WhiteBoard extends React.Component {
     }
   }
 
+  componentDidMount() {
+    console.log(this.stage.offsetTop);
+    console.log(this.stage.offsetLeft);
+    this.setState({
+      layerWidth: window.innerWidth - this.stage.offsetLeft,
+      layerHeight: window.innerHeight - this.stage.offsetTop,
+    });
+  }
+
   onMouseMove = (evt) => {
     const { evt: {
       offsetX, offsetY,
@@ -128,15 +139,15 @@ class WhiteBoard extends React.Component {
     // console.log(this.props.nextFigureType);
     // console.log("FIGURE");
     return (
-      <div className={styles.whiteBoard}>
-        <Stage width={window.innerWidth} height={window.innerHeight}>
+      <div className={styles.whiteBoard} ref={ stage => { this.stage = stage; }}>
+        <Stage width={this.state.layerWidth} height={this.state.layerHeight}>
           <Layer
             listening
             onMouseMove={this.onMouseMove}
             onMouseDown={this.onMouseDown}
             onMouseUp={this.onMouseUp}
           >
-            <Rect x="0" y="0" width={window.innerWidth} height={window.innerHeight} fill={backgroundColor} />
+            <Rect x="0" y="0" width={this.state.layerWidth} height={this.state.layerHeight} fill={backgroundColor} />
             {figures.map(renderFigure)}
             {renderFigure(figure)}
           </Layer>
