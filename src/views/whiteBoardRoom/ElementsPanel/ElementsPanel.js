@@ -46,13 +46,13 @@ function ElementsPanel(props) {
           {/* Line */}
         </button>
       </li>
-      <li className={styles.element}>
+      {/* <li className={styles.element}>
         <button onClick={onClickForCircle} className={gCN(CIRC, nextFigureType)}>
           <svg viewBox="0 0 200 200">
             <circle cx="100" cy="100" r="100" />
           </svg>
         </button>
-      </li>
+      </li> */}
       <li className={styles.element}>
         <button onClick={onClickForEllipse} className={gCN(ELLS, nextFigureType)}>
           <svg viewBox="0 0 200 200">
