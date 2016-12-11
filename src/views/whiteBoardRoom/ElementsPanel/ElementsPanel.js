@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { withHandlers } from 'recompose';
 
-import { RECT, CIRC, LINE, ELLS } from 'vclub/constants/whiteboardElements';
+import { RECT, CIRC, LINE, ELLS, TEXT } from 'vclub/constants/whiteboardElements';
 
 import styles from './ElementsPanel.css';
 
@@ -12,12 +12,13 @@ const enhance = compose(
     onClickForLine: props => () => props.onClick(LINE),
     onClickForCircle: props => () => props.onClick(CIRC),
     onClickForEllipse: props => () => props.onClick(ELLS),
+    onClickForText: props => () => props.onClick(TEXT),
   })
 );
 
 function ElementsPanel(props) {
   const {
-    onClickForRect, onClickForLine, onClickForCircle, onClickForEllipse,
+    onClickForRect, onClickForLine, onClickForCircle, onClickForEllipse, onClickForText,
     nextFigureType,
   } = props;
 
@@ -59,6 +60,15 @@ function ElementsPanel(props) {
           </svg>
         </button>
       </li>
+      <li className={styles.element}>
+        <button onClick={onClickForText} className={gCN(TEXT, nextFigureType)}>
+          <svg viewBox="0 0 200 200">
+            <text x="10" y="40" style={{fontSize: 40}}>
+              T
+            </text>
+          </svg>
+        </button>
+      </li>
     </ul>
   );
 }
@@ -68,6 +78,7 @@ ElementsPanel.propTypes = {
   onClickForLine: PropTypes.func,
   onClickForCircle: PropTypes.func,
   onClickForEllipse: PropTypes.func,
+  onClickForText: PropTypes.func,
   nextFigureType: PropTypes.number,
 };
 
