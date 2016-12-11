@@ -10,8 +10,7 @@ const BoardRect = ({ x, y, x1, y1, color }) => {
   return (
     <Rect
       x={x} y={y} width={x1 - x} height={y1 - y}
-      fill={color}
-      stroke={'#00008B'}
+      stroke="black"
       strokeWidth={4}
     />
   );

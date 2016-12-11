@@ -10,8 +10,8 @@ const BoardLine = ({ x, y, x1, y1, color }) => {
   return (
     <Line
       points={[x, y, x1, y1]}
-      stroke={color}
-      strokeWidth={15}
+      stroke="black"
+      strokeWidth={4}
       lineCap="round"
     />
   );

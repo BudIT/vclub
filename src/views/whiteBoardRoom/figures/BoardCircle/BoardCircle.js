@@ -11,8 +11,7 @@ const BoardCircle = ({ x, y, x1, y1, color }) => {
 
   return (<Circle
     x={x} y={y} radius={radius}
-    fill={color}
-    stroke={'#00008B'}
+    stroke='black'
     strokeWidth={4}
   />);
 };
