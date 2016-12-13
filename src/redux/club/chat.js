@@ -1,25 +1,19 @@
-import initialState from 'vclub/redux/initialClubState';
+import actionCreator from 'borex-actions/actionCreator';
+import setPayload from 'borex-actions/setPayload';
+import setType from 'borex-actions/setType';
+import setMetaStatic from 'borex-actions/setMetaStatic';
+import createReducer from 'borex-reducers/createReducer';
 
-export const SEND_MESSAGE = 'club/chat/send-message';
+export const sendMessage = actionCreator(
+  setType('Send message'),
+  setPayload(message => message),
+  setMetaStatic('remote', true),
+  setMetaStatic('broadcast', true)
+);
 
-export function sendMessage(message) {
-  return {
-    type: SEND_MESSAGE,
-    payload: message,
-    meta: {
-      remote: true,
-      broadcast: true,
-    },
-  };
-}
+export default createReducer(on => {
+  on(sendMessage, (state, action) => ({
+    messages: [...state.messages, action.payload],
+  }));
+});
 
-export default function reducer(state, action) {
-  switch (action.type) {
-    case SEND_MESSAGE:
-      return {
-        messages: [...state.messages, action.payload],
-      };
-    default:
-      return state || initialState.chat;
-  }
-}
