@@ -11,6 +11,11 @@ book.setInitialState(initialState);
 book.addReduxStory('InitialState ChatRoom', dispatch => (
   <ChatRoom dispatch={dispatch} />
 ), {
+  auth: {
+    user: {
+      name: 'TestName',
+    },
+  },
   chat: {
     messages: [
       {
@@ -26,6 +31,11 @@ book.addReduxStory('InitialState ChatRoom', dispatch => (
 book.addReduxStory('More messages', dispatch => (
   <ChatRoom dispatch={dispatch} />
 ), {
+  auth: {
+    user: {
+      name: 'TestName',
+    },
+  },
   chat: {
     messages: [
       {
@@ -53,6 +63,11 @@ book.addReduxStory('More messages', dispatch => (
 book.addReduxStory('No messages', dispatch => (
   <ChatRoom dispatch={dispatch} />
   ), {
+    auth: {
+      user: {
+        name: 'TestName',
+      },
+    },
     chat: {
       messages: [],
     } },

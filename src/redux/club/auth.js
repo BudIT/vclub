@@ -9,7 +9,10 @@ export function auth(authData, remember = false) {
     type: AUTH,
     payload: authData,
     meta: {
-      sideEffect: ({ ioSocket, localStorage }) => {
+      sideEffect: ({
+        ioSocket,
+        localStorage,
+      }) => {
         ioSocket.emit('auth', authData);
 
         if (remember) {
@@ -25,12 +28,18 @@ export function restoreAuth() {
   return {
     type: RESTORE_AUTH,
     meta: {
-      sideEffect: ({ store, localStorage }) => {
+      sideEffect: ({
+        store,
+        localStorage,
+      }) => {
         const name = localStorage.getItem('name');
         const master = localStorage.getItem('master');
 
         if (name) {
-          store.dispatch(auth({ name, master }));
+          store.dispatch(auth({
+            name,
+            master,
+          }));
         }
       },
     },
@@ -41,7 +50,10 @@ export function logOut() {
   return {
     type: LOG_OUT,
     meta: {
-      sideEffect: ({ ioSocket, localStorage }) => {
+      sideEffect: ({
+        ioSocket,
+        localStorage,
+      }) => {
         ioSocket.emit('logOut');
 
         localStorage.removeItem('name');

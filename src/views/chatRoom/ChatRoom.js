@@ -9,7 +9,7 @@ import { sendMessage } from 'vclub/redux/club/chat';
 
 import MessageBox from 'vclub/views/chatRoom/MessageBox/MessageBox';
 import InputBox from 'vclub/views/chatRoom/InputBox/InputBox';
-import { turnOnMemberPanel } from 'vclub/redux/club/ui';
+import { toggleMemberPanel } from 'vclub/redux/club/ui';
 // import styles from './ChatRoom.css';
 
 const enhance = compose(
@@ -19,7 +19,7 @@ const enhance = compose(
   })),
     withHandlers({
       turnUsersPanel: props => () => {
-        props.dispatch(turnOnMemberPanel());
+        props.dispatch(toggleMemberPanel());
       },
       handleSubmit: (props) => (data) => {
         const { dispatch } = props;
