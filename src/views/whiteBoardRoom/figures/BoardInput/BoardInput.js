@@ -66,5 +66,14 @@ class BoardInput extends React.Component {
   }
 };
 
+BoardInput.propTypes = {
+  dispatch: PropTypes.func,
+  clearCurrentFigure: PropTypes.func,
+  typeNumber: PropTypes.number,
+  clientX: PropTypes.number,
+  clientY: PropTypes.number,
+  x: PropTypes.number,
+  y: PropTypes.number,
+}
 
 export default BoardInput;

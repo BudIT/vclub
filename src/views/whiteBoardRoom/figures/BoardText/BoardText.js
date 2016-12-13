@@ -1,19 +1,19 @@
 import React, { PropTypes } from 'react';
 import { Text } from 'react-konva';
-import propTypes from '../propTypes';
 
-const BoardText = ({ x, y, x1, y1, color, text }) => {
+const BoardText = ({ x, y, text }) => {
   return (
     <Text
       x={x} y={y}
       text={text}
-      fontSize="30"
+      fontSize="25"
     />
   );
 };
 
 BoardText.propTypes = {
-  ...propTypes.figures,
+  x: PropTypes.number,
+  y: PropTypes.number,
   text: PropTypes.string,
 }
 
