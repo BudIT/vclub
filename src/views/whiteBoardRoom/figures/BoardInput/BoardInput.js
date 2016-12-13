@@ -46,11 +46,14 @@ class BoardInput extends React.Component {
       position: 'absolute',
       left: clientX,
       top: clientY,
+      display: 'flex',
+      width: 100,
+      flexDirection: 'column',
     }
 
     return (
       <div style={styleForInput}>
-        <textarea rows="1" cols="50" type="text"
+        <textarea rows="2" cols="50" type="text"
           // ref={ input => {
           //   input && input.focus();
           // }}
