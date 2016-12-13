@@ -7,6 +7,8 @@ import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
 import AuthPage from 'vclub/views/authPage/AuthPage';
 import UserList from 'vclub/views/userList/UserList';
 
+import style from './ClubLayout.css';
+
 const enhance = compose(
   connect(state => ({
     authenticated: state.auth.authenticated,
@@ -20,7 +22,7 @@ function ClubLayout(props) {
   const { authenticated, currentRoom, members, showMemberPanel, dispatch } = props;
 
   return (
-    <div>
+    <div className={style.main}>
       <main>
         {authenticated === false
           ? <AuthPage dispatch={dispatch} />
