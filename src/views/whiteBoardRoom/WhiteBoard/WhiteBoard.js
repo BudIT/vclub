@@ -34,21 +34,24 @@ class WhiteBoard extends React.Component {
   }
 
   // for canvas figures
-  renderFigureOnCanvas = (figure) => {
+  renderFigureOnCanvas = (figure, index) => {
     if (figure === null) return null;
+
+    if (index === undefined)
+      index = "-1"
 
     const { typeNumber } = figure;
     switch (typeNumber) {
       case RECT:
-        return <BoardRect {...figure} />;
+        return <BoardRect {...figure} key={index.toString()} />;
       case CIRC:
-        return <BoardCircle {...figure} />;
+        return <BoardCircle {...figure} key={index.toString()} />;
       case LINE:
-        return <BoardLine {...figure} />;
+        return <BoardLine {...figure} key={index.toString()} />;
       case ELLS:
-        return <BoardEllipse {...figure} />;
+        return <BoardEllipse {...figure} key={index.toString()} />;
       case TEXT:
-        return <BoardText {...figure} />;
+        return <BoardText {...figure} key={index.toString()} />;
       default:
         return null;
     }
