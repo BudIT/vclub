@@ -1,40 +1,16 @@
 import React, { PropTypes } from 'react';
 import { Layer, Rect, Stage } from 'react-konva';
-import { RECT, CIRC, LINE, ELLS, TEXT } from 'vclub/constants/whiteboardElements';
+import { RECT, CIRC, LINE, ELLS, TEXT, INPUT } from 'vclub/constants/whiteboardElements';
+// action creator for adding new figure to board
 import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
-// import compose from 'recompose/compose';
-// import { connect } from 'react-redux';
+import { backgroundColor, backgroundColorHover } from 'vclub/views/whiteBoardRoom/colors'
 
-// ! dispatch as props
+import {
+  BoardRect, BoardCircle, BoardLine, BoardEllipse, BoardText, BoardInput,
+} from '../figures';
 
-// import { addNewFigure } from 'vclub/redux/club/whiteboard';
-// ! addNewFigure as props
-
-import { BoardRect, BoardCircle, BoardLine, BoardEllipse, BoardText } from '../figures';
-import { backgroundColor, getColor } from '../colors';
 import styles from './WhiteBoard.css';
-
-function renderFigure(figureParam) {
-  // null & undefined cases?
-  if (figureParam === null) return null;
-
-  const { typeNumber } = figureParam;
-  switch (typeNumber) {
-    case RECT:
-      return <BoardRect {...figureParam} />;
-    case CIRC:
-      return <BoardCircle {...figureParam} />;
-    case LINE:
-      return <BoardLine {...figureParam} />;
-    case ELLS:
-      return <BoardEllipse {...figureParam} />;
-    case TEXT:
-      return <BoardText {...figureParam} />
-    default:
-      return null;
-  }
-}
 
 class WhiteBoard extends React.Component {
   constructor() {
@@ -43,17 +19,63 @@ class WhiteBoard extends React.Component {
       // 0 - Rect
       // 1 - Line
       // 2 - Ellipse
-      // will be set to null for not figures
+      // ...etc
       nextFigureType: null,
       // will be true after mouseDown
       // will be false after mouseUp
       listenForMouseMove: false,
-      // figures to render
-      figure: {},
-      showInput: false,
+      // figure to render
+      // we work with only one figure, others are in store
+      figure: null,
+      // initial layer size
       layerHeight: window.innerHeight,
       layerWidth: window.innerWidth,
     };
+  }
+
+  // for canvas figures
+  renderFigureOnCanvas = (figure) => {
+    if (figure === null) return null;
+
+    const { typeNumber } = figure;
+    switch (typeNumber) {
+      case RECT:
+        return <BoardRect {...figure} />;
+      case CIRC:
+        return <BoardCircle {...figure} />;
+      case LINE:
+        return <BoardLine {...figure} />;
+      case ELLS:
+        return <BoardEllipse {...figure} />;
+      case TEXT:
+        return <BoardText {...figure} />;
+      default:
+        return null;
+    }
+  }
+
+  clearCurrentFigure = () => {
+    this.setState({
+      figure: null,
+    })
+  }
+
+  renderFigure = (figure) => {
+    if (figure === null) return null;
+
+    const { typeNumber } = figure;
+    const { dispatch } = this.props;
+
+    switch (typeNumber) {
+      case INPUT:
+        return <BoardInput
+                  {...figure}
+                  dispatch={dispatch}
+                  clearCurrentFigure={this.clearCurrentFigure}
+                />;
+      default:
+        return null;
+    }
   }
 
   onMouseUp = () => {
@@ -74,14 +96,17 @@ class WhiteBoard extends React.Component {
   }
 
   onMouseDown = (evt) => {
-    // console.log("mouse down")
-    // console.log(evt);
+
     const { nextFigureType } = this.props;
 
     const { evt: {
+      // canvas offset for figures
       offsetX, offsetY,
+      // screen offset for input absolute positioning
       clientX, clientY,
     } } = evt;
+
+    const { figure } = this.state;
 
     console.log(evt);
 
@@ -100,47 +125,49 @@ class WhiteBoard extends React.Component {
             y: offsetY,
             x1: 0,
             y1: 0,
-            color: getColor(),
           },
         });
-        return;
+        break;
       case TEXT:
-        this.setState({
-          showInput: !this.state.showInput,
-          figure: {
-            typeNumber: -1,
-            x: offsetX,
-            y: offsetY,
-            x1: 0,
-            y1: 0,
-            color: getColor(),
-            // for input rendering
-            cor1: clientX,
-            cor2: clientY,
-          },
-        })
+        // don't have anything yet, show input
+        if (figure === null) {
+          this.setState({
+            figure: {
+              typeNumber: INPUT,
+              x: offsetX,
+              y: offsetY,
+              clientX,
+              clientY,
+            },
+          })
+        }
+        // click in other place of the board
+        // if we have already INPUT then remove INPUT from the board
+        if (figure.typeNumber === INPUT) {
+          this.clearCurrentFigure()
+        }
+        break;
+      default:
+        break;
     }
   }
 
   componentDidMount() {
-    console.log(this.stage.offsetTop);
-    console.log(this.stage.offsetLeft);
     this.setState({
-      layerWidth: window.innerWidth - this.stage.offsetLeft,
-      layerHeight: window.innerHeight - this.stage.offsetTop,
+      layerWidth: this.stage.offsetWidth,
+      layerHeight: this.stage.offsetHeight,
     });
   }
 
+  // scaling figures
   onMouseMove = (evt) => {
-    const { evt: {
-      offsetX, offsetY,
-    } } = evt;
-
     const { listenForMouseMove } = this.state;
 
-    // console.log(this.state.listenForMouseMove)
     if (listenForMouseMove) {
-      // console.log("move")
+      const { evt: {
+        offsetX, offsetY,
+      } } = evt;
+
       this.setState(prevState => ({
         ...prevState,
         figure: {
@@ -149,51 +176,20 @@ class WhiteBoard extends React.Component {
           y1: offsetY,
         },
       }));
-      // console.log(this.state.figure);
     }
-  }
-
-  onSubmitText = (evt) => {
-    const text = this.textInput.value.trim();
-    const { dispatch } = this.props;
-    const { figure } = this.state;
-
-    const isEmpty = ({ x1, y1 }) => x1 === 0 || y1 === 0;
-
-
-    this.setState({
-      showInput: false,
-      figure: null,
-    });
-
-    if (text.length !== 0) {
-      dispatch(addNewFigure({
-        ...figure,
-        text: text,
-        typeNumber: TEXT,
-      }));
-    }
-
   }
 
   render() {
-    // console.log("Hello")
-    const { props, state } = this;
+    const { props, state, renderFigure, renderFigureOnCanvas } = this;
     const { figures } = props;
-    const { figure, showInput } = state;
-    // console.log("NEXT FIGURE TYPE");
-    // console.log(this.props.nextFigureType);
-    // console.log("FIGURE");
-    if (showInput) {
-      var styleForInput = {
-        position: 'absolute',
-        left: figure.cor1,
-        top: figure.cor2,
-      }
-    }
+    const { figure } = state;
 
     return (
-      <div className={styles.whiteBoard} ref={ stage => { this.stage = stage; }}>
+      <div
+        className={styles.whiteBoard}
+        // ref for size fitting, watch componentDidMount & other lifecycle's methods
+        ref={ stage => { this.stage = stage; }}
+      >
         <Stage width={this.state.layerWidth} height={this.state.layerHeight}>
           <Layer
             listening
@@ -202,20 +198,12 @@ class WhiteBoard extends React.Component {
             onMouseUp={this.onMouseUp}
           >
             <Rect x="0" y="0" width={this.state.layerWidth} height={this.state.layerHeight} fill={backgroundColor} />
-            {figures.map(renderFigure)}
-            {renderFigure(figure)}
+            {figures.map(renderFigureOnCanvas)}
+            {renderFigureOnCanvas(figure)}
           </Layer>
         </Stage>
-        {showInput && (
-          <div style={styleForInput}>
-            <textarea rows="1" cols="50" type="text"
-              ref={ input => {
-                this.textInput = input;
-                input && input.focus();
-              }} />
-            <button onClick={this.onSubmitText}>Submit</button>
-          </div>
-        )}
+        {/* for elements not intended for canvas such as input */}
+        {renderFigure(figure)}
       </div>
     );
   }
