@@ -9,10 +9,10 @@ import membersReducer from './club/members';
 import roomsReducer from './club/rooms';
 import uiReducer from './club/ui';
 import sharingRoomReducer from './club/sharing';
+import whiteboardReducer from './club/whiteboard';
 
 import mediaReducer from './club/media';
 import rtcReducer from './club/rtc';
-
 
 const baseReducer = composeReducers(
   scopeReducer('auth', authReducer),
@@ -23,6 +23,7 @@ const baseReducer = composeReducers(
   scopeReducer('sharingRoom', sharingRoomReducer),
   scopeReducer('media', mediaReducer),
   scopeReducer('rtc', rtcReducer),
+  scopeReducer('whiteboard', whiteboardReducer),
 );
 
 export default initHOReducer(baseReducer);

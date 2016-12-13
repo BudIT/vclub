@@ -6,7 +6,7 @@ import R from 'ramda';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 
-import { addRectangle } from 'vclub/redux/club/whiteboard';
+import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
 const enhance = compose(
   connect(state => console.log(state) || ({
@@ -118,6 +118,7 @@ function renderFigures(figures) {
     [typeNumberIsEqual(1), returnRect],
     [typeNumberIsEqual(2), returnLine],
     [typeNumberIsEqual(3), returnCircle],
+    [R.T, () => null],
   ]);
 
   return R.map(returnFigure, figures);
@@ -136,14 +137,7 @@ class WhiteBoardRoom extends React.Component {
       // will be false after mouseUp
       listenForMouseMove: false,
       // figures to render
-      figures: [{
-        typeNumber: 1,
-        x: 200,
-        y: 200,
-        width: 50,
-        height: 50,
-        color: getColor(),
-      }],
+      figure: {},
     };
 
     this.setNextFigureType = this.setNextFigureType.bind(this);
@@ -155,34 +149,40 @@ class WhiteBoardRoom extends React.Component {
   onMouseUp() {
     console.log("mouse up");
 
+    const { dispatch } = this.props;
+    const { figure } = this.state;
+
     console.log(this.state)
+    console.log(addNewFigure.toString());
+    dispatch(addNewFigure(figure))
     this.setState(prevState => ({
       ...prevState,
       listenForMouseMove: false,
+      figure: {},
     }));
   }
 
   onMouseDown(evt) {
-    console.log("mouse down")
+    // console.log("mouse down")
     const { evt: {
       clientX, clientY,
     } } = evt;
 
     if (this.state.nextFigureType !== null) {
-      console.log("listenForMouseMove");
+      // console.log("listenForMouseMove");
       this.setState(prevState => ({
         ...prevState,
         // now we listen for mouse move
         listenForMouseMove: true,
         // set first coordinate of new figure
-        figures: R.concat(prevState.figures, [{
+        figure: {
           typeNumber: prevState.nextFigureType,
           x: clientX,
           y: clientY,
           x1: 0,
           x2: 0,
           color: getColor(),
-        }]),
+        },
       }));
     }
   }
@@ -194,15 +194,16 @@ class WhiteBoardRoom extends React.Component {
 
     console.log(this.state.listenForMouseMove)
     if (this.state.listenForMouseMove === true) {
-      console.log("move")
+      // console.log("move")
       this.setState(prevState => ({
         ...prevState,
-        figures: R.over(
-          R.lensIndex(R.length(prevState.figures) - 1),
-          elm => ({ ...elm, x1: clientX, y1: clientY }),
-          prevState.figures
-        ),
+        figure: {
+          ...prevState.figure,
+          x1: clientX,
+          y1: clientY,
+        },
       }));
+      // console.log(this.state.figure);
     }
   }
 
@@ -228,7 +229,8 @@ class WhiteBoardRoom extends React.Component {
           <ElementsPanel dispatch={dispatch} onClick={this.setNextFigureType} />
           <Layer>
             <Rect x="90" y="0" width="700" height="700" fill="#90EE90" />
-            {renderFigures(this.state.figures)}
+            {renderFigures(this.props.figures)}
+            {renderFigures([this.state.figure])}
             <Rect
               x="95" y="0" width={700} height={700}
               onMouseMove={this.onMouseMove}

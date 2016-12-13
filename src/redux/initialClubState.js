@@ -36,4 +36,8 @@ export default {
     streams: {},
     allowedStreams: [],
   },
+  whiteboard: {
+    // any other params?
+    figures: [],
+  },
 };
