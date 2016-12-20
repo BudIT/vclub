@@ -13,13 +13,13 @@ book.addReduxStory('InitialState ChatRoom', dispatch => (
 ), {
   auth: {
     user: {
-      name: 'TestName',
+      name: 'Test Name',
     },
   },
   chat: {
     messages: [
       {
-        id: Date.now(),
+        id: 1,
         author: 'Yanis',
         date: `${new Date().getHours()}:${new Date().getMinutes()}`,
         message: 'hello',
@@ -39,19 +39,19 @@ book.addReduxStory('More messages', dispatch => (
   chat: {
     messages: [
       {
-        id: Date.now(),
+        id: 1,
         author: 'Yanis',
         date: `${new Date().getHours()}:${new Date().getMinutes()}`,
         message: 'hello',
       },
       {
-        id: Date.now(),
+        id: 2,
         author: 'Den',
         date: `${new Date().getHours()}:${new Date().getMinutes()}`,
         message: 'hello!',
       },
       {
-        id: Date.now(),
+        id: 3,
         author: 'Vira',
         date: `${new Date().getHours()}:${new Date().getMinutes()}`,
         message: 'hello!!!',

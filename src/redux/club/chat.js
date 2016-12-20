@@ -1,12 +1,10 @@
 import actionCreator from 'borex-actions/actionCreator';
-import setPayload from 'borex-actions/setPayload';
 import setType from 'borex-actions/setType';
 import setMetaStatic from 'borex-actions/setMetaStatic';
 import createReducer from 'borex-reducers/createReducer';
 
 export const sendMessage = actionCreator(
-  setType('Send message'),
-  setPayload(message => message),
+  setType('sendMessage'),
   setMetaStatic('remote', true),
   setMetaStatic('broadcast', true)
 );

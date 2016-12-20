@@ -215,3 +215,4 @@ test('reducer returns initial state', () => {
   expect(reducer(undefined, {}))
     .toEqual(authInitialState);
 });
+

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
@@ -9,7 +9,6 @@ import { sendMessage } from 'vclub/redux/club/chat';
 
 import MessageBox from 'vclub/views/chatRoom/MessageBox/MessageBox';
 import InputBox from 'vclub/views/chatRoom/InputBox/InputBox';
-import { toggleMemberPanel } from 'vclub/redux/club/ui';
 // import styles from './ChatRoom.css';
 
 const enhance = compose(
@@ -18,9 +17,6 @@ const enhance = compose(
     username: state.auth.user.name,
   })),
     withHandlers({
-      turnUsersPanel: props => () => {
-        props.dispatch(toggleMemberPanel());
-      },
       handleSubmit: (props) => (data) => {
         const { dispatch } = props;
         const { message } = data;
@@ -34,21 +30,15 @@ const enhance = compose(
     }),
 );
 
-class ChatRoom extends Component {
-  componentWillMount() {
-    this.props.turnUsersPanel();
-  }
-
-  render() {
-    const { messages, handleSubmit } = this.props;
-    return (
-      <section>
-        <MessageBox messages={messages} />
-        <InputBox onSubmit={handleSubmit} />
-      </section>
-    );
-  }
-}
+const ChatRoom = (props) => {
+  const { messages, handleSubmit } = props;
+  return (
+    <section>
+      <MessageBox messages={messages} />
+      <InputBox onSubmit={handleSubmit} />
+    </section>
+  );
+};
 
 /* eslint-disable */
 ChatRoom.propTypes = {
@@ -58,7 +48,6 @@ ChatRoom.propTypes = {
     date: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
   }).isRequired).isRequired,
-  turnUsersPanel: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 /* eslint-enable */
