@@ -1,3 +1,4 @@
+import R from 'ramda';
 import actionCreator from 'borex-actions/actionCreator';
 import setPayload from 'borex-actions/setPayload';
 import createReducer from 'borex-reducers/createReducer';
@@ -18,6 +19,10 @@ export const addAudioStream = actionCreator(
   setPayload((userId, stream) => ({ userId, stream })),
 );
 
+export const addVideoStream = actionCreator(
+  setPayload((userId, stream) => ({ userId, stream })),
+);
+
 export const setAllowedStreams = actionCreator();
 
 
@@ -30,26 +35,14 @@ export default createReducer(on => {
   );
 
   on(removePeer,
-    setIn('peers', (userId, peers) => {
-      if (!peers[userId]) return peers;
-
-      const newPeers = { ...peers };
-      delete newPeers[userId];
-
-      return newPeers;
-    }),
-    setIn('streams', (userId, streams) => {
-      if (!streams[userId]) return streams;
-
-      const newStreams = { ...streams };
-      delete newStreams[userId];
-
-      return newStreams;
-    }),
+    setIn('peers', (userId, peers) => R.dissoc(userId, peers)),
+    setIn('audioStreams', (userId, streams) => R.dissoc(userId, streams)),
+    setIn('videoStreams', (userId, streams) => R.dissoc(userId, streams)),
     rejectIn('passivePeers', (peerId, targetId) => peerId === targetId),
   );
 
-  on(addAudioStream, updateIn('streams', ({ userId, stream }) => ({ [userId]: stream })));
+  on(addAudioStream, updateIn('audioStreams', ({ userId, stream }) => ({ [userId]: stream })));
+  on(addVideoStream, updateIn('videoStreams', ({ userId, stream }) => ({ [userId]: stream })));
 
   on(setAllowedStreams, setIn('allowedStreams'));
 });

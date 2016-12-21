@@ -1,0 +1,33 @@
+[1mdiff --cc src/redux/clubReducer.js[m
+[1mindex 94bc1e3,c9f1a31..0000000[m
+[1m--- a/src/redux/clubReducer.js[m
+[1m+++ b/src/redux/clubReducer.js[m
+[36m@@@ -9,11 -9,13 +9,14 @@@[m [mimport membersReducer from './club/memb[m
+  import roomsReducer from './club/rooms';[m
+  import uiReducer from './club/ui';[m
+  import sharingRoomReducer from './club/sharing';[m
+[32m +import whiteboardReducer from './club/whiteboard';[m
+[32m+ import streamRoomReducer from './club/streamRoom';[m
+  [m
+[31m- import mediaReducer from './club/media';[m
+[32m+ import audioMediaReducer from './club/audioMedia';[m
+[32m+ import videoMediaReducer from './club/videoMedia';[m
+  import rtcReducer from './club/rtc';[m
+  [m
+[32m+ [m
+  const baseReducer = composeReducers([m
+    scopeReducer('auth', authReducer),[m
+    scopeReducer('members', membersReducer),[m
+[36m@@@ -21,9 -23,10 +24,11 @@@[m
+    scopeReducer('ui', uiReducer),[m
+    scopeReducer('form', formReducer),[m
+    scopeReducer('sharingRoom', sharingRoomReducer),[m
+[31m-   scopeReducer('media', mediaReducer),[m
+[32m+   scopeReducer('streamRoom', streamRoomReducer),[m
+[32m+   scopeReducer('audioMedia', audioMediaReducer),[m
+[32m+   scopeReducer('videoMedia', videoMediaReducer()),[m
+    scopeReducer('rtc', rtcReducer),[m
+[32m +  scopeReducer('whiteboard', whiteboardReducer),[m
+  );[m
+  [m
+  export default initHOReducer(baseReducer);[m

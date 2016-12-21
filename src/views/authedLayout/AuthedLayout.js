@@ -12,7 +12,7 @@ import Dialog from 'vclub/views/dialog/Dialog';
 import ChatRoom from 'vclub/views/chatRoom/ChatRoom';
 import SharingRoom from 'vclub/views/sharingRoom/SharingRoom';
 import WhiteBoardRoom from 'vclub/views/whiteBoardRoom/WhiteBoardRoom';
-import VideoRoom from 'vclub/views/videoRoom/VideoRoom';
+import StreamRoom from 'vclub/views/streamRoom/StreamRoom';
 
 import style from './AuthedLayout.css';
 
@@ -23,7 +23,7 @@ const room = (currentRoom) => {
     case SharingRoomType:
       return <SharingRoom />;
     case MediaRoomType:
-      return <VideoRoom />;
+      return <StreamRoom />;
     case WhiteboardRoomType:
       return <WhiteBoardRoom />;
     default:

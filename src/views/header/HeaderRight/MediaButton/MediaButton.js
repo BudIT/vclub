@@ -4,7 +4,7 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withHandlers } from 'recompose';
 
-import { toggleAudio } from 'vclub/redux/club/media';
+import { toggleAudio } from 'vclub/redux/club/audioMedia';
 
 import { MediaStatusPending, MediaStatusReady } from 'vclub/constants/mediaStatus';
 
@@ -22,8 +22,8 @@ import threeDotsIcon from './ic_more_horiz_black_24px.svg';
 const enhance = compose(
   connect(state => ({
     allowedStreams: state.rtc.allowedStreams,
-    muted: state.media.muted,
-    status: state.media.status,
+    muted: state.audioMedia.muted,
+    status: state.audioMedia.status,
     userId: state.auth.user.id,
   })),
   withHandlers({

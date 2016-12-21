@@ -1,6 +1,6 @@
-import { setAudioStream, setMediaRequestStatus } from 'vclub/redux/club/media';
+import { setAudioStream, setMediaRequestStatus } from 'vclub/redux/club/audioMedia';
 import {
-  MediaStatusDismissed, MediaStatusDenied, MediaStatusNoAudio, MediaStatusUnknown,
+  MediaStatusDismissed, MediaStatusDenied, MediaStatusNoTracks, MediaStatusUnknown,
 } from 'vclub/constants/mediaStatus';
 
 
@@ -14,7 +14,7 @@ export default function requestMediaDevices(store) {
     const audioTracks = localStream.getAudioTracks();
 
     if (audioTracks.length === 0) {
-      store.dispatch(setMediaRequestStatus(MediaStatusNoAudio));
+      store.dispatch(setMediaRequestStatus(MediaStatusNoTracks));
 
       return;
     }

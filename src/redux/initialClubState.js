@@ -35,7 +35,17 @@ export default {
     sessionDuration: 300,
     expired: false,
   },
-  media: {
+  streamRoom: {
+    source: null,
+    ownerId: null,
+  },
+  audioMedia: {
+    muted: false,
+    status: MediaStatusPending,
+    stream: null,
+    errorName: null,
+  },
+  videoMedia: {
     muted: false,
     status: MediaStatusPending,
     stream: null,
@@ -44,7 +54,8 @@ export default {
   rtc: {
     peers: {},
     passivePeers: [],
-    streams: {},
+    audioStreams: {},
+    videoStreams: {},
     allowedStreams: [],
   },
   whiteboard: {
