@@ -16,14 +16,12 @@ export default function LocalMediaView(props) {
     return <span>Разрешите использовать ваше видео устройство</span>;
   }
 
-  if (status === MediaStatusReady) {
-    return (
-      <span>
-        Произошла ошибка <strong>{errorName}</strong>.
-        Обратитесь к администратору.
-      </span>
-    );
-  }
+  return (
+    <span>
+      Произошла ошибка <strong>{errorName}</strong>.
+      Обратитесь к администратору.
+    </span>
+  );
 }
 
 LocalMediaView.propTypes = {

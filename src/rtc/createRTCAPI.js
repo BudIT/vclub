@@ -9,6 +9,8 @@ import {
   setPeers, addPeer, removePeer, addAudioStream, addVideoStream, setAllowedStreams,
 } from 'vclub/redux/club/rtc';
 
+import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
+
 import requestVideoStream from './requestVideoStream';
 import { ByRoomSelectors, DefaultStreamsSelector } from './allowedStreamsSelectors';
 
@@ -136,10 +138,15 @@ export default function createRTCAPI(ioSocket, store) {
     }
   }
 
-  function manageVideoSource(action) {
-    const { source } = action.payload;
+  function manageVideoSource() {
+    const { streamRoom, auth } = store.getState();
+    const { source, ownerId } = streamRoom;
 
-    if (source === 'WEBCAM' || source === 'SCREEN') {
+    if (ownerId !== auth.user.id) {
+      return;
+    }
+
+    if (source === StreamSourceWebcam || source === StreamSourceScreen) {
       requestVideoStream(store, source);
 
       return;
@@ -155,6 +162,7 @@ export default function createRTCAPI(ioSocket, store) {
 
     if (action.type === INITIALIZE) {
       initPeers(members);
+      manageVideoSource();
     }
 
     if (action.type === MEMBER_ENTER) {
@@ -174,9 +182,7 @@ export default function createRTCAPI(ioSocket, store) {
     }
 
     if (action.type === setVideoSource.type) {
-      if (action.payload.ownerId === auth.user.id) {
-        manageVideoSource(action);
-      }
+      manageVideoSource(action);
     }
 
     if (action.type === resetStreaming.type) {

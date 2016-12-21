@@ -3,6 +3,8 @@ import {
   MediaStatusDismissed, MediaStatusDenied, MediaStatusNoTracks, MediaStatusUnknown,
 } from 'vclub/constants/mediaStatus';
 
+import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
+
 
 const MediaRequestErrorsMap = {
   PermissionDismissedError: MediaStatusDismissed,
@@ -10,10 +12,10 @@ const MediaRequestErrorsMap = {
 };
 
 const mediaConstraints = {
-  WEBCAM: {
+  [StreamSourceWebcam]: {
     video: true,
   },
-  SCREEN: {
+  [StreamSourceScreen]: {
     video: {
       mandatory: { chromeMediaSource: 'desktop' },
     },
