@@ -2,7 +2,7 @@ import React from 'react';
 import { Ellipse } from 'react-konva';
 import propTypes from '../propTypes';
 
-const BoardEllipse = ({ x, y, x1, y1, color }) => {
+const BoardEllipse = ({ x, y, x1, y1 }) => {
   if (x1 === 0 && y1 === 0) {
     return null;
   }

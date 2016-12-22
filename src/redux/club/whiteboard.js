@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 import initialState from 'vclub/redux/initialClubState';
 
 // adding figures
@@ -23,9 +21,7 @@ export default function reducer(state, action) {
     case ADD_NEW_FIGURE:
       return {
         ...state,
-        figures: R.concat(state.figures, [
-          action.payload.figure,
-        ]),
+        figures: [...state.figures, action.payload.figure],
       };
     default:
       return state || initialState.whiteboard;

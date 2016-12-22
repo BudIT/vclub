@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import propTypes from '../propTypes';
-
-import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
 import { TEXT } from 'vclub/constants/whiteboardElements';
+import { addNewFigure } from 'vclub/redux/club/whiteboard';
+
 import styles from './BoardInput.css';
+
 
 class BoardInput extends React.Component {
 
@@ -13,7 +13,7 @@ class BoardInput extends React.Component {
 
     this.state = {
       text: '',
-    }
+    };
   }
 
   onSubmitText = () => {
@@ -26,7 +26,7 @@ class BoardInput extends React.Component {
     if (text.length !== 0) {
       dispatch(addNewFigure({
         ...figure,
-        text: text,
+        text,
         typeNumber: TEXT,
       }));
     }
@@ -35,25 +35,28 @@ class BoardInput extends React.Component {
   onChangeText = (evt) => {
     this.setState({
       text: evt.target.value,
-    })
+    });
   }
 
   render() {
     const { text } = this.state;
     const { clientX, clientY } = this.props;
 
-    var styleForInput = {
+    const styleForInput = {
       position: 'absolute',
       left: clientX,
       top: clientY,
       display: 'flex',
       width: 100,
       flexDirection: 'column',
-    }
+    };
 
     return (
       <div style={styleForInput}>
-        <textarea rows="2" cols="50" type="text"
+        <textarea
+          rows="2"
+          cols="50"
+          type="text"
           // ref={ input => {
           //   input && input.focus();
           // }}
@@ -64,7 +67,7 @@ class BoardInput extends React.Component {
       </div>
     );
   }
-};
+}
 
 BoardInput.propTypes = {
   dispatch: PropTypes.func,
@@ -74,6 +77,6 @@ BoardInput.propTypes = {
   clientY: PropTypes.number,
   x: PropTypes.number,
   y: PropTypes.number,
-}
+};
 
 export default BoardInput;

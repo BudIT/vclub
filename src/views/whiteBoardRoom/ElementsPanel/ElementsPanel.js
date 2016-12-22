@@ -18,7 +18,7 @@ const enhance = compose(
 
 function ElementsPanel(props) {
   const {
-    onClickForRect, onClickForLine, onClickForCircle, onClickForEllipse, onClickForText,
+    onClickForRect, onClickForLine, onClickForEllipse, onClickForText,
     nextFigureType,
   } = props;
 
@@ -63,7 +63,7 @@ function ElementsPanel(props) {
       <li className={styles.element}>
         <button onClick={onClickForText} className={gCN(TEXT, nextFigureType)}>
           <svg viewBox="0 0 200 200">
-            <text x="10" y="40" style={{fontSize: 40}}>
+            <text x="10" y="40" style={{ fontSize: 40 }}>
               T
             </text>
           </svg>
@@ -76,7 +76,6 @@ function ElementsPanel(props) {
 ElementsPanel.propTypes = {
   onClickForRect: PropTypes.func,
   onClickForLine: PropTypes.func,
-  onClickForCircle: PropTypes.func,
   onClickForEllipse: PropTypes.func,
   onClickForText: PropTypes.func,
   nextFigureType: PropTypes.number,

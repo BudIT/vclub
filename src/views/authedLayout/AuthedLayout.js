@@ -13,7 +13,7 @@ import SharingRoom from 'vclub/views/sharingRoom/SharingRoom';
 import WhiteBoardRoom from 'vclub/views/whiteBoardRoom/WhiteBoardRoom';
 import VideoRoom from 'vclub/views/videoRoom/VideoRoom';
 
-import style from './AuthedLayout.css'
+import style from './AuthedLayout.css';
 
 const room = (currentRoom) => {
   switch (currentRoom) {
@@ -36,12 +36,8 @@ function AuthedLayout(props) {
   } = props;
 
   return (
-<<<<<<< c2033cda195195548fd6cdd345bd1b6e3d0f8249
-    <div>
-      <AudioStreams />
-=======
     <div className={style.layout}>
->>>>>>> fix css for canvas board to fit
+      <AudioStreams />
       <Header />
       <div className={style.room}>
         { room(currentRoom) }

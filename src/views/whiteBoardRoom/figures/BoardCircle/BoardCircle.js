@@ -2,7 +2,7 @@ import React from 'react';
 import { Circle } from 'react-konva';
 import propTypes from '../propTypes';
 
-const BoardCircle = ({ x, y, x1, y1, color }) => {
+const BoardCircle = ({ x, y, x1, y1 }) => {
   // by Pifagor theorem
   if (x1 === 0 && y1 === 0) {
     return null;
@@ -11,7 +11,7 @@ const BoardCircle = ({ x, y, x1, y1, color }) => {
 
   return (<Circle
     x={x} y={y} radius={radius}
-    stroke='black'
+    stroke="black"
     strokeWidth={4}
   />);
 };

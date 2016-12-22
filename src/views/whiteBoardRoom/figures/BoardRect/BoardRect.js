@@ -2,7 +2,7 @@ import React from 'react';
 import { Rect } from 'react-konva';
 import propTypes from '../propTypes';
 
-const BoardRect = ({ x, y, x1, y1, color }) => {
+const BoardRect = ({ x, y, x1, y1 }) => {
   if (x1 === 0 && y1 === 0) {
     return null;
   }
