@@ -13,6 +13,7 @@ import SharingRoom from 'vclub/views/sharingRoom/SharingRoom';
 import WhiteBoardRoom from 'vclub/views/whiteBoardRoom/WhiteBoardRoom';
 import VideoRoom from 'vclub/views/videoRoom/VideoRoom';
 
+import style from './AuthedLayout.css';
 
 const room = (currentRoom) => {
   switch (currentRoom) {
@@ -35,10 +36,12 @@ function AuthedLayout(props) {
   } = props;
 
   return (
-    <div>
+    <div className={style.layout}>
       <AudioStreams />
       <Header />
-      { room(currentRoom) }
+      <div className={style.room}>
+        { room(currentRoom) }
+      </div>
     </div>
   );
 }
