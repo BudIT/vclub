@@ -5,22 +5,27 @@ export default class Stream extends PureComponent {
   static propTypes = {
     from: PropTypes.instanceOf(MediaStream).isRequired,
     type: PropTypes.oneOf(['video', 'audio']).isRequired,
+    className: PropTypes.string,
   }
 
-  componentDidMount() {
-    this.setStream(this.props.from);
-  }
   componentWillReceiveProps(nextProps) {
     this.setStream(nextProps.from);
   }
 
   setStream(stream) {
+    if (!this.mediaEl) return;
+
     this.mediaEl.srcObject = stream;
   }
 
-  render() {
-    const Type = this.props.type;
+  setMediaElementRef = (el) => {
+    this.mediaEl = el;
+    this.setStream(this.props.from);
+  }
 
-    return <Type ref={el => { this.mediaEl = el; }} autoPlay />;
+  render() {
+    const { type: Type, className } = this.props;
+
+    return <Type ref={this.setMediaElementRef} className={className} autoPlay />;
   }
 }

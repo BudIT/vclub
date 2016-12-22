@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 
 import { resetStreaming, setVideoSource } from 'vclub/redux/club/streamRoom';
 
-import SourceSelect from './SourceSelect';
-import LocalMediaView from './LocalMediaView';
-import RemoteMediaView from './RemoteMediaView';
+import SourceSelect from './SourceSelect/SourceSelect';
+import StatusMessage from './StatusMessage/StatusMessage';
+import LocalMediaView from './LocalMediaView/LocalMediaView';
+import RemoteMediaView from './RemoteMediaView/RemoteMediaView';
 
+import styles from './StreamRoom.css';
 
-function PreparingMessage() {
-  return <div>Подготовка вещания...</div>;
-}
 
 const enhance = compose(
   connect(state => ({
@@ -41,16 +40,22 @@ function StreamRoom(props) {
   const owner = currentUser.id === ownerId;
 
   if (!source) {
-    return currentUser.master
-      ? <SourceSelect onSelected={onSourceSelected} />
-      : <PreparingMessage />;
+    return (
+      <div className={styles.container}>
+        {currentUser.master
+          ? <SourceSelect onSelected={onSourceSelected} />
+          : <StatusMessage>Подготовка вещания...</StatusMessage>
+        }
+      </div>
+    );
   }
+
   return (
-    <div>
+    <div className={styles.container}>
       {currentUser.master && (
-        <div>
-          <button onClick={onResetStreaming}>Отключить вещание</button>
-        </div>
+        <button className={styles.resetButton} onClick={onResetStreaming}>
+          Отключить вещание
+        </button>
       )}
       {owner
         ? <LocalMediaView {...videoMedia} />
@@ -66,7 +71,7 @@ StreamRoom.propTypes = {
   currentUser: PropTypes.object.isRequired,
   videoStreams: PropTypes.object.isRequired,
   videoMedia: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   onResetStreaming: PropTypes.func.isRequired,
   onSourceSelected: PropTypes.func.isRequired,
 };

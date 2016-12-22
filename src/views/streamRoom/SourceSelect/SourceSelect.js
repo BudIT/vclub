@@ -5,6 +5,8 @@ import withHandlers from 'recompose/withHandlers';
 
 import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
 
+import styles from './SourceSelect.css';
+
 
 const enhance = compose(
   withHandlers({
@@ -21,9 +23,15 @@ function SourceSelect(props) {
   const { onWebcamSelected, onScreenSelected } = props;
 
   return (
-    <div>
-      <button onClick={onWebcamSelected}>Веб-камера</button>
-      <button onClick={onScreenSelected}>Экран</button>
+    <div className={styles.container}>
+      <div className={styles.row}>
+        <button className={styles.button} onClick={onWebcamSelected}>
+          Веб-камера
+        </button>
+        <button className={styles.button} onClick={onScreenSelected}>
+          Экран
+        </button>
+      </div>
     </div>
   );
 }

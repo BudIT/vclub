@@ -42,7 +42,9 @@ function AuthedLayout(props) {
       <Header />
       <Dialog />
       <div className={style.room}>
-        { room(currentRoom) }
+        <div className={style.roomInner}>
+          {room(currentRoom)}
+        </div>
       </div>
     </div>
   );
