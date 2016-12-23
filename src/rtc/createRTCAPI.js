@@ -6,7 +6,7 @@ import { setAudioStream } from 'vclub/redux/club/audioMedia';
 import { setVideoStream } from 'vclub/redux/club/videoMedia';
 import { resetStreaming, setVideoSource } from 'vclub/redux/club/streamRoom';
 import {
-  setPeers, addPeer, removePeer, addAudioStream, addVideoStream, setAllowedStreams,
+  setPeers, addPeer, removePeer, addAudioStream, addVideoStream, removeStream, setAllowedStreams,
 } from 'vclub/redux/club/rtc';
 
 import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
@@ -50,6 +50,10 @@ export default function createRTCAPI(ioSocket, store) {
       const addRemoteStream = track.kind === 'video' ? addVideoStream : addAudioStream;
 
       store.dispatch(addRemoteStream(userId, event.stream));
+    };
+
+    peer.onremovestream = event => {
+      store.dispatch(removeStream(userId, event.stream));
     };
 
     return peer;
@@ -190,6 +194,13 @@ export default function createRTCAPI(ioSocket, store) {
 
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
+
+        Object.keys(rtc.peers).forEach(userId => {
+          const peer = rtc.peers[userId];
+
+          peer.removeStream(stream);
+          sendOffer(peer, userId);
+        });
       }
     }
 

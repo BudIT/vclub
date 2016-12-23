@@ -41,12 +41,9 @@ function StreamRoom(props) {
 
   if (!source) {
     return (
-      <div className={styles.container}>
-        {currentUser.master
-          ? <SourceSelect onSelected={onSourceSelected} />
-          : <StatusMessage>Подготовка вещания...</StatusMessage>
-        }
-      </div>
+      currentUser.master
+        ? <SourceSelect onSelected={onSourceSelected} />
+        : <StatusMessage>Подготовка вещания...</StatusMessage>
     );
   }
 

@@ -23,6 +23,10 @@ export const addVideoStream = actionCreator(
   setPayload((userId, stream) => ({ userId, stream })),
 );
 
+export const removeStream = actionCreator(
+  setPayload((userId, stream) => ({ userId, stream })),
+);
+
 export const setAllowedStreams = actionCreator();
 
 
@@ -43,6 +47,18 @@ export default createReducer(on => {
 
   on(addAudioStream, updateIn('audioStreams', ({ userId, stream }) => ({ [userId]: stream })));
   on(addVideoStream, updateIn('videoStreams', ({ userId, stream }) => ({ [userId]: stream })));
+
+  function cleanupStreams({ userId, stream }, streams) {
+    const userStream = streams[userId];
+    const matches = userStream && stream.id === userStream.id;
+
+    return matches ? R.dissoc(userId, streams) : streams;
+  }
+
+  on(removeStream,
+    setIn('audioStreams', cleanupStreams),
+    setIn('videoStreams', cleanupStreams),
+  );
 
   on(setAllowedStreams, setIn('allowedStreams'));
 });
