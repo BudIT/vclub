@@ -16,6 +16,7 @@ export default function hoReducer(reducer) {
       serverState.auth.user = user;
 
       delete serverState.audioMedia;
+      delete serverState.socket;
 
       return { ...state, ...serverState };
     }

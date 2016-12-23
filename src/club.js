@@ -18,10 +18,11 @@ import initialState from 'vclub/redux/initialClubState';
 import { restoreAuth } from 'vclub/redux/club/auth';
 
 import requestAudioStream from 'vclub/rtc/requestAudioStream';
-import ServerTime from 'vclub/utils/ServerTime';
+
+import setupSocketClient from 'vclub/socket/setupSocketClient';
 
 
-const ioSocket = io({ path: '/vclub-socket', forceNew: true });
+const ioSocket = io({ path: '/vclub-socket', forceNew: true, reconnection: false });
 
 const storeEnhancer = compose(
   applyMiddleware(
@@ -34,18 +35,7 @@ const storeEnhancer = compose(
 
 const store = createStore(reducer, initialState, storeEnhancer);
 
-ioSocket.on('dispatch', action => store.dispatch(action));
-
-ioSocket.on('time:response', data => {
-  const duration = Date.now() - data.clientStartTime;
-  const clientEventTime = data.clientStartTime + (duration / 2);
-  const diff = data.serverTime - clientEventTime;
-
-  ServerTime.setDiff(diff);
-});
-
-ioSocket.emit('time:request', Date.now());
-
+setupSocketClient(ioSocket, store);
 store.dispatch(restoreAuth());
 
 render((

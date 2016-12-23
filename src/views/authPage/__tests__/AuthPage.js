@@ -11,7 +11,7 @@ import { shallowToJson } from 'enzyme-to-json';
 
 import { auth } from 'vclub/redux/club/auth';
 
-import AuthPageContainer, { AuthPage } from '../AuthPage';
+import AuthPageContainer, { AuthPageComponent } from '../AuthPage';
 
 function createPage(subject) {
   return {
@@ -73,7 +73,7 @@ test('<AuthPage /> component renders correctly', () => {
   // const store = createStore(() => ({}));
 
   const wrapper = shallow(
-    <AuthPage handleSubmit={jest.fn()} />
+    <AuthPageComponent handleSubmit={jest.fn()} />
   );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

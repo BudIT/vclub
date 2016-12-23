@@ -1,7 +1,9 @@
-import { MediaStatusPending } from 'vclub/constants/mediaStatus';
-import { ChatRoomType } from 'vclub/constants/roomTypes';
 import uuid from 'uuid';
 import moment from 'moment';
+import { MediaStatusPending } from 'vclub/constants/mediaStatus';
+import { ChatRoomType } from 'vclub/constants/roomTypes';
+import { SocketStatusConnecting } from 'vclub/constants/socketStatus';
+
 
 export default {
   members: [], // array of { id: String, name: String, master: Boolean }
@@ -57,6 +59,9 @@ export default {
     audioStreams: {},
     videoStreams: {},
     allowedStreams: [],
+  },
+  socket: {
+    status: SocketStatusConnecting,
   },
   whiteboard: {
     // any other params?
