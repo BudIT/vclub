@@ -14,6 +14,7 @@ export default {
   },
   ui: {
     showMemberPanel: false,
+    visibleDialog: false,
   },
   sharingRoom: {
     ballPosition: null,

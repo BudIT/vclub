@@ -10,10 +10,13 @@ import { toggleMemberPanel } from 'vclub/redux/club/ui';
 import style from './HeaderRight.css';
 
 import MediaButton from './MediaButton/MediaButton';
+import ResultQuickVoteOf from './vote/ResultQuickVoteOf';
 
 
 const enhance = compose(
+
   withHandlers({
+
     onToggleMemberPanel: props => () => {
       props.dispatch(toggleMemberPanel());
     },
@@ -24,16 +27,30 @@ const enhance = compose(
 );
 
 function HeaderRight(props) {
+  // eslint-disable-next-line react/prop-types
   const {
     numberOfMembers,
-    onLogOut, onToggleMemberPanel,
+    onLogOut,
+    onToggleMemberPanel,
+    user,
+    dispatch,
   } = props;
+
+  const displayVoteMenu = user.master;
 
   return (
     <ul className={style.ul}>
       <li>
         <MediaButton className={style.tab} />
       </li>
+      {displayVoteMenu && (
+        <li>
+          <ResultQuickVoteOf
+            className={style.tab}
+            dispatch={dispatch}
+          />
+        </li>
+      )}
       <li>
         <button
           className={style.tab}
@@ -60,15 +77,21 @@ function HeaderRight(props) {
     </ul>
   );
 }
-
+/*eslint-disable */
 HeaderRight.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onToggleMemberPanel: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    master: PropTypes.bool.isRequired,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
-
+/*eslint-enable */
 HeaderRight.defaultProps = {
-  numberOfMembers: 1,
+  numberOfMembers: 0,
 };
 
 export default enhance(HeaderRight);
