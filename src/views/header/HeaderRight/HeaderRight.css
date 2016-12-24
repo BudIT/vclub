@@ -30,8 +30,9 @@
   border-right: 2px solid transparent;
 }
 
-.tab:not([disabled]):hover {
-  background-color: #FFAA00;
+.tab:not([disabled]):hover,
+.tab:focus {
+	background-color: #FFAA00;
 }
 
 .dropdownContent {
@@ -43,8 +44,6 @@
   right: 0px;
   z-index: 1;
 }
-
-.dropdown {}
 
 .dropdownContent .tab:hover {
   background-color: #FFAA00;

@@ -27,7 +27,7 @@ function HeaderLeft(props) {
     </ul>
   );
 }
-
+/*eslint-disable */
 HeaderLeft.propTypes = {
   currentRoomName: PropTypes.string.isRequired,
   roomsNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -38,5 +38,5 @@ HeaderLeft.propTypes = {
     master: PropTypes.bool.isRequired,
   }).isRequired,
 };
-
+/*eslint-enable */
 export default HeaderLeft;

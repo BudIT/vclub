@@ -60,7 +60,7 @@ const enhance = compose(
       }
     },
 
-    onBallClick: (props) => () => {
+    onBallClick: props => () => {
       const { dispatch, user, showBallMenu } = props;
       if (user.master) {
         dispatch(toggleBallMenu(!showBallMenu));
@@ -68,8 +68,7 @@ const enhance = compose(
     },
 
     onCompletesSessionClick: (props) => () => {
-      const { dispatch } = props;
-      dispatch(completesSession());
+      props.dispatch(completesSession());
     },
   }),
 );

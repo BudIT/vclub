@@ -48,7 +48,7 @@ function HeaderTab(props) {
     </li>
   );
 }
-
+/*eslint-disable */
 HeaderTab.propTypes = {
   children: PropTypes.node.isRequired,
   isCurrentTab: PropTypes.bool.isRequired,
@@ -60,5 +60,5 @@ HeaderTab.propTypes = {
     master: PropTypes.bool.isRequired,
   }).isRequired,
 };
-
+/*eslint-enable */
 export default enhance(HeaderTab);

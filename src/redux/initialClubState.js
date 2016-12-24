@@ -14,7 +14,6 @@ export default {
   },
   ui: {
     showMemberPanel: false,
-    visibleDialog: false,
   },
   sharingRoom: {
     ballPosition: null,
@@ -26,7 +25,7 @@ export default {
     expired: false,
   },
   media: {
-    muted: false,
+    muted: true, // false default
     status: MediaStatusPending,
     stream: null,
     errorName: null,
@@ -40,5 +39,10 @@ export default {
   whiteboard: {
     // any other params?
     figures: [],
+  },
+  vote: {
+    showModalVote: false,
+    pros: [],
+    cons: [],
   },
 };

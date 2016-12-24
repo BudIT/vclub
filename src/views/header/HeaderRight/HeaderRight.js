@@ -27,7 +27,6 @@ const enhance = compose(
 );
 
 function HeaderRight(props) {
-  // eslint-disable-next-line react/prop-types
   const {
     numberOfMembers,
     onLogOut,
