@@ -2,23 +2,59 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .row {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .button {
   width: 200px;
   height: 200px;
-  border: 2px solid #7F6706;
-  border-radius: 12px;
-  background-color: #FFD00B;
+  margin: 3px;
   text-align: center;
-  font-weight: bold;
-  font-size: 2em;
+  background-color: #0B58C2;
   cursor: pointer;
+  position: relative;
+}
+
+.buttonGap {
+  width: 200px;
+  height: 200px;
+  margin: 3px;
+}
+
+.icon {
+  fill: white;
+  cursor: pointer;
+}
+
+.label {
+  color: white;
+  position: absolute;
+  bottom: 5px;
+  left: 15px;
+  cursor: pointer;
+}
+
+.buttonDisabled {
+  composes: button;
+  background-color: #888;
+  cursor: default;
+}
+
+
+.buttonDisabled .icon {
+  fill: #999;
+}
+
+.buttonDisabled .label {
+  position: absolute;
+  bottom: 5px;
+  left: 15px;
+  color: #999;
+  cursor: default;
 }
