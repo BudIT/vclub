@@ -25,7 +25,7 @@ export default {
     expired: false,
   },
   media: {
-    muted: true, // false default
+    muted: false,
     status: MediaStatusPending,
     stream: null,
     errorName: null,
