@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-
 import styles from './Timer.css';
 
 
@@ -22,24 +21,20 @@ class Timer extends Component {
       }
     }, 1000);
   }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
   render() {
     const { startTime, duration } = this.props;
-
     const secondsElapsed = startTime
       ? getElapsedTime(startTime, duration)
       : duration;
     const displaySeconds = Math.abs(secondsElapsed);
-
     const seconds = displaySeconds % 60;
     const minutes = (displaySeconds - seconds) / 60;
     const currentSeconds = prependZero(seconds);
     const currentMinutes = prependZero(minutes);
-
     const expired = secondsElapsed < 0;
     const className = expired ? styles.timerExpired : styles.timer;
 

@@ -12,16 +12,6 @@ import roomsReducer from './club/rooms';
 import uiReducer from './club/ui';
 import sharingRoomReducer from './club/sharing';
 
-
-// const baseReducer = combineReducers({
-//   auth: authReducer,
-//   members: membersReducer,
-//   rooms: roomsReducer,
-//   ui: uiReducer,
-//   form: formReducer,
-//   sharingRoom: sharingRoomReducer,
-// });
-
 const baseReducer = composeReducers(
   scopeReducer('auth', authReducer),
   scopeReducer('members', membersReducer),

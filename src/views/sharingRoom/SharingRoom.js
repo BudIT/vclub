@@ -27,15 +27,12 @@ const enhance = compose(
         dispatch(increment());
       }
     },
-
     onDecrementClick: (props) => () => {
       const { dispatch, ballPosition } = props;
-
       if (ballPosition === null) {
         dispatch(decrement());
       }
     },
-
   }),
 );
 
@@ -75,22 +72,11 @@ function SharingRoom(props) {
         </div>
         {showTimeControlBtn && (
           <div className={styles.timerControl}>
-            <button
-              className={styles.btnIncrement}
-              onClick={onIncrementClick}
-            >
-              &#708;
-            </button>
-            <button
-              className={styles.btnDecrement}
-              onClick={onDecrementClick}
-            >
-              &#709;
-            </button>
+            <button className={styles.btnIncrement} onClick={onIncrementClick}></button>
+            <button className={styles.btnDecrement} onClick={onDecrementClick}></button>
           </div>
         )}
       </header>
-
       <div className={styles.member}>
         {members.map((member) => (
           <Member

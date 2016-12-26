@@ -1,35 +1,30 @@
 import actionCreator from 'borex-actions/actionCreator';
-import setPayload from 'borex-actions/setPayload';
 import setMetaStatic from 'borex-actions/setMetaStatic';
 import createReducer from 'borex-reducers/createReducer';
+import setIn from 'borex-reducers/setIn';
 
 import initialState from 'vclub/redux/initialClubState';
-import changeRoom from 'vclub/redux/club/rooms';
+
+import { CHANGE_ROOM } from 'vclub/redux/club/rooms';
 
 
 export const increment = actionCreator(
-  'increment',
   setMetaStatic('remote', true),
   setMetaStatic('broadcast', true)
 );
 export const decrement = actionCreator(
-  'decrement',
   setMetaStatic('remote', true),
   setMetaStatic('broadcast', true)
 );
 export const passBall = actionCreator(
-  'passBall',
-  setPayload((memberId) => (memberId)), // ???
   setMetaStatic('remote', true),
   setMetaStatic('broadcast', true)
 );
 export const setUserMenuPosition = actionCreator(
   'setUserMenuPosition',
-  setPayload((memberId) => (memberId)) // ???
 );
 export const toggleBallMenu = actionCreator(
   'toggleBallMenu',
-  setPayload((showBallMenu) => (showBallMenu)) // ???
 );
 export const completesSession = actionCreator(
   'completesSession',
@@ -39,15 +34,8 @@ export const completesSession = actionCreator(
 
 
 export default createReducer((on) => {
-  on(increment, (state, action) => ({
-    ...state,
-    sessionDuration: state.sessionDuration + 60,
-  }));
-
-  on(decrement, (state, action) => ({
-    ...state,
-    sessionDuration: state.sessionDuration - 60,
-  }));
+  on(increment, setIn('sessionDuration', (_, sessionDuration) => sessionDuration + 60));
+  on(decrement, setIn('sessionDuration', (_, sessionDuration) => sessionDuration - 60));
 
   on(passBall, (state, action) => {
     if (state.ballPosition === action.payload) {
@@ -85,11 +73,6 @@ export default createReducer((on) => {
     };
   });
 
-  on(completesSession, () => {
-    return initialState.sharingRoom;
-  });
-
-  on(changeRoom, () => {
-    return initialState.sharingRoom;
-  });
+  on(completesSession, () => initialState.sharingRoom);
+  on(CHANGE_ROOM, () => initialState.sharingRoom);
 });
