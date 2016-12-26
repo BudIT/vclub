@@ -45,9 +45,10 @@ function Dialog(props) {
     cons,
   } = props;
 
-  const userIs = pros.includes(user.id);
-  const userIs2 = cons.includes(user.id);
-  const userHasVoted = userIs || userIs2;
+  const userVotedPros = pros.includes(user.id);
+  const userVotedCons = cons.includes(user.id);
+  const userHasVoted = userVotedPros || userVotedCons;
+
 
   return (
     <Modal
@@ -75,7 +76,7 @@ function Dialog(props) {
     </Modal>
   );
 }
-/*eslint-disable */
+
 Dialog.propTypes = {
   onLikeClick: PropTypes.func.isRequired,
   onDislikeClick: PropTypes.func.isRequired,
@@ -88,5 +89,5 @@ Dialog.propTypes = {
   pros: PropTypes.arrayOf(PropTypes.string).isRequired,
   cons: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
-/*eslint-enable */
+
 export default enhance(Dialog);

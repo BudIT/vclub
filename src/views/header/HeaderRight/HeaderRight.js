@@ -33,9 +33,12 @@ function HeaderRight(props) {
     onToggleMemberPanel,
     user,
     dispatch,
+    showModalVote,
   } = props;
 
   const displayVoteMenu = user.master;
+  const modalIsOpen = showModalVote === false;
+  const modalStyle = modalIsOpen ? style.modalISOpen : style.tab;
 
   return (
     <ul className={style.ul}>
@@ -45,7 +48,7 @@ function HeaderRight(props) {
       {displayVoteMenu && (
         <li>
           <ResultQuickVoteOf
-            className={style.tab}
+            className={modalStyle}
             dispatch={dispatch}
           />
         </li>

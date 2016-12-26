@@ -31,7 +31,7 @@
 }
 
 .tab:not([disabled]):hover,
-.tab:focus {
+.modalISOpen {
 	background-color: #FFAA00;
 }
 
