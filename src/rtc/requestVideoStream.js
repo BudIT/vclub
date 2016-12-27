@@ -1,9 +1,7 @@
-import { setVideoStream, setMediaRequestStatus } from 'vclub/redux/club/videoMedia';
+import { setVideoStream, setVideoRequestStatus } from 'vclub/redux/club/videoMedia';
 import {
   MediaStatusDismissed, MediaStatusDenied, MediaStatusNoTracks, MediaStatusUnknown,
 } from 'vclub/constants/mediaStatus';
-
-import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
 
 
 const MediaRequestErrorsMap = {
@@ -11,23 +9,17 @@ const MediaRequestErrorsMap = {
   PermissionDeniedError: MediaStatusDenied,
 };
 
-const mediaConstraints = {
-  [StreamSourceWebcam]: {
-    video: true,
-  },
-  [StreamSourceScreen]: {
-    video: {
-      mandatory: { chromeMediaSource: 'desktop' },
-    },
-  },
-};
+export default function requestVideoStream(store, videoConstraints) {
+  const constraints = {
+    audio: false,
+    video: videoConstraints,
+  };
 
-export default function requestVideoStream(store, type) {
-  return navigator.mediaDevices.getUserMedia(mediaConstraints[type]).then(videoStream => {
+  return navigator.mediaDevices.getUserMedia(constraints).then(videoStream => {
     const videoTracks = videoStream.getVideoTracks();
 
     if (videoTracks.length === 0) {
-      store.dispatch(setMediaRequestStatus(MediaStatusNoTracks));
+      store.dispatch(setVideoRequestStatus(MediaStatusNoTracks));
 
       return;
     }
@@ -35,6 +27,6 @@ export default function requestVideoStream(store, type) {
     store.dispatch(setVideoStream(videoStream));
   }).catch(error => {
     const status = error.name && MediaRequestErrorsMap[error.name];
-    store.dispatch(setMediaRequestStatus(status || MediaStatusUnknown, error.name));
+    store.dispatch(setVideoRequestStatus(status || MediaStatusUnknown, error.name));
   });
 }

@@ -9,7 +9,7 @@ import { MediaStatusReady } from 'vclub/constants/mediaStatus';
 
 export const setAudioStream = actionCreator();
 
-export const setMediaRequestStatus = actionCreator(
+export const setAudioRequestStatus = actionCreator(
   setPayload((status, errorName) => ({ status, errorName })),
 );
 
@@ -24,7 +24,7 @@ export default createReducer(on => {
     })),
   );
 
-  on(setMediaRequestStatus, update());
+  on(setAudioRequestStatus, update());
 
   on(toggleAudio, setIn('muted', (_, muted) => !muted));
 });

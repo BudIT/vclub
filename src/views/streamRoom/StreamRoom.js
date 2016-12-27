@@ -42,7 +42,12 @@ function StreamRoom(props) {
   if (!source) {
     return (
       currentUser.master
-        ? <SourceSelect onSelected={onSourceSelected} />
+        ? (
+          <SourceSelect
+            onSelected={onSourceSelected}
+            screenCaptureAvailable={videoMedia.screenCaptureAvailable}
+          />
+        )
         : <StatusMessage>Подготовка вещания...</StatusMessage>
     );
   }
@@ -68,7 +73,6 @@ StreamRoom.propTypes = {
   currentUser: PropTypes.object.isRequired,
   videoStreams: PropTypes.object.isRequired,
   videoMedia: PropTypes.object.isRequired,
-  // dispatch: PropTypes.func.isRequired,
   onResetStreaming: PropTypes.func.isRequired,
   onSourceSelected: PropTypes.func.isRequired,
 };

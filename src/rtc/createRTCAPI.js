@@ -12,6 +12,7 @@ import {
 import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
 
 import requestVideoStream from './requestVideoStream';
+import getScreenCaptureRequest from './getScreenCaptureRequest';
 import { ByRoomSelectors, DefaultStreamsSelector } from './allowedStreamsSelectors';
 
 
@@ -24,6 +25,8 @@ const IceServers = [
 ];
 
 export default function createRTCAPI(ioSocket, store) {
+  const requestScreenCapture = getScreenCaptureRequest(store);
+
   function createPeerConnection(userId) {
     const { audioMedia, videoMedia } = store.getState();
     const peer = new RTCPeerConnection({
@@ -150,10 +153,14 @@ export default function createRTCAPI(ioSocket, store) {
       return;
     }
 
-    if (source === StreamSourceWebcam || source === StreamSourceScreen) {
-      requestVideoStream(store, source);
+    if (source === StreamSourceWebcam) {
+      requestVideoStream(store, true);
 
       return;
+    }
+
+    if (source === StreamSourceScreen) {
+      requestScreenCapture();
     }
   }
 

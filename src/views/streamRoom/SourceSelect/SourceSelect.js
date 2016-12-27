@@ -35,6 +35,7 @@ const enhance = compose(
 
 function SourceSelect(props) {
   const {
+    screenCaptureAvailable,
     onWebcamSelected, onScreenSelected, onYoutubeSelected, onVideoSelected, onAudioSelected,
   } = props;
 
@@ -46,7 +47,10 @@ function SourceSelect(props) {
           <SvgIcon className={styles.icon} glyph={CameraIcon} size={100} />
           <span className={styles.label}>Веб-камера</span>
         </button>
-        <button className={styles.button} onClick={onScreenSelected}>
+        <button
+          className={screenCaptureAvailable ? styles.button : styles.buttonDisabled}
+          onClick={onScreenSelected}
+        >
           <SvgIcon className={styles.icon} glyph={ScreenIcon} size={100} />
           <span className={styles.label}>Экран</span>
         </button>
@@ -70,6 +74,7 @@ function SourceSelect(props) {
 }
 
 SourceSelect.propTypes = {
+  screenCaptureAvailable: PropTypes.bool.isRequired,
   onWebcamSelected: PropTypes.func.isRequired,
   onScreenSelected: PropTypes.func.isRequired,
   onYoutubeSelected: PropTypes.func.isRequired,

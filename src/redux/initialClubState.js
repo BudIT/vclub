@@ -52,6 +52,7 @@ export default {
     status: MediaStatusPending,
     stream: null,
     errorName: null,
+    screenCaptureAvailable: false,
   },
   rtc: {
     peers: {},

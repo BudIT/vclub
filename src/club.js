@@ -16,9 +16,9 @@ import rtcMiddleware from 'vclub/redux/middlewares/rtcMiddleware';
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
 import { restoreAuth } from 'vclub/redux/club/auth';
+import { enableScreenCapture } from 'vclub/redux/club/videoMedia';
 
 import requestAudioStream from 'vclub/rtc/requestAudioStream';
-
 import setupSocketClient from 'vclub/socket/setupSocketClient';
 
 
@@ -45,3 +45,9 @@ render((
 ), document.getElementById('AppRoot'));
 
 requestAudioStream(store);
+
+window.addEventListener('message', (event) => {
+  if (!event.data || event.data.type !== 'vclub:extension:loaded') return;
+
+  store.dispatch(enableScreenCapture());
+});

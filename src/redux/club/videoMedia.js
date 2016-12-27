@@ -12,11 +12,12 @@ import { resetStreaming } from './streamRoom';
 
 export const setVideoStream = actionCreator();
 
-export const setMediaRequestStatus = actionCreator(
+export const setVideoRequestStatus = actionCreator(
   setPayload((status, errorName) => ({ status, errorName })),
 );
 
 export const toggleVideo = actionCreator();
+export const enableScreenCapture = actionCreator();
 
 export default () => createReducer(on => {
   on(setVideoStream,
@@ -27,9 +28,11 @@ export default () => createReducer(on => {
     })),
   );
 
-  on(setMediaRequestStatus, update());
+  on(setVideoRequestStatus, update());
 
   on(toggleVideo, setIn('muted', (_, muted) => !muted));
 
   on(resetStreaming, () => initialState.videoMedia);
+
+  on(enableScreenCapture, setIn('screenCaptureAvailable', () => true));
 });
