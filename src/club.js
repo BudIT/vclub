@@ -16,7 +16,7 @@ import rtcMiddleware from 'vclub/redux/middlewares/rtcMiddleware';
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
 import { restoreAuth } from 'vclub/redux/club/auth';
-import { enableScreenCapture } from 'vclub/redux/club/videoMedia';
+import { enableScreenCapture } from 'vclub/redux/club/features';
 
 import requestAudioStream from 'vclub/rtc/requestAudioStream';
 import setupSocketClient from 'vclub/socket/setupSocketClient';

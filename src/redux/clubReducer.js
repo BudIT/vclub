@@ -15,6 +15,7 @@ import audioMediaReducer from './club/audioMedia';
 import videoMediaReducer from './club/videoMedia';
 import rtcReducer from './club/rtc';
 import socketReducer from './club/socket';
+import featuresReducer from './club/features';
 import whiteboardReducer from './club/whiteboard';
 import voteReducer from './club/vote';
 
@@ -29,9 +30,10 @@ const baseReducer = composeReducers(
   scopeReducer('chat', chatReducer),
   scopeReducer('streamRoom', streamRoomReducer),
   scopeReducer('audioMedia', audioMediaReducer),
-  scopeReducer('videoMedia', videoMediaReducer()),
+  scopeReducer('videoMedia', videoMediaReducer),
   scopeReducer('rtc', rtcReducer),
   scopeReducer('socket', socketReducer),
+  scopeReducer('features', featuresReducer),
   scopeReducer('whiteboard', whiteboardReducer),
   scopeReducer('vote', voteReducer),
 );

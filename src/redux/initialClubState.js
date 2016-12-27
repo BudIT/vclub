@@ -52,7 +52,6 @@ export default {
     status: MediaStatusPending,
     stream: null,
     errorName: null,
-    screenCaptureAvailable: false,
   },
   rtc: {
     peers: {},
@@ -72,5 +71,9 @@ export default {
     showModalVote: false,
     pros: [],
     cons: [],
+  },
+  features: {
+    screenCapture: false,
+    camera: true,
   },
 };

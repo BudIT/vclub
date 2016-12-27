@@ -21,6 +21,7 @@ const enhance = compose(
     currentUser: state.auth.user,
     videoStreams: state.rtc.videoStreams,
     videoMedia: state.videoMedia,
+    features: state.features,
   })),
   withHandlers({
     onResetStreaming: (props) => () => {
@@ -34,7 +35,7 @@ const enhance = compose(
 
 function StreamRoom(props) {
   const {
-    source, currentUser, ownerId, videoStreams, videoMedia,
+    source, currentUser, ownerId, videoStreams, videoMedia, features,
     onSourceSelected, onResetStreaming,
   } = props;
   const owner = currentUser.id === ownerId;
@@ -42,12 +43,7 @@ function StreamRoom(props) {
   if (!source) {
     return (
       currentUser.master
-        ? (
-          <SourceSelect
-            onSelected={onSourceSelected}
-            screenCaptureAvailable={videoMedia.screenCaptureAvailable}
-          />
-        )
+        ? <SourceSelect onSelected={onSourceSelected} features={features} />
         : <StatusMessage>Подготовка вещания...</StatusMessage>
     );
   }
@@ -73,6 +69,7 @@ StreamRoom.propTypes = {
   currentUser: PropTypes.object.isRequired,
   videoStreams: PropTypes.object.isRequired,
   videoMedia: PropTypes.object.isRequired,
+  features: PropTypes.object.isRequired,
   onResetStreaming: PropTypes.func.isRequired,
   onSourceSelected: PropTypes.func.isRequired,
 };

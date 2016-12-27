@@ -17,9 +17,8 @@ export const setVideoRequestStatus = actionCreator(
 );
 
 export const toggleVideo = actionCreator();
-export const enableScreenCapture = actionCreator();
 
-export default () => createReducer(on => {
+export default createReducer(on => {
   on(setVideoStream,
     setIn('stream'),
     update(() => ({
@@ -33,6 +32,4 @@ export default () => createReducer(on => {
   on(toggleVideo, setIn('muted', (_, muted) => !muted));
 
   on(resetStreaming, () => initialState.videoMedia);
-
-  on(enableScreenCapture, setIn('screenCaptureAvailable', () => true));
 });
