@@ -6,24 +6,18 @@
 //
 
 import initialState from 'vclub/redux/initialClubState';
+import uuid from 'uuid';
 import reducer, {
   sendMessage,
 } from '../chat';
-
-// action creator
-test('sendMessage action creator creates proper action', () => {
-  const action = sendMessage();
-
-  expect(action).toEqual(sendMessage());
-});
 
 test('reducer should handle sendMessage', () => {
   const { chat } = initialState;
 
   const newMessages =
     {
-      id: 1,
-      author: 'Test User',
+      id: uuid.v4(),
+      user: 'Test User',
       date: '',
       message: 'hello lads',
     };

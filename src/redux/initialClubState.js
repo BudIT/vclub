@@ -1,6 +1,7 @@
 import { MediaStatusPending } from 'vclub/constants/mediaStatus';
 import { ChatRoomType } from 'vclub/constants/roomTypes';
-
+import uuid from 'uuid';
+import moment from 'moment';
 
 export default {
   members: [], // array of { id: String, name: String, master: Boolean }
@@ -15,6 +16,16 @@ export default {
   ui: {
     showMemberPanel: false,
   },
+  chat: {
+    messages: [
+      {
+        id: uuid.v4(),
+        user: 'Bot',
+        date: moment.utc(),
+        message: 'Hello! Welcome to chat!',
+      },
+    ],
+  }, // array of { id: Number, user: String, date: String, message: String }
   sharingRoom: {
     ballPosition: null,
     done: [],

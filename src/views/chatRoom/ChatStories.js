@@ -3,6 +3,8 @@ import React from 'react';
 import { storiesOf } from '@kadira/storybook';
 import initialState from 'vclub/redux/initialClubState';
 import ChatRoom from 'vclub/views/chatRoom/ChatRoom';
+import uuid from 'uuid';
+import moment from 'moment';
 
 const book = storiesOf('ChatRoom', module);
 
@@ -19,9 +21,9 @@ book.addReduxStory('InitialState ChatRoom', dispatch => (
   chat: {
     messages: [
       {
-        id: 1,
-        author: 'Yanis',
-        date: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        id: uuid.v4(),
+        user: 'Yanis',
+        date: moment.utc(),
         message: 'hello',
       },
     ],
@@ -39,21 +41,21 @@ book.addReduxStory('More messages', dispatch => (
   chat: {
     messages: [
       {
-        id: 1,
-        author: 'Yanis',
-        date: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        id: uuid.v4(),
+        user: 'Yanis',
+        date: moment.utc(),
         message: 'hello',
       },
       {
-        id: 2,
-        author: 'Den',
-        date: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        id: uuid.v4(),
+        user: 'Den',
+        date: moment.utc(),
         message: 'hello!',
       },
       {
-        id: 3,
-        author: 'Vira',
-        date: `${new Date().getHours()}:${new Date().getMinutes()}`,
+        id: uuid.v4(),
+        user: 'Vira',
+        date: moment.utc(),
         message: 'hello!!!',
       },
     ],

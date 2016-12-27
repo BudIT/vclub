@@ -22,6 +22,7 @@ function UserList(props) {
       component="div"
       enter={{
         opacity: 1,
+        height: 35,
       }}
       leave={{
         height: 0,

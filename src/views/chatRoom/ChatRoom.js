@@ -3,9 +3,10 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import { connect } from 'react-redux';
-import format from 'date-fns/format';
 import { reset } from 'redux-form';
 import { sendMessage } from 'vclub/redux/club/chat';
+import moment from 'moment';
+import uuid from 'uuid';
 
 import MessageBox from 'vclub/views/chatRoom/MessageBox/MessageBox';
 import InputBox from 'vclub/views/chatRoom/InputBox/InputBox';
@@ -20,11 +21,11 @@ const enhance = compose(
       handleSubmit: (props) => (data) => {
         const { dispatch } = props;
         const { message } = data;
-        const author = props.username;
+        const user = props.username;
 
-        const id = Date.now();
-        const date = format(Date.now(), 'HH:mm');
-        dispatch(sendMessage({ id, author, date, message }));
+        const id = uuid.v4();
+        const date = moment.utc();
+        dispatch(sendMessage({ id, user, date, message }));
         dispatch(reset('chatMessage'));
       },
     }),
@@ -43,8 +44,8 @@ const ChatRoom = (props) => {
 /* eslint-disable */
 ChatRoom.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    author: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
   }).isRequired).isRequired,
