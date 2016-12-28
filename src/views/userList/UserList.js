@@ -49,7 +49,7 @@ function UserList(props) {
 /*eslint-disable */
 UserList.propTypes = {
   members: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
   })).isRequired,
