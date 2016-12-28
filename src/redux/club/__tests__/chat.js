@@ -1,10 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-env jest */
 
-// TODO: need setType (ask Den)
-// initialState test?
-//
-
 import initialState from 'vclub/redux/initialClubState';
 import uuid from 'uuid';
 import reducer, {
