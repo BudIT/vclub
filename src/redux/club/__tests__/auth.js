@@ -3,19 +3,14 @@
 
 import initialState from 'vclub/redux/initialClubState';
 
-import reducer, {
-  LOG_OUT, logOut,
-  AUTH, auth,
-  RESTORE_AUTH, restoreAuth,
-} from '../auth';
+import reducer, { logOut, auth, restoreAuth } from '../auth';
 
 // action creator
 // logOut
 test('logOut action creator creates proper action', () => {
   const action = logOut();
 
-  expect(action.type).toEqual(LOG_OUT);
-  expect(action.meta.sideEffect).toBeDefined();
+  expect(action).toMatchSnapshot();
 });
 
 test('logOut sideEffect works correctly', () => {
@@ -30,34 +25,16 @@ test('logOut sideEffect works correctly', () => {
     removeItem: jest.fn(),
   };
 
-  action.meta.sideEffect({
+  action.meta.sideEffects[0]({
     ioSocket,
     localStorage,
   });
 
-  expect(ioSocket.emit).toHaveBeenCalledWith('logOut');
-  expect(ioSocket.emit).toHaveBeenCalledTimes(1);
-
   expect(localStorage.removeItem).toHaveBeenCalledWith('name');
   expect(localStorage.removeItem).toHaveBeenCalledWith('master');
   expect(localStorage.removeItem).toHaveBeenCalledTimes(2);
-});
 
-test('reducer with logOut works correctly', () => {
-  // after logOut fired state must become initial
-  const state = {
-    ...initialState.auth,
-    authenticated: true,
-    user: {
-      id: '1',
-      name: 'Yanis',
-      master: false,
-    },
-  };
-
-  const action = logOut();
-
-  expect(reducer(state, action)).toEqual(initialState.auth);
+  // TODO document.location.reload ?
 });
 
 // auth
@@ -67,10 +44,7 @@ test('auth action creator creates proper action', () => {
     master: true,
   }, false);
 
-  expect(action.type).toEqual(AUTH);
-  expect(action.payload.name).toEqual('test');
-  expect(action.payload.master).toEqual(true);
-  expect(action.meta.sideEffect).toBeDefined();
+  expect(action).toMatchSnapshot();
 });
 
 test('auth sideEffect works correctly with remember = true', () => {
@@ -88,7 +62,7 @@ test('auth sideEffect works correctly with remember = true', () => {
     setItem: jest.fn(),
   };
 
-  action.meta.sideEffect({
+  action.meta.sideEffects[0]({
     ioSocket,
     localStorage,
   });
@@ -116,7 +90,7 @@ test('auth sideEffect works correctly with remember = false', () => {
     setItem: jest.fn(),
   };
 
-  action.meta.sideEffect({
+  action.meta.sideEffects[0]({
     ioSocket,
     localStorage,
   });
@@ -143,37 +117,27 @@ test('reducer with auth works correctly', () => {
 test('restoreAuth action creator creates proper action', () => {
   const action = restoreAuth();
 
-  expect(action.type).toEqual(RESTORE_AUTH);
-  expect(action.meta.sideEffect).toBeDefined();
+  expect(action).toMatchSnapshot();
 });
 
 test('restoreAuth sideEffect works correctly when we already have name in localStorage', () => {
   const action = restoreAuth();
-
-  // mock for ioSocket
-  const store = {
-    dispatch: jest.fn(),
-  };
+  const dispatch = jest.fn();
 
   const storage = {
     name: 'testName',
     master: true,
   };
-
   const localStorage = {
     getItem: jest.fn(elm => storage[elm]),
   };
 
-  action.meta.sideEffect({
-    store,
+  action.meta.sideEffects[0]({
+    dispatch,
     localStorage,
   });
 
-  // expect(store.dispatch).toHaveBeenCalledWith(auth({
-  //   name: returnValues[0],
-  //   master: returnValues[1],
-  // }));
-  expect(store.dispatch).toHaveBeenCalledTimes(1);
+  expect(dispatch).toHaveBeenCalledTimes(1);
 
   expect(localStorage.getItem).toHaveBeenCalledWith('name');
   expect(localStorage.getItem).toHaveBeenCalledWith('master');
@@ -182,26 +146,18 @@ test('restoreAuth sideEffect works correctly when we already have name in localS
 
 test('restoreAuth sideEffect works correctly when we haven\'t name in localStorage', () => {
   const action = restoreAuth();
-
-  // mock for ioSocket
-  const store = {
-    dispatch: jest.fn(),
-  };
+  const dispatch = jest.fn();
 
   const localStorage = {
     getItem: jest.fn(() => null),
   };
 
-  action.meta.sideEffect({
-    store,
+  action.meta.sideEffects[0]({
+    dispatch,
     localStorage,
   });
 
-  // expect(store.dispatch).toHaveBeenCalledWith(auth({
-  //   name: returnValues[0],
-  //   master: returnValues[1],
-  // }));
-  expect(store.dispatch).not.toHaveBeenCalled();
+  expect(dispatch).not.toHaveBeenCalled();
 
   expect(localStorage.getItem).toHaveBeenCalledWith('name');
   expect(localStorage.getItem).toHaveBeenCalledWith('master');
@@ -215,4 +171,3 @@ test('reducer returns initial state', () => {
   expect(reducer(undefined, {}))
     .toEqual(authInitialState);
 });
-

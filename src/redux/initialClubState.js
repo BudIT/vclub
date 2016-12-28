@@ -42,7 +42,7 @@ export default {
     ownerId: null,
   },
   audioMedia: {
-    muted: false,
+    muted: true,
     status: MediaStatusPending,
     stream: null,
     errorName: null,

@@ -1,0 +1,10 @@
+exports[`test changeRoom action creates proper action 1`] = `
+Object {
+  "meta": Object {
+    "broadcast": true,
+    "remote": true,
+  },
+  "payload": "CHAT",
+  "type": "club/rooms/change-room",
+}
+`;

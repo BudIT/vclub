@@ -10,10 +10,18 @@ import HeaderTab from '../HeaderTab';
 
 const tabName = 'VIDEO';
 
-test('HeaderTab calls passed function when HeaderTab is clicked', () => {
+const masterUser = {
+  id: '1',
+  name: 'User',
+  master: true,
+};
+
+const justAMember = { ...masterUser, master: false };
+
+test('HeaderTab dispatches action for master', () => {
   const dispatchSpy = jest.fn();
   const wrapper = mount(
-    <HeaderTab isCurrentTab dispatch={dispatchSpy}>
+    <HeaderTab isCurrentTab user={masterUser} dispatch={dispatchSpy}>
       {tabName}
     </HeaderTab>
   );
@@ -22,4 +30,17 @@ test('HeaderTab calls passed function when HeaderTab is clicked', () => {
   button.simulate('click');
   expect(dispatchSpy).toHaveBeenCalledTimes(1);
   expect(dispatchSpy).toHaveBeenCalledWith(changeRoom(tabName));
+});
+
+test('HeaderTab ignores click for member', () => {
+  const dispatchSpy = jest.fn();
+  const wrapper = mount(
+    <HeaderTab isCurrentTab user={justAMember} dispatch={dispatchSpy}>
+      {tabName}
+    </HeaderTab>
+  );
+
+  const button = wrapper.find('button');
+  button.simulate('click');
+  expect(dispatchSpy).not.toBeCalled();
 });

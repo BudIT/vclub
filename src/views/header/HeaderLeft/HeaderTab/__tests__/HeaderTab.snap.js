@@ -7,11 +7,18 @@ import HeaderTab from '../HeaderTab';
 
 const tabName = 'VIDEO';
 
+const user = {
+  id: '1',
+  name: 'User',
+  master: true,
+};
+
 test('<HeaderTab /> (current tab) renders correctly', () => {
   const dispatchSpy = jest.fn();
   const rendered = renderer.create(
     <HeaderTab
       isCurrentTab
+      user={user}
       dispatch={dispatchSpy}
     >
       {tabName}
@@ -25,6 +32,7 @@ test('<HeaderTab /> (not current tab) renders correctly', () => {
   const rendered = renderer.create(
     <HeaderTab
       isCurrentTab={false}
+      user={user}
       dispatch={dispatchSpy}
     >
       {tabName}

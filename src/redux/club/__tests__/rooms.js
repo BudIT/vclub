@@ -2,18 +2,13 @@
 /* eslint-env jest */
 import { ChatRoomType, MediaRoomType } from 'vclub/constants/roomTypes';
 import initialState from 'vclub/redux/initialClubState';
-import reducer, {
-  CHANGE_ROOM, changeRoom,
-} from '../rooms';
+import reducer, { changeRoom } from '../rooms';
 
 // action creator
 test('changeRoom action creates proper action', () => {
   const nextRoom = ChatRoomType;
-  const expectedAction = {
-    type: CHANGE_ROOM,
-    payload: nextRoom,
-  };
-  expect(changeRoom(nextRoom)).toEqual(expectedAction);
+
+  expect(changeRoom(nextRoom)).toMatchSnapshot();
 });
 
 // reducer

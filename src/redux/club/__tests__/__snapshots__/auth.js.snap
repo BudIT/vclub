@@ -1,0 +1,36 @@
+exports[`test auth action creator creates proper action 1`] = `
+Object {
+  "meta": Object {
+    "sideEffects": Array [
+      [Function],
+    ],
+  },
+  "payload": Object {
+    "master": true,
+    "name": "test",
+  },
+  "type": "club/auth/auth",
+}
+`;
+
+exports[`test logOut action creator creates proper action 1`] = `
+Object {
+  "meta": Object {
+    "sideEffects": Array [
+      [Function],
+    ],
+  },
+  "type": "club/auth/log-out",
+}
+`;
+
+exports[`test restoreAuth action creator creates proper action 1`] = `
+Object {
+  "meta": Object {
+    "sideEffects": Array [
+      [Function],
+    ],
+  },
+  "type": "club/auth/restoreAuth",
+}
+`;

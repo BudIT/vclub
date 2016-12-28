@@ -9,11 +9,18 @@ import HeaderRight from '../HeaderRight';
 
 const numberOfMembers = 5;
 
+const user = {
+  id: '1',
+  name: 'User',
+  master: true,
+};
+
 test('HeaderRight dispatch toggleMemberPanel action on click', () => {
   const dispatchSpy = jest.fn();
   const wrapper = mount(
     <HeaderRight
       numberOfMembers={numberOfMembers}
+      user={user}
       dispatch={dispatchSpy}
     />
   );
@@ -30,6 +37,7 @@ test('HeaderRight dispatch logOut action on click', () => {
   const wrapper = mount(
     <HeaderRight
       numberOfMembers={numberOfMembers}
+      user={user}
       dispatch={dispatchSpy}
     />
   );

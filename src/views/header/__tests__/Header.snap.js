@@ -14,12 +14,19 @@ jest.mock('react-redux', () => ({
   },
 }));
 
+const user = {
+  id: '1',
+  name: 'User',
+  master: true,
+};
+
 test('<Header /> renders correctly', () => {
   const dispatchSpy = jest.fn();
   const rendered = renderer.create(
     <Header
       currentRoomName={currentRoomName}
       numberOfMembers={numberOfMembers}
+      user={user}
       dispatch={dispatchSpy}
     />
   );
