@@ -1,6 +1,7 @@
 import createReducer from 'borex-reducers/createReducer';
 import actionCreator from 'borex-actions/actionCreator';
 import setMetaStatic from 'borex-actions/setMetaStatic';
+import appendIn from 'borex-reducers/appendIn';
 
 import initialState from 'vclub/redux/initialClubState';
 
@@ -26,6 +27,6 @@ export default createReducer((on) => {
       showModalVote: !state.showModalVote,
     };
   });
-  on(like, (state, action) => ({ ...state, pros: [...state.pros, action.payload] }));
-  on(dislike, (state, action) => ({ ...state, cons: [...state.cons, action.payload] }));
+  on(like, appendIn('pros'));
+  on(dislike, appendIn('cons'));
 });
