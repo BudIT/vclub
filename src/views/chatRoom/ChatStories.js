@@ -23,7 +23,7 @@ book.addReduxStory('InitialState ChatRoom', dispatch => (
       {
         id: uuid.v4(),
         user: 'Yanis',
-        date: moment.utc(),
+        date: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
         message: 'hello',
       },
     ],
@@ -43,19 +43,19 @@ book.addReduxStory('More messages', dispatch => (
       {
         id: uuid.v4(),
         user: 'Yanis',
-        date: moment.utc(),
+        date: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
         message: 'hello',
       },
       {
         id: uuid.v4(),
         user: 'Den',
-        date: moment.utc(),
+        date: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
         message: 'hello!',
       },
       {
         id: uuid.v4(),
         user: 'Vira',
-        date: moment.utc(),
+        date: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
         message: 'hello!!!',
       },
     ],

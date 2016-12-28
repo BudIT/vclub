@@ -19,16 +19,22 @@ const enhance = compose(
 );
 
 function InputBox(props) {
-  const { handleSubmit, pristine, submitting, username } = props;
+  const { handleSubmit, pristine, submitting, username, styles } = props;
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <Field name="message" component="input" type="text" placeholder="message" className={style.input} />
+        <Field
+          name="message"
+          component="input"
+          type="text"
+          placeholder="message"
+          className={style.input}
+        />
       </div>
       <button type="submit" disabled={submitting || pristine} className={style.send}>Send</button>
       <div className={style.icon}>
-        <span className={style.pic}>
-          <i className={style.char}>{username.charAt(0)}</i>
+        <span className={styles.pic}>
+          <i className={styles.char}>{username.charAt(0)}</i>
         </span>
       </div>
     </form>
@@ -47,6 +53,7 @@ InputBox.propTypes = {
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   username: PropTypes.string.isRequired,
+  styles: PropTypes.object.isRequired,
 };
 /* eslint-enable */
 

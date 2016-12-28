@@ -10,7 +10,7 @@ import uuid from 'uuid';
 
 import MessageBox from 'vclub/views/chatRoom/MessageBox/MessageBox';
 import InputBox from 'vclub/views/chatRoom/InputBox/InputBox';
-// import styles from './ChatRoom.css';
+import styles from './ChatRoom.css';
 
 const enhance = compose(
   connect(state => ({
@@ -24,7 +24,7 @@ const enhance = compose(
         const user = props.username;
 
         const id = uuid.v4();
-        const date = moment.utc();
+        const date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
         dispatch(sendMessage({ id, user, date, message }));
         dispatch(reset('chatMessage'));
       },
@@ -32,11 +32,11 @@ const enhance = compose(
 );
 
 const ChatRoom = (props) => {
-  const { messages, handleSubmit } = props;
+  const { messages, handleSubmit, username } = props;
   return (
     <section>
-      <MessageBox messages={messages} />
-      <InputBox onSubmit={handleSubmit} />
+      <MessageBox messages={messages} username={username} styles={styles} />
+      <InputBox onSubmit={handleSubmit} styles={styles} />
     </section>
   );
 };
@@ -50,6 +50,7 @@ ChatRoom.propTypes = {
     message: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
 };
 /* eslint-enable */
 

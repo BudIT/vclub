@@ -21,7 +21,7 @@ export default {
       {
         id: uuid.v4(),
         user: 'Bot',
-        date: moment.utc(),
+        date: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
         message: 'Hello! Welcome to chat!',
       },
     ],
