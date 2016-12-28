@@ -30,19 +30,24 @@ const enhance = compose(
   }),
 );
 
+
 function ResultQuickVoteOf(props) {
   const {
     className,
+    activeClassName,
     showModalVote,
     onToggleClick,
     pros,
     cons,
   } = props;
 
+  const modalIsOpen = showModalVote === true;
+  const modalStyle = modalIsOpen ? activeClassName : className;
+
   return (
     <div>
       <button
-        className={className}
+        className={modalStyle}
         onClick={onToggleClick}
       >
         &#63;
@@ -67,18 +72,13 @@ function ResultQuickVoteOf(props) {
     </div>
   );
 }
-/*eslint-disable */
+
 ResultQuickVoteOf.propTypes = {
   className: PropTypes.string,
   showModalVote: PropTypes.bool,
   onToggleClick: PropTypes.func,
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    master: PropTypes.bool.isRequired,
-  }).isRequired,
   pros: PropTypes.arrayOf(PropTypes.string).isRequired,
   cons: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
-/*eslint-enable */
+
 export default enhance(ResultQuickVoteOf);

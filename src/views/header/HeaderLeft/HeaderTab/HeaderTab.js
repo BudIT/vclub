@@ -9,7 +9,7 @@ import { changeRoom } from 'vclub/redux/club/rooms';
 import style from './HeaderTab.css';
 
 const enhance = compose(
-  setPropTypes({ // !!!!
+  setPropTypes({
     dispatch: PropTypes.func,
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -48,17 +48,12 @@ function HeaderTab(props) {
     </li>
   );
 }
-/*eslint-disable */
+
 HeaderTab.propTypes = {
   children: PropTypes.node.isRequired,
   isCurrentTab: PropTypes.bool.isRequired,
   // recompose props
   onClick: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    master: PropTypes.bool.isRequired,
-  }).isRequired,
 };
-/*eslint-enable */
+
 export default enhance(HeaderTab);

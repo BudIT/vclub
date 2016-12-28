@@ -49,7 +49,6 @@ function Dialog(props) {
   const userVotedCons = cons.includes(user.id);
   const userHasVoted = userVotedPros || userVotedCons;
 
-
   return (
     <Modal
       isOpen={!user.master && showModalVote && !userHasVoted}

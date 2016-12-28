@@ -17,8 +17,6 @@ const enhance = compose(
     numberOfMembers: state.members.length,
     currentRoomName: state.rooms.currentRoom,
     user: state.auth.user,
-    members: state.members,
-    ...state.vote,
   })),
 );
 
@@ -49,7 +47,7 @@ function Header(props) {
     </div>
   );
 }
-/*eslint-disable */
+
 Header.propTypes = {
   dispatch: PropTypes.func.isRequired,
   numberOfMembers: PropTypes.number.isRequired,
@@ -59,10 +57,6 @@ Header.propTypes = {
     name: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
   }).isRequired,
-  members: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    master: PropTypes.bool.isRequired,
-  }).isRequired).isRequired,
 };
-/*eslint-enable */
+
 export default enhance(Header);

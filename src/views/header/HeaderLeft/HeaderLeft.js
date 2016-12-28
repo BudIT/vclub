@@ -7,7 +7,8 @@ import style from './HeaderLeft.css';
 // changeRoom
 function HeaderLeft(props) {
   const {
-    roomsNames, currentRoomName,
+    roomsNames,
+    currentRoomName,
     dispatch,
     user,
   } = props;
@@ -18,8 +19,8 @@ function HeaderLeft(props) {
         <HeaderTab
           isCurrentTab={roomName === currentRoomName}
           key={index.toString()}
-          dispatch={dispatch}
           user={user}
+          dispatch={dispatch}
         >
           {roomName}
         </HeaderTab>
@@ -27,7 +28,7 @@ function HeaderLeft(props) {
     </ul>
   );
 }
-/*eslint-disable */
+
 HeaderLeft.propTypes = {
   currentRoomName: PropTypes.string.isRequired,
   roomsNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -38,5 +39,5 @@ HeaderLeft.propTypes = {
     master: PropTypes.bool.isRequired,
   }).isRequired,
 };
-/*eslint-enable */
+
 export default HeaderLeft;

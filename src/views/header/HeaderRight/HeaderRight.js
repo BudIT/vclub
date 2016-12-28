@@ -14,9 +14,7 @@ import ResultQuickVoteOf from './vote/ResultQuickVoteOf';
 
 
 const enhance = compose(
-
   withHandlers({
-
     onToggleMemberPanel: props => () => {
       props.dispatch(toggleMemberPanel());
     },
@@ -33,12 +31,9 @@ function HeaderRight(props) {
     onToggleMemberPanel,
     user,
     dispatch,
-    showModalVote,
   } = props;
 
   const displayVoteMenu = user.master;
-  const modalIsOpen = showModalVote === false;
-  const modalStyle = modalIsOpen ? style.modalISOpen : style.tab;
 
   return (
     <ul className={style.ul}>
@@ -48,7 +43,8 @@ function HeaderRight(props) {
       {displayVoteMenu && (
         <li>
           <ResultQuickVoteOf
-            className={modalStyle}
+            className={style.tab}
+            activeClassName={style.activeTab}
             dispatch={dispatch}
           />
         </li>
@@ -79,7 +75,7 @@ function HeaderRight(props) {
     </ul>
   );
 }
-/*eslint-disable */
+
 HeaderRight.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
   onLogOut: PropTypes.func.isRequired,
@@ -91,7 +87,7 @@ HeaderRight.propTypes = {
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
-/*eslint-enable */
+
 HeaderRight.defaultProps = {
   numberOfMembers: 0,
 };
