@@ -1,13 +1,18 @@
-import R from 'ramda';
 import { MediaStatusReady } from 'vclub/constants/mediaStatus';
 
 import { MEMBER_ENTER, MEMBER_LEAVE } from 'vclub/redux/club/members';
 import { INITIALIZE } from 'vclub/redux/club/init';
-import { setAudioStream } from 'vclub/redux/club/media';
+import { setAudioStream } from 'vclub/redux/club/audioMedia';
+import { setVideoStream } from 'vclub/redux/club/videoMedia';
+import { resetStreaming, setVideoSource } from 'vclub/redux/club/streamRoom';
 import {
-  setPeers, addPeer, removePeer, addAudioStream, setAllowedStreams,
+  setPeers, addPeer, removePeer, addAudioStream, addVideoStream, removeStream, setAllowedStreams,
 } from 'vclub/redux/club/rtc';
 
+import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
+
+import requestVideoStream from './requestVideoStream';
+import getScreenCaptureRequest from './getScreenCaptureRequest';
 import { ByRoomSelectors, DefaultStreamsSelector } from './allowedStreamsSelectors';
 
 
@@ -16,26 +21,24 @@ const IceServers = [
     url: 'stun:stun.l.google.com:19302',
   }, {
     url: 'stun:stun.anyfirewall.com:3478',
-  }, {
-    url: 'turn:turn.bistri.com:80',
-    credential: 'homeo',
-    username: 'homeo',
-  }, {
-    url: 'turn:turn.anyfirewall.com:443?transport=tcp',
-    credential: 'webrtc',
-    username: 'webrtc',
   },
 ];
 
 export default function createRTCAPI(ioSocket, store) {
+  const requestScreenCapture = getScreenCaptureRequest(store);
+
   function createPeerConnection(userId) {
-    const { media } = store.getState();
+    const { audioMedia, videoMedia } = store.getState();
     const peer = new RTCPeerConnection({
       iceServers: IceServers,
     });
 
-    if (media.stream) {
-      peer.addStream(media.stream);
+    if (audioMedia.stream) {
+      peer.addStream(audioMedia.stream);
+    }
+
+    if (videoMedia.stream) {
+      peer.addStream(videoMedia.stream);
     }
 
     peer.onicecandidate = event => {
@@ -45,10 +48,26 @@ export default function createRTCAPI(ioSocket, store) {
     };
 
     peer.onaddstream = event => {
-      store.dispatch(addAudioStream(userId, event.stream));
+      const stream = event.stream;
+      const track = stream.getTracks()[0];
+      const addRemoteStream = track.kind === 'video' ? addVideoStream : addAudioStream;
+
+      store.dispatch(addRemoteStream(userId, event.stream));
+    };
+
+    peer.onremovestream = event => {
+      store.dispatch(removeStream(userId, event.stream));
     };
 
     return peer;
+  }
+
+  function sendOffer(peer, userId) {
+    peer.createOffer().then(localDesc => {
+      peer.setLocalDescription(localDesc).then(() => {
+        ioSocket.emit('RTC.SDP', { userId, sdp: localDesc, offer: true });
+      });
+    });
   }
 
   function initPeers(members) {
@@ -59,12 +78,6 @@ export default function createRTCAPI(ioSocket, store) {
       if (member.id === currentUserId) return memo;
 
       const peer = createPeerConnection(member.id);
-
-      peer.createOffer().then(localDesc => {
-        peer.setLocalDescription(localDesc).then(() => {
-          ioSocket.emit('RTC.SDP', { userId: member.id, sdp: localDesc });
-        });
-      });
 
       // eslint-disable-next-line no-param-reassign
       memo[member.id] = peer;
@@ -79,6 +92,7 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = createPeerConnection(member.id);
 
     store.dispatch(addPeer(member.id, peer));
+    sendOffer(peer, member.id);
   }
 
   function destroyPeer(memberId, rtc) {
@@ -93,8 +107,11 @@ export default function createRTCAPI(ioSocket, store) {
   }
 
   function setupStream(stream, peers) {
-    R.values(peers).forEach(peer => {
+    Object.keys(peers).forEach(userId => {
+      const peer = peers[userId];
+
       peer.addStream(stream);
+      sendOffer(peer, userId);
     });
   }
 
@@ -111,25 +128,44 @@ export default function createRTCAPI(ioSocket, store) {
     }
   }
 
-  function manageStreamState() {
-    const { auth, media, rtc } = store.getState();
+  function manageAudioStreamState() {
+    const { auth, audioMedia, rtc } = store.getState();
 
-    if (media.status !== MediaStatusReady) {
+    if (audioMedia.status !== MediaStatusReady) {
       return;
     }
 
     const userId = auth.user.id;
     const hasAllowedStream = rtc.allowedStreams.includes(userId);
-    const shouldBeEnabled = !media.muted && hasAllowedStream;
-    const track = media.stream.getAudioTracks()[0];
+    const shouldBeEnabled = !audioMedia.muted && hasAllowedStream;
+    const track = audioMedia.stream.getAudioTracks()[0];
 
     if (track.enabled !== shouldBeEnabled) {
       track.enabled = shouldBeEnabled;
     }
   }
 
-  function dispatch(action) {
-    const { media, members, rtc, auth } = store.getState();
+  function manageVideoSource() {
+    const { streamRoom, auth } = store.getState();
+    const { source, ownerId } = streamRoom;
+
+    if (ownerId !== auth.user.id) {
+      return;
+    }
+
+    if (source === StreamSourceWebcam) {
+      requestVideoStream(store, true);
+
+      return;
+    }
+
+    if (source === StreamSourceScreen) {
+      requestScreenCapture();
+    }
+  }
+
+  function dispatch(action, prevState) {
+    const { audioMedia, videoMedia, members, rtc, auth } = store.getState();
 
     if (!auth.authenticated) {
       return;
@@ -137,6 +173,7 @@ export default function createRTCAPI(ioSocket, store) {
 
     if (action.type === INITIALIZE) {
       initPeers(members);
+      manageVideoSource();
     }
 
     if (action.type === MEMBER_ENTER) {
@@ -148,11 +185,34 @@ export default function createRTCAPI(ioSocket, store) {
     }
 
     if (action.type === setAudioStream.type) {
-      setupStream(media.stream, rtc.peers);
+      setupStream(audioMedia.stream, rtc.peers);
+    }
+
+    if (action.type === setVideoStream.type) {
+      setupStream(videoMedia.stream, rtc.peers);
+    }
+
+    if (action.type === setVideoSource.type) {
+      manageVideoSource(action);
+    }
+
+    if (action.type === resetStreaming.type) {
+      const { stream } = prevState.videoMedia;
+
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+
+        Object.keys(rtc.peers).forEach(userId => {
+          const peer = rtc.peers[userId];
+
+          peer.removeStream(stream);
+          sendOffer(peer, userId);
+        });
+      }
     }
 
     manageAllowedStreams();
-    manageStreamState();
+    manageAudioStreamState();
   }
 
   ioSocket.on('RTC.ICECandidate', ({ userId, candidate }) => {
@@ -160,28 +220,27 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = rtc.peers[userId];
 
     if (!peer) {
-      // track this place 'ICE-JOIN race'
+      // TODO: track this place 'ICE-JOIN race'
       return;
     }
 
     peer.addIceCandidate(new RTCIceCandidate(candidate));
   });
 
-  ioSocket.on('RTC.SDP', ({ userId, sdp }) => {
+  ioSocket.on('RTC.SDP', ({ userId, sdp, offer }) => {
     const { rtc } = store.getState();
-    const { peers, passivePeers } = rtc;
+    const { peers } = rtc;
     const peer = peers[userId];
-    const isPassive = passivePeers.includes(userId);
 
     if (!peer) {
-      // track this place 'SDP-JOIN race'
+      // TODO: track this place 'SDP-JOIN race'
       return;
     }
 
     const sessionDesc = new RTCSessionDescription(sdp);
 
     peer.setRemoteDescription(sessionDesc).then(() => {
-      if (!isPassive) return;
+      if (!offer) return;
 
       peer.createAnswer().then(localDesc => {
         peer.setLocalDescription(localDesc).then(() => {

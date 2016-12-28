@@ -9,14 +9,14 @@ export function auth(authData, remember = false) {
     type: AUTH,
     payload: authData,
     meta: {
-      sideEffect: ({ ioSocket, localStorage }) => {
+      sideEffects: [({ ioSocket, localStorage }) => {
         ioSocket.emit('auth', authData);
 
         if (remember) {
           localStorage.setItem('name', authData.name);
           localStorage.setItem('master', authData.master);
         }
-      },
+      }],
     },
   };
 }
@@ -25,14 +25,14 @@ export function restoreAuth() {
   return {
     type: RESTORE_AUTH,
     meta: {
-      sideEffect: ({ store, localStorage }) => {
+      sideEffects: [({ dispatch, localStorage }) => {
         const name = localStorage.getItem('name');
         const master = localStorage.getItem('master') === 'true';
 
         if (name) {
-          store.dispatch(auth({ name, master }));
+          dispatch(auth({ name, master }));
         }
-      },
+      }],
     },
   };
 }
@@ -41,12 +41,12 @@ export function logOut() {
   return {
     type: LOG_OUT,
     meta: {
-      sideEffect: ({ localStorage }) => {
+      sideEffects: [({ localStorage }) => {
         localStorage.removeItem('name');
         localStorage.removeItem('master');
 
         document.location.reload();
-      },
+      }],
     },
   };
 }

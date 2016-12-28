@@ -46,7 +46,7 @@ const enhance = compose(
   }),
 );
 
-export const AuthPage = (props) => {
+export const AuthPageComponent = (props) => {
   const { handleSubmit } = props;
 
   return (
@@ -101,8 +101,8 @@ export const AuthPage = (props) => {
   );
 };
 
-AuthPage.propTypes = {
+AuthPageComponent.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired,
 };
 
-export default enhance(AuthPage);
+export default enhance(AuthPageComponent);

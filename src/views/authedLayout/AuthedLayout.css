@@ -8,6 +8,13 @@
 .room {
   flex: 1;
   display: flex;
+  position: relative;
+}
+
+.roomInner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .header {

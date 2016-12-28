@@ -10,11 +10,15 @@ import roomsReducer from './club/rooms';
 import uiReducer from './club/ui';
 import chatReducer from './club/chat';
 import sharingRoomReducer from './club/sharing';
+import streamRoomReducer from './club/streamRoom';
+import audioMediaReducer from './club/audioMedia';
+import videoMediaReducer from './club/videoMedia';
+import rtcReducer from './club/rtc';
+import socketReducer from './club/socket';
+import featuresReducer from './club/features';
 import whiteboardReducer from './club/whiteboard';
 import voteReducer from './club/vote';
 
-import mediaReducer from './club/media';
-import rtcReducer from './club/rtc';
 
 const baseReducer = composeReducers(
   scopeReducer('auth', authReducer),
@@ -24,8 +28,12 @@ const baseReducer = composeReducers(
   scopeReducer('form', formReducer),
   scopeReducer('sharingRoom', sharingRoomReducer),
   scopeReducer('chat', chatReducer),
-  scopeReducer('media', mediaReducer),
+  scopeReducer('streamRoom', streamRoomReducer),
+  scopeReducer('audioMedia', audioMediaReducer),
+  scopeReducer('videoMedia', videoMediaReducer),
   scopeReducer('rtc', rtcReducer),
+  scopeReducer('socket', socketReducer),
+  scopeReducer('features', featuresReducer),
   scopeReducer('whiteboard', whiteboardReducer),
   scopeReducer('vote', voteReducer),
 );

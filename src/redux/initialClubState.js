@@ -1,7 +1,9 @@
-import { MediaStatusPending } from 'vclub/constants/mediaStatus';
-import { ChatRoomType } from 'vclub/constants/roomTypes';
 import uuid from 'uuid';
 import moment from 'moment';
+import { MediaStatusPending } from 'vclub/constants/mediaStatus';
+import { ChatRoomType } from 'vclub/constants/roomTypes';
+import { SocketStatusConnecting } from 'vclub/constants/socketStatus';
+
 
 export default {
   members: [], // array of { id: String, name: String, master: Boolean }
@@ -35,7 +37,17 @@ export default {
     sessionDuration: 300,
     expired: false,
   },
-  media: {
+  streamRoom: {
+    source: null,
+    ownerId: null,
+  },
+  audioMedia: {
+    muted: false,
+    status: MediaStatusPending,
+    stream: null,
+    errorName: null,
+  },
+  videoMedia: {
     muted: false,
     status: MediaStatusPending,
     stream: null,
@@ -44,8 +56,12 @@ export default {
   rtc: {
     peers: {},
     passivePeers: [],
-    streams: {},
+    audioStreams: {},
+    videoStreams: {},
     allowedStreams: [],
+  },
+  socket: {
+    status: SocketStatusConnecting,
   },
   whiteboard: {
     // any other params?
@@ -55,5 +71,9 @@ export default {
     showModalVote: false,
     pros: [],
     cons: [],
+  },
+  features: {
+    screenCapture: false,
+    camera: true,
   },
 };

@@ -6,9 +6,10 @@ export default function rtcMiddleware(ioSocket) {
     const rtcAPI = createRTCAPI(ioSocket, store);
 
     return (next) => (action) => {
+      const prevState = store.getState();
       const result = next(action);
 
-      rtcAPI.dispatch(action);
+      rtcAPI.dispatch(action, prevState);
 
       return result;
     };

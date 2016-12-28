@@ -9,43 +9,33 @@ import { Provider } from 'react-redux';
 
 import ClubLayout from 'vclub/views/clubLayout/ClubLayout';
 
+import sideEffectProcessor from 'borex-actions/sideEffectProcessor';
 import clientActionBroker from 'vclub/redux/middlewares/clientActionBroker';
-import sideEffectProcessor from 'vclub/redux/middlewares/sideEffectProcessor';
 import rtcMiddleware from 'vclub/redux/middlewares/rtcMiddleware';
 
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
 import { restoreAuth } from 'vclub/redux/club/auth';
+import { enableScreenCapture } from 'vclub/redux/club/features';
 
-import requestMediaDevices from 'vclub/rtc/requestMediaDevices';
-import ServerTime from 'vclub/utils/ServerTime';
+import requestAudioStream from 'vclub/rtc/requestAudioStream';
+import setupSocketClient from 'vclub/socket/setupSocketClient';
 
 
-const ioSocket = io({ path: '/vclub-socket', forceNew: true });
+const ioSocket = io({ path: '/vclub-socket', forceNew: true, reconnection: false });
 
 const storeEnhancer = compose(
   applyMiddleware(
-    rtcMiddleware(ioSocket),
-    clientActionBroker(ioSocket),
     sideEffectProcessor({ context: { ioSocket, localStorage } }),
+    clientActionBroker(ioSocket),
+    rtcMiddleware(ioSocket),
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );
 
 const store = createStore(reducer, initialState, storeEnhancer);
 
-ioSocket.on('dispatch', action => store.dispatch(action));
-
-ioSocket.on('time:response', data => {
-  const duration = Date.now() - data.clientStartTime;
-  const clientEventTime = data.clientStartTime + (duration / 2);
-  const diff = data.serverTime - clientEventTime;
-
-  ServerTime.setDiff(diff);
-});
-
-ioSocket.emit('time:request', Date.now());
-
+setupSocketClient(ioSocket, store);
 store.dispatch(restoreAuth());
 
 render((
@@ -54,4 +44,10 @@ render((
   </Provider>
 ), document.getElementById('AppRoot'));
 
-requestMediaDevices(store);
+requestAudioStream(store);
+
+window.addEventListener('message', (event) => {
+  if (!event.data || event.data.type !== 'vclub:extension:loaded') return;
+
+  store.dispatch(enableScreenCapture());
+});

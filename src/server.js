@@ -20,8 +20,10 @@ const httpServer = new http.Server(app);
 const io = ioServer(httpServer, { path: '/vclub-socket' });
 
 const storeEnhancer = compose(
-  applyMiddleware(serverActionBroker(io),
-  sideEffectProcessor({ context: { ioServer: io } })),
+  applyMiddleware(
+    serverActionBroker(io),
+    sideEffectProcessor({ context: { ioServer: io } })
+  ),
 );
 
 const store = createStore(reducer, initialState, storeEnhancer);
@@ -65,12 +67,12 @@ io.on('connection', (socket) => {
 
     socket.on('dispatch', action => store.dispatch(action));
 
-    socket.on('RTC.SDP', ({ userId, sdp }) => {
+    socket.on('RTC.SDP', ({ userId, sdp, offer = false }) => {
       const remoteSocket = authSockets[userId];
 
       if (!remoteSocket) return;
 
-      remoteSocket.emit('RTC.SDP', { userId: user.id, sdp });
+      remoteSocket.emit('RTC.SDP', { userId: user.id, sdp, offer });
     });
 
     socket.on('RTC.ICECandidate', ({ userId, candidate }) => {

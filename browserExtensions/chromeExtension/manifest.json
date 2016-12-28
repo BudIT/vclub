@@ -1,0 +1,24 @@
+{
+    "name" : "VirtualClub",
+    "author": "Denis Nevmerzhitskii",
+    "version" : "0.1",
+    "manifest_version" : 2,
+    "minimum_chrome_version": "34",
+    "description" : "Extension for vclub application",
+    "background": {
+        "scripts": ["background-script.js"],
+        "persistent": false
+    },
+    "content_scripts": [ {
+       "js": [ "content-script.js" ],
+       "all_frames": true,
+       "run_at": "document_end",
+       "matches": ["http://localhost:3000/*", "https://localhost:3443/*"]
+    }],
+    "icons" : {
+        "48": "icon.png"
+    },
+    "permissions": [
+        "desktopCapture"
+    ]
+}

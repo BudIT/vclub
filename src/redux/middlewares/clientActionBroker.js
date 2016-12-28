@@ -1,11 +1,15 @@
 function resetRemoteFlag(action) {
-  return {
+  const clone = {
     ...action,
     meta: {
       ...action.meta,
-      remote: false,
     },
   };
+
+  delete clone.meta.remote;
+  delete clone.meta.sideEffects;
+
+  return clone;
 }
 
 export default function clientActionBroker(ioSocket) {
