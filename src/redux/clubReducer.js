@@ -10,6 +10,7 @@ import roomsReducer from './club/rooms';
 import uiReducer from './club/ui';
 import sharingRoomReducer from './club/sharing';
 import whiteboardReducer from './club/whiteboard';
+import voteReducer from './club/vote';
 
 import mediaReducer from './club/media';
 import rtcReducer from './club/rtc';
@@ -24,6 +25,7 @@ const baseReducer = composeReducers(
   scopeReducer('media', mediaReducer),
   scopeReducer('rtc', rtcReducer),
   scopeReducer('whiteboard', whiteboardReducer),
+  scopeReducer('vote', voteReducer),
 );
 
 export default initHOReducer(baseReducer);

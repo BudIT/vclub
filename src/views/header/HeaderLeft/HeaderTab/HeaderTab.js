@@ -9,7 +9,7 @@ import { changeRoom } from 'vclub/redux/club/rooms';
 import style from './HeaderTab.css';
 
 const enhance = compose(
-  setPropTypes({ // !!!!
+  setPropTypes({
     dispatch: PropTypes.func,
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -54,11 +54,6 @@ HeaderTab.propTypes = {
   isCurrentTab: PropTypes.bool.isRequired,
   // recompose props
   onClick: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    master: PropTypes.bool.isRequired,
-  }).isRequired,
 };
 
 export default enhance(HeaderTab);

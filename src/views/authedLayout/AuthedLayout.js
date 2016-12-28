@@ -6,6 +6,7 @@ import {
 
 import AudioStreams from 'vclub/views/audioStreams/AudioStreams';
 import Header from 'vclub/views/header/Header';
+import Dialog from 'vclub/views/dialog/Dialog';
 
 // rooms
 import ChatRoom from 'vclub/views/chatRoom/ChatRoom';
@@ -39,6 +40,7 @@ function AuthedLayout(props) {
     <div className={style.layout}>
       <AudioStreams />
       <Header />
+      <Dialog />
       <div className={style.room}>
         { room(currentRoom) }
       </div>

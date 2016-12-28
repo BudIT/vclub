@@ -1,66 +1,66 @@
 .masterMenu
 {
-    background: #2D2D2D;
-    box-shadow: inset 0 10px 10px -5px #0d1116;
+  background: #2D2D2D;
+  flex: 1;
 }
 .controlPanel
 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #d4ce65;
-    background: -webkit-gradient(linear, left top, left bottom, from(#d4ce65), to(#9c7d3e));
-    height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d4ce65;
+  background: -webkit-gradient(linear, left top, left bottom, from(#d4ce65), to(#9c7d3e));
+  height: 50px;
 }
 
 .controlItem
 {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 /* timer styles */
 .timer
 {
-    color: white;
-    font-size: 16px;
-    background: darkorange;
-    border: 1px solid saddlebrown;
-    border-radius: 3px;
-    outline: none;
-    height: 20px;
-    padding: 3px;
-    margin-top: 7px;
+  color: white;
+  font-size: 16px;
+  background: darkorange;
+  border: 1px solid saddlebrown;
+  border-radius: 3px;
+  outline: none;
+  height: 20px;
+  padding: 3px;
+  margin-top: 7px;
 }
 
 .timerControl
 {
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px;
-    margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 
 .btnIncrement,
 .btnDecrement
 {
-    background: 0;
-    border: 0;
-    cursor: pointer;
-    color: darkorange;
-    font-weight: 700;
-    margin-left: -10px;
-    width: 12px;
-    height: 12px;
+  background: 0;
+  border: 0;
+  cursor: pointer;
+  color: darkorange;
+  font-weight: 700;
+  margin-left: -10px;
+  width: 12px;
+  height: 12px;
 }
 .btnIncrement:focus,
 .btnDecrement:focus
 {
-    outline: none;
+  outline: none;
 }
 
 .btnIncrement:active,
 .btnDecrement:active
 {
-    opacity: .5;
+  opacity: .5;
 }

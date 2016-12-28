@@ -40,4 +40,9 @@ export default {
     // any other params?
     figures: [],
   },
+  vote: {
+    showModalVote: false,
+    pros: [],
+    cons: [],
+  },
 };

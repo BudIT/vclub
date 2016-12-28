@@ -10,6 +10,7 @@ import { toggleMemberPanel } from 'vclub/redux/club/ui';
 import style from './HeaderRight.css';
 
 import MediaButton from './MediaButton/MediaButton';
+import ResultQuickVoteOf from './vote/ResultQuickVoteOf';
 
 
 const enhance = compose(
@@ -26,14 +27,28 @@ const enhance = compose(
 function HeaderRight(props) {
   const {
     numberOfMembers,
-    onLogOut, onToggleMemberPanel,
+    onLogOut,
+    onToggleMemberPanel,
+    user,
+    dispatch,
   } = props;
+
+  const displayVoteMenu = user.master;
 
   return (
     <ul className={style.ul}>
       <li>
         <MediaButton className={style.tab} />
       </li>
+      {displayVoteMenu && (
+        <li>
+          <ResultQuickVoteOf
+            className={style.tab}
+            activeClassName={style.activeTab}
+            dispatch={dispatch}
+          />
+        </li>
+      )}
       <li>
         <button
           className={style.tab}
@@ -65,10 +80,16 @@ HeaderRight.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onToggleMemberPanel: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    master: PropTypes.bool.isRequired,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 HeaderRight.defaultProps = {
-  numberOfMembers: 1,
+  numberOfMembers: 0,
 };
 
 export default enhance(HeaderRight);

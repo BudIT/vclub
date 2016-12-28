@@ -41,6 +41,7 @@ function Header(props) {
       />
       <HeaderRight
         numberOfMembers={numberOfMembers}
+        user={user}
         dispatch={dispatch}
       />
     </div>

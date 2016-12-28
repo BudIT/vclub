@@ -7,7 +7,8 @@ import style from './HeaderLeft.css';
 // changeRoom
 function HeaderLeft(props) {
   const {
-    roomsNames, currentRoomName,
+    roomsNames,
+    currentRoomName,
     dispatch,
     user,
   } = props;
@@ -18,8 +19,8 @@ function HeaderLeft(props) {
         <HeaderTab
           isCurrentTab={roomName === currentRoomName}
           key={index.toString()}
-          dispatch={dispatch}
           user={user}
+          dispatch={dispatch}
         >
           {roomName}
         </HeaderTab>
