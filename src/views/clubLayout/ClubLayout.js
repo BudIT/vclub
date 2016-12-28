@@ -21,8 +21,6 @@ const enhance = compose(
 function ClubLayout(props) {
   const { authenticated, currentRoom, members, showMemberPanel, dispatch } = props;
 
-  const isVisible = currentRoom === 'CHAT' || showMemberPanel === true;
-
   return (
     <div className={style.main}>
       <main>
@@ -30,7 +28,7 @@ function ClubLayout(props) {
           ? <AuthPage dispatch={dispatch} />
           : <AuthedLayout currentRoom={currentRoom} />
         }
-        {authenticated && isVisible && <UserList members={members} />}
+        {authenticated && showMemberPanel === true && <UserList members={members} />}
       </main>
     </div>
   );
