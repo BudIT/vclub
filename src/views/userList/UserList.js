@@ -22,6 +22,7 @@ function UserList(props) {
       component="div"
       enter={{
         opacity: 1,
+        height: 35,
       }}
       leave={{
         height: 0,
@@ -48,7 +49,7 @@ function UserList(props) {
 /*eslint-disable */
 UserList.propTypes = {
   members: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
   })).isRequired,
