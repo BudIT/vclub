@@ -75,6 +75,7 @@ function ResultQuickVoteOf(props) {
 
 ResultQuickVoteOf.propTypes = {
   className: PropTypes.string,
+  activeClassName: PropTypes.string,
   showModalVote: PropTypes.bool,
   onToggleClick: PropTypes.func,
   pros: PropTypes.arrayOf(PropTypes.string).isRequired,
