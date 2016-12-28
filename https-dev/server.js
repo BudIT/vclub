@@ -30,22 +30,23 @@ fallbackApp.get('*', (req, res) => {
 });
 
 fallbackApp.listen(httpPort, () => {
-  process.stdout.write(`The server is running at http://localhost:${httpPort}\n`);
+  process.stdout.write(`The fallback server is running at http://localhost:${httpPort}\n`);
 });
 
 proxy.listen(sslPort, () => {
-  process.stdout.write(`Proxy is started\n`);
+  process.stdout.write(`Proxy is started at https://localhost:${sslPort}\n`);
 });
 
-exec('npm start', {
+const realServerProc = exec('npm start', {
   env: Object.assign({}, process.env, {
     PORT: targetPort,
   }),
-}, (error, stdout, stderr) => {
+}, error => {
   if (error) {
-    console.error(`exec error: ${error}`);
-    return;
+    process.stderr.write(`exec error: ${error}\n`);
   }
-  console.log(`stdout: ${stdout}`);
-  console.log(`stderr: ${stderr}`);
+});
+
+realServerProc.stdout.on('data', data => {
+  process.stdout.write(data);
 });
