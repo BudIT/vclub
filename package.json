@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/server.bundle.js",
+    "start:dev:ssl": "node ./https-dev/server.js",
     "storybook": "start-storybook -p 9001 -s ./dist-files/public",
     "clean": "rimraf dist",
     "build": "npm run build:prod",
@@ -68,6 +69,7 @@
     "eslint-plugin-import": "^1.15.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.2.2",
+    "http-proxy": "^1.16.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^16.0.1",
     "postcss-autoreset": "^1.1.5",
