@@ -2,8 +2,11 @@
 /* eslint-env jest */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
+
 import HeaderLeft from '../HeaderLeft';
+
 
 const roomsNames = ['SHARING', 'VIDEO', 'CHAT', 'WHITEBOARD'];
 const currentRoomName = 'VIDEO';
@@ -16,7 +19,7 @@ const user = {
 
 test('<HeaderLeft /> renders correctly', () => {
   const dispatchSpy = jest.fn();
-  const rendered = renderer.create(
+  const wrapper = shallow(
     <HeaderLeft
       currentRoomName={currentRoomName}
       roomsNames={roomsNames}
@@ -24,5 +27,5 @@ test('<HeaderLeft /> renders correctly', () => {
       dispatch={dispatchSpy}
     />
   );
-  expect(rendered.toJSON()).toMatchSnapshot();
+  expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

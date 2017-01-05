@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
 import compose from 'recompose/compose';
-import { withHandlers } from 'recompose';
+import withHandlers from 'recompose/withHandlers';
+import setDisplayName from 'recompose/setDisplayName';
 
 // actions
 import { logOut } from 'vclub/redux/club/auth';
@@ -14,6 +15,7 @@ import ResultQuickVoteOf from './vote/ResultQuickVoteOf';
 
 
 const enhance = compose(
+  setDisplayName('HeaderRight'),
   withHandlers({
     onToggleMemberPanel: props => () => {
       props.dispatch(toggleMemberPanel());
@@ -21,10 +23,10 @@ const enhance = compose(
     onLogOut: props => () => {
       props.dispatch(logOut());
     },
-  })
+  }),
 );
 
-function HeaderRight(props) {
+export function HeaderRightComponent(props) {
   const {
     numberOfMembers,
     onLogOut,
@@ -76,7 +78,7 @@ function HeaderRight(props) {
   );
 }
 
-HeaderRight.propTypes = {
+HeaderRightComponent.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onToggleMemberPanel: PropTypes.func.isRequired,
@@ -88,8 +90,4 @@ HeaderRight.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-HeaderRight.defaultProps = {
-  numberOfMembers: 0,
-};
-
-export default enhance(HeaderRight);
+export default enhance(HeaderRightComponent);

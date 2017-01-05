@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { withHandlers } from 'recompose';
+import withHandlers from 'recompose/withHandlers';
+import setDisplayName from 'recompose/setDisplayName';
 
 import { toggleAudio } from 'vclub/redux/club/audioMedia';
 
@@ -20,6 +21,7 @@ import threeDotsIcon from './ic_more_horiz_black_24px.svg';
 
 
 const enhance = compose(
+  setDisplayName('MediaButton'),
   connect(state => ({
     allowedStreams: state.rtc.allowedStreams,
     muted: state.audioMedia.muted,

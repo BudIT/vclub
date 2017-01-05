@@ -3,12 +3,15 @@ import React, { PropTypes } from 'react';
 import compose from 'recompose/compose';
 import { withHandlers } from 'recompose';
 import setPropTypes from 'recompose/setPropTypes';
+import setDisplayName from 'recompose/setDisplayName';
 
 import { changeRoom } from 'vclub/redux/club/rooms';
 
 import style from './HeaderTab.css';
 
+
 const enhance = compose(
+  setDisplayName('HeaderTab'),
   setPropTypes({
     dispatch: PropTypes.func,
     user: PropTypes.shape({
@@ -30,7 +33,7 @@ const enhance = compose(
 );
 
 // changeRoom
-function HeaderTab(props) {
+export function HeaderTabComponent(props) {
   const {
     children,
     isCurrentTab,
@@ -49,11 +52,11 @@ function HeaderTab(props) {
   );
 }
 
-HeaderTab.propTypes = {
+HeaderTabComponent.propTypes = {
   children: PropTypes.node.isRequired,
   isCurrentTab: PropTypes.bool.isRequired,
   // recompose props
   onClick: PropTypes.func.isRequired,
 };
 
-export default enhance(HeaderTab);
+export default enhance(HeaderTabComponent);

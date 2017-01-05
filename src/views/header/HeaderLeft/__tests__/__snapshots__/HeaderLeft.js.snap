@@ -1,0 +1,53 @@
+exports[`test <HeaderLeft /> renders correctly 1`] = `
+<ul
+  className="ul">
+  <HeaderTab
+    dispatch={[Function]}
+    isCurrentTab={false}
+    user={
+      Object {
+        "id": "1",
+        "master": true,
+        "name": "User",
+      }
+    }>
+    SHARING
+  </HeaderTab>
+  <HeaderTab
+    dispatch={[Function]}
+    isCurrentTab={true}
+    user={
+      Object {
+        "id": "1",
+        "master": true,
+        "name": "User",
+      }
+    }>
+    VIDEO
+  </HeaderTab>
+  <HeaderTab
+    dispatch={[Function]}
+    isCurrentTab={false}
+    user={
+      Object {
+        "id": "1",
+        "master": true,
+        "name": "User",
+      }
+    }>
+    CHAT
+  </HeaderTab>
+  <HeaderTab
+    dispatch={[Function]}
+    isCurrentTab={false}
+    user={
+      Object {
+        "id": "1",
+        "master": true,
+        "name": "User",
+      }
+    }>
+    WHITEBOARD
+  </HeaderTab>
+</ul>
+`;

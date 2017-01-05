@@ -5,8 +5,11 @@
 import { changeRoom } from 'vclub/redux/club/rooms';
 
 import React from 'react';
-import { mount } from 'enzyme';
-import HeaderTab from '../HeaderTab';
+import { shallow, mount } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
+
+import HeaderTab, { HeaderTabComponent } from '../HeaderTab';
+
 
 const tabName = 'VIDEO';
 
@@ -17,6 +20,27 @@ const masterUser = {
 };
 
 const justAMember = { ...masterUser, master: false };
+
+
+test('<HeaderTab /> (current tab) renders correctly', () => {
+  const wrapper = shallow(
+    <HeaderTabComponent isCurrentTab onClick={jest.fn()}>
+      {tabName}
+    </HeaderTabComponent>
+  );
+
+  expect(shallowToJson(wrapper)).toMatchSnapshot();
+});
+
+test('<HeaderTab /> (not current tab) renders correctly', () => {
+  const wrapper = shallow(
+    <HeaderTabComponent isCurrentTab={false} onClick={jest.fn()}>
+      {tabName}
+    </HeaderTabComponent>
+  );
+
+  expect(shallowToJson(wrapper)).toMatchSnapshot();
+});
 
 test('HeaderTab dispatches action for master', () => {
   const dispatchSpy = jest.fn();

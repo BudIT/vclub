@@ -2,17 +2,13 @@
 /* eslint-env jest */
 
 import React from 'react';
-import renderer from 'react-test-renderer';
-import Header from '../Header';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
+import { HeaderComponent } from '../Header';
+
 
 const currentRoomName = 'VIDEO';
 const numberOfMembers = 5;
-
-jest.mock('react-redux', () => ({
-  connect() {
-    return elm => elm;
-  },
-}));
 
 const user = {
   id: '1',
@@ -22,13 +18,13 @@ const user = {
 
 test('<Header /> renders correctly', () => {
   const dispatchSpy = jest.fn();
-  const rendered = renderer.create(
-    <Header
+  const wrapper = shallow(
+    <HeaderComponent
       currentRoomName={currentRoomName}
       numberOfMembers={numberOfMembers}
       user={user}
       dispatch={dispatchSpy}
     />
   );
-  expect(rendered.toJSON()).toMatchSnapshot();
+  expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

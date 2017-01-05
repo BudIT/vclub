@@ -20,7 +20,7 @@ const enhance = compose(
   })),
 );
 
-function Header(props) {
+export function HeaderComponent(props) {
   const roomsNames = [ChatRoomType, SharingRoomType, MediaRoomType, WhiteboardRoomType];
 
   const {
@@ -48,7 +48,7 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
+HeaderComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   numberOfMembers: PropTypes.number.isRequired,
   currentRoomName: PropTypes.string.isRequired,
@@ -59,4 +59,4 @@ Header.propTypes = {
   }).isRequired,
 };
 
-export default enhance(Header);
+export default enhance(HeaderComponent);

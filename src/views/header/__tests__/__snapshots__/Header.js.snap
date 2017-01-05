@@ -1,0 +1,33 @@
+exports[`test <Header /> renders correctly 1`] = `
+<div
+  className="header">
+  <HeaderLeft
+    currentRoomName="VIDEO"
+    dispatch={[Function]}
+    roomsNames={
+      Array [
+        "CHAT",
+        "SHARING",
+        "MEDIA",
+        "WHITEBOARD",
+      ]
+    }
+    user={
+      Object {
+        "id": "1",
+        "master": true,
+        "name": "User",
+      }
+    } />
+  <HeaderRight
+    dispatch={[Function]}
+    numberOfMembers={5}
+    user={
+      Object {
+        "id": "1",
+        "master": true,
+        "name": "User",
+      }
+    } />
+</div>
+`;

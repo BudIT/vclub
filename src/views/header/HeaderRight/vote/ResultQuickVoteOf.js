@@ -4,6 +4,7 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
+import setDisplayName from 'recompose/setDisplayName';
 
 import { toggleModal } from 'vclub/redux/club/vote';
 
@@ -14,6 +15,7 @@ import style from './ResultQuickVoteOf.css';
 
 
 const enhance = compose(
+  setDisplayName('ResultQuickVoteOf'),
   connect(state => ({
     user: state.auth.user,
     ...state.vote,
