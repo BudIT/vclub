@@ -1,5 +1,3 @@
-import uuid from 'uuid';
-import moment from 'moment';
 import { MediaStatusPending } from 'vclub/constants/mediaStatus';
 import { ChatRoomType } from 'vclub/constants/roomTypes';
 import { SocketStatusConnecting } from 'vclub/constants/socketStatus';
@@ -19,14 +17,7 @@ export default {
     showMemberPanel: false,
   },
   chat: {
-    messages: [
-      {
-        id: uuid.v4(),
-        user: 'Bot',
-        date: moment.utc().format('YYYY-MM-DD HH:mm:ss'),
-        message: 'Hello! Welcome to chat!',
-      },
-    ],
+    messages: [],
   }, // array of { id: Number, user: String, date: String, message: String }
   sharingRoom: {
     ballPosition: null,
@@ -42,7 +33,7 @@ export default {
     ownerId: null,
   },
   audioMedia: {
-    muted: true,
+    muted: false,
     status: MediaStatusPending,
     stream: null,
     errorName: null,

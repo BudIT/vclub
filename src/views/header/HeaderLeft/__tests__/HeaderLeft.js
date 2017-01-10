@@ -8,8 +8,8 @@ import { shallowToJson } from 'enzyme-to-json';
 import HeaderLeft from '../HeaderLeft';
 
 
-const roomsNames = ['SHARING', 'VIDEO', 'CHAT', 'WHITEBOARD'];
-const currentRoomName = 'VIDEO';
+const roomsNames = ['SHARING', 'MEDIA', 'CHAT', 'WHITEBOARD'];
+const currentRoomName = 'MEDIA';
 
 const user = {
   id: '1',

@@ -20,43 +20,43 @@
 .panel {
   list-style-type: none;
   margin: 0;
-  padding: 0;
-  /*display: flex;*/
-  /*justify-content: flex-start;*/
+  padding: 5px 0;
   background-color: #FFD00B;
-  border-right: 3px solid #33363A;
   display: flex;
   flex-direction: column;
+
+  box-shadow: 0 0 5px black;
+  z-index: 2;
 }
 
 .button {
-  background-color: inherit;
-  color: inherit;
+  color: #333;
+  font-family: serif;
   font-size: inherit;
+  font-weight: bold;
   text-transform: uppercase;
-  font-family: inherit;
-  border: 3px solid #33363A;
+  text-align: center;
   border-radius: 3px;
   padding: 5px 10px;
-  margin-top: 10px;
   width: 32px;
   height: 32px;
-  text-align: center;
   overflow: hidden;
   cursor: pointer;
 }
 
-.buttonCurrent {
-  composes: button;
-  background-color: #C65A00;
+.button svg {
+  fill: #333;
+  stroke: #333;
 }
 
-.button:hover
-{
+.buttonCurrent {
+  composes: button;
+}
+
+.button:hover {
   background-color: #FFAA00;
 }
 
-.buttonCurrent {
-  composes: button;
-  text-decoration: underline;
+.buttonCurrent, .buttonCurrent:hover {
+  background-color: #C65A00;
 }

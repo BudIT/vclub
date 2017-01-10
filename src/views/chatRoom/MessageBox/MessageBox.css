@@ -1,12 +1,25 @@
 .chat {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 50px;
+  flex: 1;
+  overflow-y: scroll;
+  background-color: #fafafa;
+}
+
+.welcome {
+  display: block;
+  font-style: italic;
+  color: #666;
+  padding: 5px 10px;
 }
 
 .user {
   color: blue;
   font-weight: bold;
+  margin-right: 5px;
+}
+
+.self {
+  composes: user;
+  color: red;
 }
 
 .message {
@@ -20,6 +33,7 @@
 .time {
   margin-left: 5px;
   margin-right: 5px;
+  color: #999;
 }
 
 .text {
@@ -27,7 +41,17 @@
   max-width: 70%;
 }
 
-.self {
-  color: red;
-  font-weight: bold;
+.pic {
+  display: inline-flex;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,0.4);
+  background: darkorange;
+}
+
+.char {
+  text-align: center;
+  align-self: center;
+  width: 100%;
 }

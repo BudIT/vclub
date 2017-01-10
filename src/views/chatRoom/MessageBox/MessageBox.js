@@ -1,33 +1,34 @@
 import React, { PropTypes } from 'react';
 import moment from 'moment';
-import style from './MessageBox.css';
+
+import styles from './MessageBox.css';
+
 
 function MessageBox(props) {
-  const { messages, styles, username } = props;
+  const { messages, username } = props;
   return (
-    <div className={style.chat}>
-      {messages.length === 0
-        ? <span>No messages</span>
-        : messages.map(message => (
-          <span key={message.id}>
-            <div className={style.message}>
-              <span className={styles.pic}>
-                <i className={styles.char}>{message.user.charAt(0)}</i>
-              </span>
-              <span className={username === message.user ? style.self : style.user}>
-                {message.user}
-              </span>
-              <span className={style.time}>
-                {moment.utc(message.date, 'YYYY-MM-DD HH:mm:ss').local().format('HH:mm')}
-              </span>
-              <span className={style.text}>{message.message}</span>
-            </div>
-          </span>
-        ))}
+    <div className={styles.chat}>
+      <div className={styles.welcome}>Добро пожаловать в Онлайн Клуб 3000!</div>
+      {messages.map(message => (
+        <div key={message.id}>
+          <div key={message.id} className={styles.message}>
+            <span className={styles.pic}>
+              <i className={styles.char}>{message.user.charAt(0)}</i>
+            </span>
+            <span className={styles.time}>
+              {moment.utc(message.date, 'YYYY-MM-DD HH:mm:ss').local().format('HH:mm')}
+            </span>
+            <span className={username === message.user ? styles.self : styles.user}>
+              {message.user}
+            </span>
+            <span className={styles.text}>{message.message}</span>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
-/* eslint-disable */
+
 MessageBox.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -35,9 +36,7 @@ MessageBox.propTypes = {
     date: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
   }).isRequired).isRequired,
-  styles: PropTypes.object.isRequired,
   username: PropTypes.string.isRequired,
 };
-/* eslint-enable */
-export default MessageBox;
 
+export default MessageBox;

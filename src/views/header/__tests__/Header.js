@@ -22,6 +22,7 @@ test('<Header /> renders correctly', () => {
     <HeaderComponent
       currentRoomName={currentRoomName}
       numberOfMembers={numberOfMembers}
+      showMemberPanel={false}
       user={user}
       dispatch={dispatchSpy}
     />

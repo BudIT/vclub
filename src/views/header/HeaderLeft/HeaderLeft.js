@@ -1,8 +1,20 @@
 import React, { PropTypes } from 'react';
 
+import {
+  ChatRoomType, WhiteboardRoomType, SharingRoomType, MediaRoomType,
+} from 'vclub/constants/roomTypes';
+
 import HeaderTab from './HeaderTab/HeaderTab';
 
 import style from './HeaderLeft.css';
+
+
+const roomTitles = {
+  [ChatRoomType]: 'Беседка',
+  [SharingRoomType]: 'Шеринг',
+  [WhiteboardRoomType]: 'Доска',
+  [MediaRoomType]: 'Медиа',
+};
 
 // changeRoom
 function HeaderLeft(props) {
@@ -20,9 +32,10 @@ function HeaderLeft(props) {
           isCurrentTab={roomName === currentRoomName}
           key={index.toString()}
           user={user}
+          roomName={roomName}
           dispatch={dispatch}
         >
-          {roomName}
+          {roomTitles[roomName] || roomName}
         </HeaderTab>
       ))}
     </ul>

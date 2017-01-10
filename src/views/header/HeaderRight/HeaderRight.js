@@ -8,10 +8,14 @@ import setDisplayName from 'recompose/setDisplayName';
 import { logOut } from 'vclub/redux/club/auth';
 import { toggleMemberPanel } from 'vclub/redux/club/ui';
 
+import SvgIcon from 'vclub/components/icons/SvgIcon';
+
 import style from './HeaderRight.css';
 
 import MediaButton from './MediaButton/MediaButton';
 import ResultQuickVoteOf from './vote/ResultQuickVoteOf';
+
+import usersIcon from './ic_group_black_24px.svg';
 
 
 const enhance = compose(
@@ -29,6 +33,7 @@ const enhance = compose(
 export function HeaderRightComponent(props) {
   const {
     numberOfMembers,
+    showMemberPanel,
     onLogOut,
     onToggleMemberPanel,
     user,
@@ -53,10 +58,11 @@ export function HeaderRightComponent(props) {
       )}
       <li>
         <button
-          className={style.tab}
+          className={showMemberPanel ? style['tab--active'] : style.tab}
           onClick={onToggleMemberPanel}
         >
-          &#9977; {numberOfMembers}
+          <SvgIcon className={style.usersIcon} glyph={usersIcon} />
+          {numberOfMembers}
         </button>
       </li>
       <li className={style.dropdown}>
@@ -70,7 +76,7 @@ export function HeaderRightComponent(props) {
             className={style.tab}
             onClick={onLogOut}
           >
-            Log Out
+            Выйти
           </button>
         </div>
       </li>
@@ -80,6 +86,7 @@ export function HeaderRightComponent(props) {
 
 HeaderRightComponent.propTypes = {
   numberOfMembers: PropTypes.number.isRequired,
+  showMemberPanel: PropTypes.bool.isRequired,
   onLogOut: PropTypes.func.isRequired,
   onToggleMemberPanel: PropTypes.func.isRequired,
   user: PropTypes.shape({

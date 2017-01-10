@@ -31,6 +31,7 @@ test('<HeaderRight /> renders correctly', () => {
   const wrapper = shallow(
     <HeaderRightComponent
       numberOfMembers={numberOfMembers}
+      showMemberPanel={false}
       user={user}
       dispatch={jest.fn()}
       onLogOut={jest.fn()}
@@ -48,6 +49,7 @@ test('HeaderRight dispatch toggleMemberPanel action on click', () => {
     <StoreProvider>
       <HeaderRight
         numberOfMembers={numberOfMembers}
+        showMemberPanel={false}
         user={user}
         dispatch={dispatch}
       />
@@ -68,6 +70,7 @@ test('HeaderRight dispatch logOut action on click', () => {
     <StoreProvider>
       <HeaderRight
         numberOfMembers={numberOfMembers}
+        showMemberPanel={false}
         user={user}
         dispatch={dispatch}
       />
