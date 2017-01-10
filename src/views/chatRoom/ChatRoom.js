@@ -17,26 +17,28 @@ const enhance = compose(
     messages: state.chat.messages,
     username: state.auth.user.name,
   })),
-    withHandlers({
-      handleSubmit: (props) => (data) => {
-        const { dispatch } = props;
-        const { message } = data;
-        const user = props.username;
 
-        const id = uuid.v4();
-        const date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
-        dispatch(sendMessage({ id, user, date, message }));
-        dispatch(reset('chatMessage'));
-      },
-    }),
+  withHandlers({
+    handleSubmit: (props) => (data) => {
+      const { dispatch } = props;
+      const { message } = data;
+      const user = props.username;
+
+      const id = uuid.v4();
+      const date = moment.utc().format('YYYY-MM-DD HH:mm:ss');
+      dispatch(sendMessage({ id, user, date, message }));
+      dispatch(reset('chatMessage'));
+    },
+  }),
 );
 
 const ChatRoom = (props) => {
   const { messages, handleSubmit, username } = props;
+
   return (
-    <section>
-      <MessageBox messages={messages} username={username} styles={styles} />
-      <InputBox onSubmit={handleSubmit} styles={styles} />
+    <section className={styles.container}>
+      <MessageBox messages={messages} username={username} />
+      <InputBox onSubmit={handleSubmit} />
     </section>
   );
 };

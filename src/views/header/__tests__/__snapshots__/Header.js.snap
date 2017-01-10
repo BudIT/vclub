@@ -22,6 +22,7 @@ exports[`test <Header /> renders correctly 1`] = `
   <HeaderRight
     dispatch={[Function]}
     numberOfMembers={5}
+    showMemberPanel={false}
     user={
       Object {
         "id": "1",

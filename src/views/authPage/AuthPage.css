@@ -25,11 +25,11 @@
 {
     width: 24vw;
     height: 5vh;
-    border: 1px solid rgba(255, 133, 51, .8);
+    border: 1px solid #444;
     border-radius: 3px;
     font-size: 20px;
     padding: 5px;
-    color: rgb(255, 133, 51);
+    color: #444;
     margin-top: 15%;
 }
 

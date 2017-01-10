@@ -17,6 +17,7 @@ const enhance = compose(
     numberOfMembers: state.members.length,
     currentRoomName: state.rooms.currentRoom,
     user: state.auth.user,
+    showMemberPanel: state.ui.showMemberPanel,
   })),
 );
 
@@ -27,6 +28,7 @@ export function HeaderComponent(props) {
     dispatch,
     numberOfMembers,
     currentRoomName,
+    showMemberPanel,
     user,
   } = props;
 
@@ -41,6 +43,7 @@ export function HeaderComponent(props) {
       />
       <HeaderRight
         numberOfMembers={numberOfMembers}
+        showMemberPanel={showMemberPanel}
         user={user}
         dispatch={dispatch}
       />
@@ -52,6 +55,7 @@ HeaderComponent.propTypes = {
   dispatch: PropTypes.func.isRequired,
   numberOfMembers: PropTypes.number.isRequired,
   currentRoomName: PropTypes.string.isRequired,
+  showMemberPanel: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

@@ -33,40 +33,27 @@ function ElementsPanel(props) {
       <li className={styles.element}>
         <button onClick={onClickForRect} className={gCN(RECT, nextFigureType)}>
           <svg viewBox="0 0 200 200">
-            <rect x="5" y="5" width="190" height="190" />
+            <rect x="5" y="25" width="190" height="150" />
           </svg>
-          {/* Rect */}
         </button>
       </li>
       <li className={styles.element}>
         <button onClick={onClickForLine} className={gCN(LINE, nextFigureType)}>
           <svg viewBox="0 0 200 200">
-            <line x1="20" y1="180" x2="180" y2="20" stroke="black" strokeWidth="20" />
+            <line x1="20" y1="180" x2="180" y2="20" strokeWidth="20" />
           </svg>
-          {/* Line */}
         </button>
       </li>
-      {/* <li className={styles.element}>
-        <button onClick={onClickForCircle} className={gCN(CIRC, nextFigureType)}>
-          <svg viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="100" />
-          </svg>
-        </button>
-      </li> */}
       <li className={styles.element}>
         <button onClick={onClickForEllipse} className={gCN(ELLS, nextFigureType)}>
-          <svg viewBox="0 0 200 200">
-            <ellipse cx="100" cy="100" rx="100" ry="50" />
+          <svg viewBox="0 0 200 200" fill="#222">
+            <ellipse cx="100" cy="100" rx="95" ry="75" />
           </svg>
         </button>
       </li>
       <li className={styles.element}>
         <button onClick={onClickForText} className={gCN(TEXT, nextFigureType)}>
-          <svg viewBox="0 0 200 200">
-            <text x="10" y="40" style={{ fontSize: 40 }}>
-              T
-            </text>
-          </svg>
+          T
         </button>
       </li>
     </ul>

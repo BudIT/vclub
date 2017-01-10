@@ -3,7 +3,7 @@ exports[`test <HeaderTab /> (current tab) renders correctly 1`] = `
   <button
     className="tabCurrent"
     onClick={[Function]}>
-    VIDEO
+    Видео
   </button>
 </li>
 `;
@@ -13,7 +13,7 @@ exports[`test <HeaderTab /> (not current tab) renders correctly 1`] = `
   <button
     className="tab"
     onClick={[Function]}>
-    VIDEO
+    Видео
   </button>
 </li>
 `;

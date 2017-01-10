@@ -4,8 +4,6 @@ import { RECT, CIRC, LINE, ELLS, TEXT, INPUT } from 'vclub/constants/whiteboardE
 // action creator for adding new figure to board
 import { addNewFigure } from 'vclub/redux/club/whiteboard';
 
-import { backgroundColor } from 'vclub/views/whiteBoardRoom/colors';
-
 import {
   BoardRect, BoardCircle, BoardLine, BoardEllipse, BoardText, BoardInput,
 } from '../figures';
@@ -199,7 +197,13 @@ class WhiteBoard extends React.Component {
             onMouseDown={this.onMouseDown}
             onMouseUp={this.onMouseUp}
           >
-            <Rect x="0" y="0" width={this.state.layerWidth} height={this.state.layerHeight} fill={backgroundColor} />
+            <Rect
+              x="0"
+              y="0"
+              width={this.state.layerWidth}
+              height={this.state.layerHeight}
+              fill="#FFF"
+            />
             {figures.map(renderFigureOnCanvas)}
             {renderFigureOnCanvas(figure)}
           </Layer>

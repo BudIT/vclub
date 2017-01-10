@@ -12,6 +12,7 @@ import HeaderTab, { HeaderTabComponent } from '../HeaderTab';
 
 
 const tabName = 'VIDEO';
+const displayName = 'Видео';
 
 const masterUser = {
   id: '1',
@@ -24,8 +25,8 @@ const justAMember = { ...masterUser, master: false };
 
 test('<HeaderTab /> (current tab) renders correctly', () => {
   const wrapper = shallow(
-    <HeaderTabComponent isCurrentTab onClick={jest.fn()}>
-      {tabName}
+    <HeaderTabComponent isCurrentTab onClick={jest.fn()} roomName={tabName}>
+      {displayName}
     </HeaderTabComponent>
   );
 
@@ -34,8 +35,8 @@ test('<HeaderTab /> (current tab) renders correctly', () => {
 
 test('<HeaderTab /> (not current tab) renders correctly', () => {
   const wrapper = shallow(
-    <HeaderTabComponent isCurrentTab={false} onClick={jest.fn()}>
-      {tabName}
+    <HeaderTabComponent isCurrentTab={false} onClick={jest.fn()} roomName={tabName}>
+      {displayName}
     </HeaderTabComponent>
   );
 
@@ -45,8 +46,8 @@ test('<HeaderTab /> (not current tab) renders correctly', () => {
 test('HeaderTab dispatches action for master', () => {
   const dispatchSpy = jest.fn();
   const wrapper = mount(
-    <HeaderTab isCurrentTab user={masterUser} dispatch={dispatchSpy}>
-      {tabName}
+    <HeaderTab isCurrentTab user={masterUser} dispatch={dispatchSpy} roomName={tabName}>
+      {displayName}
     </HeaderTab>
   );
 
@@ -59,8 +60,8 @@ test('HeaderTab dispatches action for master', () => {
 test('HeaderTab ignores click for member', () => {
   const dispatchSpy = jest.fn();
   const wrapper = mount(
-    <HeaderTab isCurrentTab user={justAMember} dispatch={dispatchSpy}>
-      {tabName}
+    <HeaderTab isCurrentTab user={justAMember} dispatch={dispatchSpy} roomName={tabName}>
+      {displayName}
     </HeaderTab>
   );
 

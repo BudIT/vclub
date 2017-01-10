@@ -13,7 +13,8 @@ import style from './HeaderTab.css';
 const enhance = compose(
   setDisplayName('HeaderTab'),
   setPropTypes({
-    dispatch: PropTypes.func,
+    dispatch: PropTypes.func.isRequired,
+    roomName: PropTypes.string.isRequired,
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -24,9 +25,9 @@ const enhance = compose(
   withHandlers({
     // array of handlers
     onClick: (props) => () => {
-      const { dispatch, user, children } = props;
+      const { dispatch, user, roomName } = props;
       if (user.master) {
-        dispatch(changeRoom(children));
+        dispatch(changeRoom(roomName));
       }
     },
   })
