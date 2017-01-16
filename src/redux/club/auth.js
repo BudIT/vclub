@@ -51,6 +51,7 @@ export function logOut() {
   };
 }
 
+
 export default function reducer(state, action) {
   if (action.type === AUTH) {
     return {

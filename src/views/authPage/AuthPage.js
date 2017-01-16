@@ -50,11 +50,12 @@ export const AuthPageComponent = (props) => {
   const { handleSubmit } = props;
 
   return (
-    <section className={styles.auth}>
-      <form className={styles.login} onSubmit={handleSubmit}>
-        <fieldset className={styles.form_group}>
-          <div>
-            <div>
+    <div className={styles.authWrapper}>
+      <div className={styles.centerContent}>
+        <header className={styles.logo}>Virtual Club</header>
+        <main className={styles.form}>
+          <form className={styles.login} onSubmit={handleSubmit}>
+            <fieldset className={styles.form_group}>
               <Field
                 name="username"
                 component={AuthInputField}
@@ -63,41 +64,58 @@ export const AuthPageComponent = (props) => {
                 className={styles.input_name}
                 onFocus
               />
-            </div>
-          </div>
-          <div className={styles.check_container}>
-            <div className={styles.round_checkbox}>
-              <Field
-                name="master"
-                id="master"
-                component="input"
-                type="checkbox"
-              />
-              <label htmlFor="master">
-                <h3 className={styles.label_h3}>Ведущий</h3>
-              </label>
-            </div>
-            <div className={styles.round_checkbox}>
-              <Field
-                name="remember"
-                id="remember"
-                component="input"
-                type="checkbox"
-              />
-              <label htmlFor="remember">
-                <h3 className={styles.label_h3}>Запомнить</h3>
-              </label>
-            </div>
-          </div>
-          <button
-            className={styles.btn}
-            type="submit"
-          >
-            Войти
-          </button>
-        </fieldset>
-      </form>
-    </section>
+              <div className={styles.check_container}>
+                <div className={styles.round_checkbox}>
+                  <Field
+                    name="master"
+                    id="master"
+                    component="input"
+                    type="checkbox"
+                  />
+                  <label htmlFor="master">
+                    <h3 className={styles.label_h3}>Ведущий</h3>
+                  </label>
+                </div>
+                <div className={styles.round_checkbox}>
+                  <Field
+                    name="remember"
+                    id="remember"
+                    component="input"
+                    type="checkbox"
+                  />
+                  <label htmlFor="remember">
+                    <h3 className={styles.label_h3}>Запомнить</h3>
+                  </label>
+                </div>
+              </div>
+              <button
+                className={styles.btnSubmit}
+                type="submit"
+              >
+                Войти
+              </button>
+              <ul className={styles.social}>
+                <li className={styles.socialButton}>
+                  <a role="button" className={styles.vkontakte}>
+                    Vk
+                  </a>
+                </li>
+                <li className={styles.socialButton}>
+                  <a role="button" className={styles.vkontakte}>
+                    Fb
+                  </a>
+                </li>
+                <li className={styles.socialButton}>
+                  <a role="button" className={styles.vkontakte}>
+                    <img src='./img/vk-w.png'/>
+                  </a>
+                </li>
+              </ul>
+            </fieldset>
+          </form>
+        </main>
+      </div>
+    </div>
   );
 };
 
