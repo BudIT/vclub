@@ -8,6 +8,8 @@ import setPropTypes from 'recompose/setPropTypes';
 import { auth } from 'vclub/redux/club/auth';
 import AuthInputField from './AuthInputField';
 
+import FacebookLogin from '../../components/auth/facebook';
+
 import styles from './AuthPage.css';
 
 
@@ -95,6 +97,7 @@ export const AuthPageComponent = (props) => {
           >
             Войти
           </button>
+          <FacebookLogin />
         </fieldset>
       </form>
     </section>
