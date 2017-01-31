@@ -1,12 +1,14 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
 
 import { auth } from 'vclub/redux/club/auth';
+import VKLogin from 'vclub/components/api/vkAuth';
 import AuthInputField from './AuthInputField';
+
 
 import styles from './AuthPage.css';
 
@@ -22,8 +24,12 @@ const validate = values => {
   return errors;
 };
 
+const selector = formValueSelector('auth');
 
 const enhance = compose(
+  connect(state => ({
+    master: selector(state, 'master'),
+  })),
   setPropTypes({
     dispatch: React.PropTypes.func.isRequired,
   }),
@@ -33,6 +39,14 @@ const enhance = compose(
       const { username, master, remember } = data;
 
       dispatch(auth({ name: username, master }, remember));
+    },
+
+    onVkLogin: (props) => (data) => {
+      const { dispatch, master } = props;
+      const fullName = `${data.first_name} ${data.last_name}`;
+      const photo = data.photo_50;
+
+      dispatch(auth({ name: fullName, photo, master }));
     },
   }),
   reduxForm({
@@ -45,10 +59,8 @@ const enhance = compose(
     validate,
   }),
 );
-
 export const AuthPageComponent = (props) => {
-  const { handleSubmit } = props;
-
+  const { handleSubmit, onVkLogin } = props;
   return (
     <div className={styles.authWrapper}>
       <div className={styles.centerContent}>
@@ -94,25 +106,11 @@ export const AuthPageComponent = (props) => {
               >
                 Войти
               </button>
-              <ul className={styles.social}>
-                <li className={styles.socialButton}>
-                  <a role="button" className={styles.vkontakte}>
-                    Vk
-                  </a>
-                </li>
-                <li className={styles.socialButton}>
-                  <a role="button" className={styles.vkontakte}>
-                    Fb
-                  </a>
-                </li>
-                <li className={styles.socialButton}>
-                  <a role="button" className={styles.vkontakte}>
-                    <img src='./img/vk-w.png'/>
-                  </a>
-                </li>
-              </ul>
             </fieldset>
           </form>
+          <div className={styles.social}>
+            <VKLogin onLogin={onVkLogin} idApp={5820504} />
+          </div>
         </main>
       </div>
     </div>
@@ -121,6 +119,7 @@ export const AuthPageComponent = (props) => {
 
 AuthPageComponent.propTypes = {
   handleSubmit: React.PropTypes.func.isRequired,
+  onVkLogin: React.PropTypes.func.isRequired,
 };
 
 export default enhance(AuthPageComponent);
