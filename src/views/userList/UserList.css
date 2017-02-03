@@ -14,20 +14,8 @@
 
 .icon {
   display: inline-flex;
-  /*width: 30px;*/
-  /*height: 30px;*/
-  /*border-radius: 50%;*/
-  /*box-shadow: 0 2px 3px 0 rgba(0,0,0,0.4);*/
-  /*margin-bottom: 5px;*/
   margin-right: 5px;
-  /*background: darkorange;*/
 }
-
-/*.user {*/
-  /*text-align: center;*/
-  /*align-self: center;*/
-  /*width: 100%;*/
-/*}*/
 
 .master {
   font-weight: bold;

@@ -3,7 +3,6 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
-import setPropTypes from 'recompose/setPropTypes';
 
 import { auth } from 'vclub/redux/club/auth';
 import VKLogin from 'vclub/components/api/vkAuth';
@@ -30,9 +29,6 @@ const enhance = compose(
   connect(state => ({
     master: selector(state, 'master'),
   })),
-  setPropTypes({
-    dispatch: React.PropTypes.func.isRequired,
-  }),
   withHandlers({
     onSubmit: (props) => (data) => {
       const { dispatch } = props;

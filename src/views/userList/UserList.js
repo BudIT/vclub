@@ -35,7 +35,7 @@ function UserList(props) {
         : sortedMembers.map(member => (
           <span key={member.id}>
             <span className={style.icon}>
-              <UserAvatar members={member} />
+              <UserAvatar user={member} />
             </span>
             {member.master === true
               ? <b className={style.master}>{member.name}</b>

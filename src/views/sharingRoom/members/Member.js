@@ -17,7 +17,7 @@ import UserAvatar from 'vclub/components/userAvatar/UserAvatar';
 import ballIcon from '../ball/icon/tennis-ball.svg';
 import doneIcon from './icon/ic_done_black_24px.svg';
 
-import styles from './Member.css';
+import style from './Member.css';
 
 const enhance = compose(
 
@@ -90,24 +90,21 @@ function Member(props) {
   const memberIsDone = done.includes(member.id);
 
   return (
-    <div className={styles.memberContainer}>
+    <div className={style.memberContainer}>
       <button
         disabled={memberIsDone}
         onClick={onMemberClick}
-        className={styles.membersBtn}
+        className={style.membersBtn}
       >
-        {member.photo
-          ? <img src={member.photo} className={styles.userAvatar} alt="avatar" />
-          : (<span className={styles.icon}>
-            <i className={styles.user}>{member.name.charAt(0).toUpperCase()}</i>
-          </span>)
-        }
+        <span className={style.icon}>
+          <UserAvatar user={member} />
+        </span>
       </button>
 
       {showUserMenu && (
-        <div className={styles.hideShowMenu}>
+        <div className={style.hideShowMenu}>
           <button
-            className={styles.hideShowBtn}
+            className={style.hideShowBtn}
             onClick={onPassBallClick}
           >
             Передать мяч
@@ -115,18 +112,18 @@ function Member(props) {
         </div>
       )}
       {ballPosition === member.id && (
-        <div className={styles.ballMenu}>
+        <div className={style.ballMenu}>
           <button
-            className={styles.btnBall}
+            className={style.btnBall}
             onClick={onBallClick}
           >
             <SvgIcon glyph={ballIcon} />
           </button>
 
           {showBallMenu && (
-            <div className={styles.hideShowMenu}>
+            <div className={style.hideShowMenu}>
               <button
-                className={styles.hideShowBtn}
+                className={style.hideShowBtn}
                 onClick={onCompletesSessionClick}
               >
                 Завершить сеанс
@@ -137,8 +134,8 @@ function Member(props) {
       )}
 
       {memberIsDone && (
-        <button className={styles.btnDone}>
-          <SvgIcon className={styles.greenIcon} glyph={doneIcon} />
+        <button className={style.btnDone}>
+          <SvgIcon className={style.greenIcon} glyph={doneIcon} />
         </button>
       )}
     </div>
