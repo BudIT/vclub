@@ -130,3 +130,26 @@
 .greenIcon {
   fill: #2ad62a;
 }
+
+.userAvatar {
+	border-radius: 100%;
+	box-shadow: 0 2px 3px 0 rgba(0,0,0,0.4);
+	width: 40px;
+	height: 40px;
+}
+
+.icon {
+	display: flex;
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	box-shadow: 0 2px 3px 0 rgba(0,0,0,0.4);
+	background: #d6a765;
+}
+.user {
+	text-align: center;
+	align-self: center;
+	color: #fff;
+	font-weight: 700;
+	width: 100%;
+}

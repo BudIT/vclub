@@ -43,10 +43,10 @@ const enhance = compose(
 
     onVkLogin: (props) => (data) => {
       const { dispatch, master } = props;
-      const fullName = `${data.first_name} ${data.last_name}`;
+      const id = `VK-${data.id}`;
+      const name = `${data.first_name} ${data.last_name}`;
       const photo = data.photo_50;
-
-      dispatch(auth({ name: fullName, photo, master }));
+      dispatch(auth({ name, photo, master, id }));
     },
   }),
   reduxForm({

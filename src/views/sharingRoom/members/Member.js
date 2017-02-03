@@ -12,6 +12,7 @@ import {
 } from 'vclub/redux/club/sharing';
 
 import SvgIcon from 'vclub/components/icons/SvgIcon';
+import UserAvatar from 'vclub/components/userAvatar/UserAvatar';
 
 import ballIcon from '../ball/icon/tennis-ball.svg';
 import doneIcon from './icon/ic_done_black_24px.svg';
@@ -95,7 +96,12 @@ function Member(props) {
         onClick={onMemberClick}
         className={styles.membersBtn}
       >
-        {member.name}
+        {member.photo
+          ? <img src={member.photo} className={styles.userAvatar} alt="avatar" />
+          : (<span className={styles.icon}>
+            <i className={styles.user}>{member.name.charAt(0).toUpperCase()}</i>
+          </span>)
+        }
       </button>
 
       {showUserMenu && (
@@ -143,6 +149,7 @@ Member.propTypes = {
   member: PropTypes.shape({
     id: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
+    photo: PropTypes.string,
   }).isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,

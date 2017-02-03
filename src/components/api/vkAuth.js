@@ -3,7 +3,6 @@ import SvgIcon from 'vclub/components/icons/SvgIcon';
 import VkIcon from './icon/vk-icon.svg';
 import styles from './vkAuth.css';
 
-
 export default class VKLogin extends Component {
   static propTypes = {
     onLogin: React.PropTypes.func.isRequired,
