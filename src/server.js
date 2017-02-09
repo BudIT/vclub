@@ -41,14 +41,15 @@ app.get('*', (req, res) => {
 
 const authSockets = {};
 
+
 io.on('connection', (socket) => {
   socket.on('auth', (authData) => {
     const user = {
-      id: uuid.v4(),
+      id: authData.id || uuid.v4(),
       name: authData.name,
       master: !!authData.master,
+      photo: authData.photo,
     };
-
     store.dispatch(memberEnter(user));
     authSockets[user.id] = socket;
     socket.join('users');

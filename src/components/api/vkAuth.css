@@ -1,0 +1,12 @@
+.vkButton
+{
+	background: transparent;
+	cursor: pointer;
+	margin: 0;
+	padding-left: 10px;
+}
+
+.vkButton:hover
+{
+	opacity: .8;
+}

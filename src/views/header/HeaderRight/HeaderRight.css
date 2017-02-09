@@ -32,7 +32,7 @@
   background-color: #FFAA00;
 }
 
-.tab--active {
+.tab--active, .activeTab {
   composes: tab;
   background-color: #FFAA00;
   color: #fff;

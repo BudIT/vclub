@@ -2,6 +2,7 @@ import R from 'ramda';
 import React, { PropTypes } from 'react';
 import Transition from 'react-motion-ui-pack';
 import { createSelector } from 'reselect';
+import UserAvatar from 'vclub/components/userAvatar/UserAvatar';
 import style from './UserList.css';
 
 function sortMembers(a, b) {
@@ -34,7 +35,7 @@ function UserList(props) {
         : sortedMembers.map(member => (
           <span key={member.id}>
             <span className={style.icon}>
-              <i className={style.user}>{member.name.charAt(0)}</i>
+              <UserAvatar user={member} />
             </span>
             {member.master === true
               ? <b className={style.master}>{member.name}</b>
@@ -52,6 +53,7 @@ UserList.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     master: PropTypes.bool.isRequired,
+    photo: PropTypes.string,
   })).isRequired,
 };
 /*eslint-enable */
