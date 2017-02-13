@@ -7,7 +7,7 @@ function AuthInputField(props) {
   } = props;
 
   const {
-    touched, error,
+    dirty, error,
   } = meta;
 
   return (
@@ -20,7 +20,7 @@ function AuthInputField(props) {
           className={className}
           autoFocus
         />
-        {(touched && error)
+        {(dirty && error)
         && <span className={styles.errors}>{error}</span>}
       </div>
     </div>
@@ -33,7 +33,7 @@ AuthInputField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   meta: PropTypes.shape({
-    touched: PropTypes.bool.isRequired,
+    dirty: PropTypes.bool.isRequired,
     error: PropTypes.string,
   }),
 };
