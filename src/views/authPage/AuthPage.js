@@ -60,7 +60,7 @@ export const AuthPageComponent = (props) => {
   return (
     <div className={styles.authWrapper}>
       <div className={styles.centerContent}>
-        <header className={styles.logo}>Virtual Club</header>
+        <header className={styles.logo}>Онлайн клуб</header>
         <main className={styles.form}>
           <form className={styles.login} onSubmit={handleSubmit}>
             <fieldset className={styles.form_group}>
