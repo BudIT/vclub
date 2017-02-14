@@ -8,7 +8,7 @@ function MessageBox(props) {
   const { messages, username } = props;
   return (
     <div className={styles.chat}>
-      <div className={styles.welcome}>Добро пожаловать в Онлайн Клуб 3000!</div>
+      <div className={styles.welcome}>Добро пожаловать в Онлайн Клуб!</div>
       {messages.map(message => (
         <div key={message.id}>
           <div key={message.id} className={styles.message}>
