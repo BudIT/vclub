@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import withHandlers from 'recompose/withHandlers';
 import setPropTypes from 'recompose/setPropTypes';
 import setDisplayName from 'recompose/setDisplayName';
+import onOutsideClick from 'vclub/utils/hoc/onOutsideClick';
 
 import { toggleModal } from 'vclub/redux/club/vote';
 
@@ -30,6 +31,12 @@ const enhance = compose(
       dispatch(toggleModal());
     },
   }),
+  onOutsideClick((props) => {
+    if (props.showModalVote) {
+      const { dispatch } = props;
+      dispatch(toggleModal());
+    }
+  })
 );
 
 

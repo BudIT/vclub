@@ -2,8 +2,15 @@ import R from 'ramda';
 import React, { PropTypes } from 'react';
 import Transition from 'react-motion-ui-pack';
 import { createSelector } from 'reselect';
+
+import onOutsideClick from 'vclub/utils/hoc/onOutsideClick';
+import withDispatch from 'vclub/utils/hoc/withDispatch';
+
+import { toggleMemberPanel } from 'vclub/redux/club/ui';
 import UserAvatar from 'vclub/components/userAvatar/UserAvatar';
+
 import style from './UserList.css';
+
 
 function sortMembers(a, b) {
   return a.master < b.master ? 1 : -1;
@@ -12,6 +19,13 @@ function sortMembers(a, b) {
 const getSortedMembers = createSelector(
   props => props.members,
   members => R.sort(sortMembers, members)
+);
+
+const enhance = R.compose(
+  withDispatch(),
+  onOutsideClick((props) => {
+    props.dispatch(toggleMemberPanel());
+  }),
 );
 
 function UserList(props) {
@@ -58,4 +72,4 @@ UserList.propTypes = {
 };
 /*eslint-enable */
 
-export default UserList;
+export default enhance(UserList);

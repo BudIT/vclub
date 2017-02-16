@@ -13,6 +13,7 @@ import {
 
 import SvgIcon from 'vclub/components/icons/SvgIcon';
 import UserAvatar from 'vclub/components/userAvatar/UserAvatar';
+import Popup from './popup/Popup';
 
 import ballIcon from '../ball/icon/tennis-ball.svg';
 import doneIcon from './icon/ic_done_black_24px.svg';
@@ -54,6 +55,10 @@ const enhance = compose(
       }
     },
 
+    onUserMenuHide: (props) => () => {
+      props.dispatch(setUserMenuPosition(null));
+    },
+
     onPassBallClick: (props) => () => {
       const { member, user, dispatch, ballPosition } = props;
       if (user.master || user.id === ballPosition) {
@@ -61,11 +66,15 @@ const enhance = compose(
       }
     },
 
-    onBallClick: props => () => {
+    onBallClick: (props) => () => {
       const { dispatch, user, showBallMenu } = props;
       if (user.master) {
         dispatch(toggleBallMenu(!showBallMenu));
       }
+    },
+
+    onBallMenuHide: (props) => () => {
+      props.dispatch(toggleBallMenu(false));
     },
 
     onCompletesSessionClick: (props) => () => {
@@ -85,6 +94,8 @@ function Member(props) {
     onBallClick,
     onMemberClick,
     onCompletesSessionClick,
+    onUserMenuHide,
+    onBallMenuHide,
   } = props;
 
   const memberIsDone = done.includes(member.id);
@@ -102,15 +113,9 @@ function Member(props) {
       </button>
 
       {showUserMenu && (
-        <div className={style.hideShowMenu}>
-          <button
-            className={style.hideShowBtn}
-            onClick={onPassBallClick}
-          >
-            Передать мяч
-          </button>
-        </div>
+        <Popup title="Передать мяч" onClick={onPassBallClick} onOutsideClick={onUserMenuHide} />
       )}
+
       {ballPosition === member.id && (
         <div className={style.ballMenu}>
           <button
@@ -121,14 +126,11 @@ function Member(props) {
           </button>
 
           {showBallMenu && (
-            <div className={style.hideShowMenu}>
-              <button
-                className={style.hideShowBtn}
-                onClick={onCompletesSessionClick}
-              >
-                Завершить сеанс
-              </button>
-            </div>
+            <Popup
+              title="Завершить сеанс"
+              onClick={onCompletesSessionClick}
+              onOutsideClick={onBallMenuHide}
+            />
           )}
         </div>
       )}
@@ -155,12 +157,14 @@ Member.propTypes = {
   }).isRequired,
   ballPosition: PropTypes.string,
   done: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onMemberClick: PropTypes.func,
-  onPassBallClick: PropTypes.func,
-  onBallClick: PropTypes.func,
-  showUserMenu: PropTypes.bool,
-  showBallMenu: PropTypes.bool,
-  onCompletesSessionClick: PropTypes.func,
+  onMemberClick: PropTypes.func.isRequired,
+  onPassBallClick: PropTypes.func.isRequired,
+  onBallClick: PropTypes.func.isRequired,
+  showUserMenu: PropTypes.bool.isRequired,
+  showBallMenu: PropTypes.bool.isRequired,
+  onCompletesSessionClick: PropTypes.func.isRequired,
+  onUserMenuHide: PropTypes.func.isRequired,
+  onBallMenuHide: PropTypes.func.isRequired,
 };
 
 export default enhance(Member);
