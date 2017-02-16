@@ -41,16 +41,12 @@ function StreamRoom(props) {
   const owner = currentUser.id === ownerId;
 
   if (!source) {
-    return (
-      currentUser.master
-        ? <SourceSelect onSelected={onSourceSelected} features={features} />
-        : <StatusMessage>Подготовка вещания...</StatusMessage>
-    );
+    return <SourceSelect onSelected={onSourceSelected} features={features} />;
   }
 
   return (
     <div className={styles.container}>
-      {currentUser.master && (
+      {(currentUser.master || currentUser.id === ownerId) && (
         <button className={styles.resetButton} onClick={onResetStreaming}>
           Отключить вещание
         </button>

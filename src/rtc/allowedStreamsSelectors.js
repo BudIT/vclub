@@ -15,18 +15,23 @@ const allMembersSelector = createSelector(
 );
 
 const sharingRoomSelector = createSelector(
+  allMembersSelector,
   mastersSelector,
   state => state.sharingRoom.ballPosition,
-  (masters, ballPosition) => (
-    (ballPosition && !masters.includes(ballPosition)) ? [...masters, ballPosition] : masters
-  )
+  (all, masters, ballPosition) => {
+    if (!ballPosition) {
+      return all;
+    }
+
+    return masters.includes(ballPosition) ? masters : [...masters, ballPosition];
+  }
 );
 
 export const ByRoomSelectors = {
   [ChatRoomType]: allMembersSelector,
   [SharingRoomType]: sharingRoomSelector,
   [WhiteboardRoomType]: allMembersSelector,
-  [MediaRoomType]: mastersSelector,
+  [MediaRoomType]: allMembersSelector,
 };
 
 export const DefaultStreamsSelector = mastersSelector;
