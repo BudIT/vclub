@@ -1,5 +1,4 @@
-.tab
-{
+.trigger {
   color: #33363A;
   text-decoration: none;
   text-align: center;
@@ -17,12 +16,21 @@
   outline: none;
 }
 
-.tabCurrent {
-  composes: tab;
-  text-decoration: underline;
+.trigger:hover {
+  background-color: #FFAA00;
 }
 
-.tab:hover {
+.triggerActive {
+  composes: trigger;
   background-color: #FFAA00;
-  /*text-decoration: line-through;*/
+}
+
+.dropdownIcon {
+  vertical-align: middle;
+}
+
+.dropdownList {
+  position: absolute;
+  display: block;
+  background-color: #FFD00B;
 }

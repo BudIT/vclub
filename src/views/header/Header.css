@@ -4,4 +4,16 @@
   display: flex;
   box-shadow: 0 0 10px black;
   z-index: 10;
+  background-color: #FFD00B;
+}
+
+.roomTitle {
+  display: block;
+
+  color: #33363A;
+  font-size: 22px;
+  font-family: 'Rubik', helvetica, sans-serif;
+
+  padding: 14px 16px;
+  cursor: default;
 }
