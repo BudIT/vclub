@@ -9,7 +9,7 @@ const MediaRequestErrorsMap = {
   PermissionDeniedError: MediaStatusDenied,
 };
 
-export default function requestVideoStream(store, videoConstraints) {
+export default function requestVideoStream(store, videoConstraints, videoType) {
   const constraints = {
     audio: false,
     video: videoConstraints,
@@ -24,7 +24,7 @@ export default function requestVideoStream(store, videoConstraints) {
       return;
     }
 
-    store.dispatch(setVideoStream(videoStream));
+    store.dispatch(setVideoStream(videoStream, videoType));
   }).catch(error => {
     const status = error.name && MediaRequestErrorsMap[error.name];
     store.dispatch(setVideoRequestStatus(status || MediaStatusUnknown, error.name));

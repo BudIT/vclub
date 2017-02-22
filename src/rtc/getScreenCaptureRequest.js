@@ -1,5 +1,6 @@
-import { setVideoRequestStatus } from 'vclub/redux/club/videoMedia';
+import { setVideoRequestStatus, startVideoRequest } from 'vclub/redux/club/videoMedia';
 import { MediaStatusDismissed } from 'vclub/constants/mediaStatus';
+import { ScreenVideoType } from 'vclub/constants/videoTypes';
 
 import requestVideoStream from './requestVideoStream';
 
@@ -20,13 +21,14 @@ export default function getScreenCaptureRequest(store) {
       mandatory: {
         chromeMediaSource: 'desktop',
         chromeMediaSourceId: response.sourceId,
-        maxWidth: 1280,
-        maxHeight: 720,
+        maxWidth: 1920,
+        maxHeight: 1080,
       },
-    });
+    }, ScreenVideoType);
   });
 
   return () => {
+    store.dispatch(startVideoRequest(ScreenVideoType));
     window.postMessage({ type: 'vclub:screenShare:requestSourceId' }, '*');
   };
 }

@@ -41,12 +41,11 @@ export default {
   videoMedia: {
     muted: false,
     status: MediaStatusPending,
+    type: null,
     stream: null,
     errorName: null,
   },
   rtc: {
-    peers: {},
-    passivePeers: [],
     audioStreams: {},
     videoStreams: {},
     allowedStreams: [],

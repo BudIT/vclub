@@ -1,72 +1,72 @@
 import { MediaStatusReady } from 'vclub/constants/mediaStatus';
+import { ChatRoomType, MediaRoomType } from 'vclub/constants/roomTypes';
+import { WebcamVideoType, ScreenVideoType } from 'vclub/constants/videoTypes';
 
 import { MEMBER_ENTER, MEMBER_LEAVE } from 'vclub/redux/club/members';
 import { INITIALIZE } from 'vclub/redux/club/init';
 import { setAudioStream } from 'vclub/redux/club/audioMedia';
-import { setVideoStream } from 'vclub/redux/club/videoMedia';
-import { resetStreaming, setVideoSource } from 'vclub/redux/club/streamRoom';
+import { setVideoStream, unsetVideoStream } from 'vclub/redux/club/videoMedia';
 import {
-  setPeers, addPeer, removePeer, addAudioStream, addVideoStream, removeStream, setAllowedStreams,
+  addAudioStream, addVideoStream, removeStream, setAllowedStreams,
 } from 'vclub/redux/club/rtc';
 
 import { StreamSourceWebcam, StreamSourceScreen } from 'vclub/constants/streamSources';
 
-import requestVideoStream from './requestVideoStream';
+import createPeerManager from './createPeerManager';
+import requestWebcamStream from './requestWebcamStream';
 import getScreenCaptureRequest from './getScreenCaptureRequest';
 import { ByRoomSelectors, DefaultStreamsSelector } from './allowedStreamsSelectors';
 
 
-const IceServers = [
-  {
-    url: 'stun:stun.l.google.com:19302',
-  }, {
-    url: 'stun:stun.anyfirewall.com:3478',
-  },
-];
-
 export default function createRTCAPI(ioSocket, store) {
   const requestScreenCapture = getScreenCaptureRequest(store);
+  const peers = {};
 
-  function createPeerConnection(userId) {
+  function forEachPeer(fn) {
+    Object.keys(peers).forEach(userId => fn(peers[userId], userId));
+  }
+
+  function createPeer(member, active = true) {
     const { audioMedia, videoMedia } = store.getState();
-    const peer = new RTCPeerConnection({
-      iceServers: IceServers,
-    });
+    const localStreams = [];
 
     if (audioMedia.stream) {
-      peer.addStream(audioMedia.stream);
+      console.log('ADD audio stream');
+      localStreams.push(audioMedia.stream);
     }
 
     if (videoMedia.stream) {
-      peer.addStream(videoMedia.stream);
+      console.log('ADD video stream');
+      localStreams.push(videoMedia.stream);
     }
 
-    peer.onicecandidate = event => {
-      if (!event.candidate) return;
+    peers[member.id] = createPeerManager({
+      localStreams,
+      active,
+      api: {
+        sendICE(candidate) {
+          ioSocket.emit('RTC.ICECandidate', { userId: member.id, candidate });
+        },
 
-      ioSocket.emit('RTC.ICECandidate', { userId, candidate: event.candidate });
-    };
+        handleAddStream(stream) {
+          const track = stream.getTracks()[0];
+          const addRemoteStream = track.kind === 'video' ? addVideoStream : addAudioStream;
 
-    peer.onaddstream = event => {
-      const stream = event.stream;
-      const track = stream.getTracks()[0];
-      const addRemoteStream = track.kind === 'video' ? addVideoStream : addAudioStream;
+          store.dispatch(addRemoteStream(member.id, stream));
+        },
 
-      store.dispatch(addRemoteStream(userId, event.stream));
-    };
+        handleRemoveStream(stream) {
+          store.dispatch(removeStream(member.id, stream));
+        },
 
-    peer.onremovestream = event => {
-      store.dispatch(removeStream(userId, event.stream));
-    };
+        sendSDP(sdp, offer) {
+          ioSocket.emit('RTC.SDP', { userId: member.id, sdp, offer });
+        },
 
-    return peer;
-  }
-
-  function sendOffer(peer, userId) {
-    peer.createOffer().then(localDesc => {
-      peer.setLocalDescription(localDesc).then(() => {
-        ioSocket.emit('RTC.SDP', { userId, sdp: localDesc, offer: true });
-      });
+        notifyNegotiation() {
+          ioSocket.emit('RTC.NegReq', { userId: member.id });
+        },
+      },
     });
   }
 
@@ -74,44 +74,22 @@ export default function createRTCAPI(ioSocket, store) {
     const { auth } = store.getState();
     const currentUserId = auth.user.id;
 
-    const peers = members.reduce((memo, member) => {
-      if (member.id === currentUserId) return memo;
+    members.forEach(member => {
+      if (member.id === currentUserId) return;
 
-      const peer = createPeerConnection(member.id);
-
-      // eslint-disable-next-line no-param-reassign
-      memo[member.id] = peer;
-
-      return memo;
-    }, {});
-
-    store.dispatch(setPeers(peers));
+      createPeer(member, false);
+    });
   }
 
-  function createPeer(member) {
-    const peer = createPeerConnection(member.id);
-
-    store.dispatch(addPeer(member.id, peer));
-    sendOffer(peer, member.id);
+  function destroyPeer(memberId) {
+    peers[memberId].destroy();
+    delete peers[memberId];
   }
 
-  function destroyPeer(memberId, rtc) {
-    const { peers } = rtc;
-    const peer = peers[memberId];
-
-    store.dispatch(removePeer(memberId));
-
-    if (peer.signalingState !== 'closed') {
-      peer.close();
-    }
-  }
-
-  function setupStream(stream, peers) {
-    Object.keys(peers).forEach(userId => {
-      const peer = peers[userId];
-
-      peer.addStream(stream);
-      sendOffer(peer, userId);
+  function setupStream(stream) {
+    forEachPeer(peer => {
+      console.log('SETUP stream', stream.getTracks()[0].kind);
+      peer.attachStream(stream);
     });
   }
 
@@ -145,91 +123,115 @@ export default function createRTCAPI(ioSocket, store) {
     }
   }
 
-  function manageVideoSource() {
-    const { streamRoom, auth } = store.getState();
-    const { source, ownerId } = streamRoom;
+  function getExpectedVideoType() {
+    const { auth, videoMedia, rooms, streamRoom } = store.getState();
 
-    if (ownerId !== auth.user.id) {
+    if (rooms.currentRoom === ChatRoomType) {
+      return videoMedia.muted ? null : WebcamVideoType;
+    }
+
+    if (rooms.currentRoom === MediaRoomType) {
+      const { source, ownerId } = streamRoom;
+
+      if (ownerId !== auth.user.id) {
+        return null;
+      } else if (source === StreamSourceWebcam) {
+        return WebcamVideoType;
+      } else if (source === StreamSourceScreen) {
+        return ScreenVideoType;
+      }
+    }
+
+    return null;
+  }
+
+  function manageVideoStreamState(prevState) {
+    const { stream, type } = prevState.videoMedia;
+
+    const expectedVideoType = getExpectedVideoType();
+
+    console.log('check', type, expectedVideoType, type === expectedVideoType);
+
+    if (type === expectedVideoType) {
       return;
     }
 
-    if (source === StreamSourceWebcam) {
-      requestVideoStream(store, true);
+    if (!expectedVideoType) {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        forEachPeer(peer => peer.detachStream(stream));
+
+        store.dispatch(unsetVideoStream());
+      }
 
       return;
     }
 
-    if (source === StreamSourceScreen) {
+    if (expectedVideoType === WebcamVideoType) {
+      requestWebcamStream(store);
+
+      return;
+    }
+
+    if (expectedVideoType === ScreenVideoType) {
       requestScreenCapture();
+
+      return;
     }
   }
 
+  let dispatchingDeep = 0;
+
   function dispatch(action, prevState) {
-    const { audioMedia, videoMedia, members, rtc, auth } = store.getState();
+    const { audioMedia, videoMedia, members, auth } = store.getState();
 
     if (!auth.authenticated) {
       return;
     }
 
+    dispatchingDeep++; // eslint-disable-line no-plusplus
+
     if (action.type === INITIALIZE) {
       initPeers(members);
-      manageVideoSource();
     }
 
     if (action.type === MEMBER_ENTER) {
-      createPeer(action.payload);
+      createPeer(action.payload, true);
     }
 
     if (action.type === MEMBER_LEAVE) {
-      destroyPeer(action.payload, rtc);
+      destroyPeer(action.payload);
     }
 
     if (action.type === setAudioStream.type) {
-      setupStream(audioMedia.stream, rtc.peers);
+      setupStream(audioMedia.stream);
     }
 
     if (action.type === setVideoStream.type) {
-      setupStream(videoMedia.stream, rtc.peers);
+      setupStream(videoMedia.stream);
     }
 
-    if (action.type === setVideoSource.type) {
-      manageVideoSource(action);
+    if (dispatchingDeep === 1) {
+      manageAllowedStreams();
+      manageAudioStreamState();
+      manageVideoStreamState(prevState);
     }
 
-    if (action.type === resetStreaming.type) {
-      const { stream } = prevState.videoMedia;
-
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-
-        Object.keys(rtc.peers).forEach(userId => {
-          const peer = rtc.peers[userId];
-
-          peer.removeStream(stream);
-          sendOffer(peer, userId);
-        });
-      }
-    }
-
-    manageAllowedStreams();
-    manageAudioStreamState();
+    dispatchingDeep--; // eslint-disable-line no-plusplus
   }
 
   ioSocket.on('RTC.ICECandidate', ({ userId, candidate }) => {
-    const { rtc } = store.getState();
-    const peer = rtc.peers[userId];
+    const peer = peers[userId];
 
     if (!peer) {
       // TODO: track this place 'ICE-JOIN race'
       return;
     }
 
-    peer.addIceCandidate(new RTCIceCandidate(candidate));
+    peer.addIceCandidate(candidate);
   });
 
   ioSocket.on('RTC.SDP', ({ userId, sdp, offer }) => {
-    const { rtc } = store.getState();
-    const { peers } = rtc;
     const peer = peers[userId];
 
     if (!peer) {
@@ -237,17 +239,18 @@ export default function createRTCAPI(ioSocket, store) {
       return;
     }
 
-    const sessionDesc = new RTCSessionDescription(sdp);
+    peer.processSdp(sdp, offer);
+  });
 
-    peer.setRemoteDescription(sessionDesc).then(() => {
-      if (!offer) return;
+  ioSocket.on('RTC.NegReq', ({ userId }) => {
+    const peer = peers[userId];
 
-      peer.createAnswer().then(localDesc => {
-        peer.setLocalDescription(localDesc).then(() => {
-          ioSocket.emit('RTC.SDP', { userId, sdp: localDesc });
-        });
-      });
-    });
+    if (!peer) {
+      // TODO: track this place 'neg request race'
+      return;
+    }
+
+    peer.sendOffer();
   });
 
   return { dispatch };
