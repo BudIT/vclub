@@ -1,0 +1,28 @@
+.container {
+  display: block;
+}
+
+.item {
+  display: block;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  color: #FDFDFD;
+  font-family: 'Rubik', helvetica, sans-serif;
+  padding: 5px 20px;
+
+  transition: background 0.2s;
+
+  /*background-color: inherit;*/
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: rgba(255,255,255,0.3);
+}
+
+.active {
+  composes: item;
+  font-weight: bold;
+}

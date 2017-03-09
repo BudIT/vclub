@@ -1,64 +1,41 @@
-import initialState from 'vclub/redux/initialClubState';
+import uuid from 'uuid';
 
-export const AUTH = 'club/auth/auth';
-export const LOG_OUT = 'club/auth/log-out';
-export const RESTORE_AUTH = 'club/auth/restoreAuth';
-
-export function auth(authData, remember = false) {
-  return {
-    type: AUTH,
-    payload: authData,
-    meta: {
-      sideEffects: [({ ioSocket, localStorage }) => {
-        ioSocket.emit('auth', authData);
-
-        if (remember) {
-          localStorage.setItem('name', authData.name);
-          localStorage.setItem('master', authData.master);
-        }
-      }],
-    },
-  };
-}
-
-export function restoreAuth() {
-  return {
-    type: RESTORE_AUTH,
-    meta: {
-      sideEffects: [({ dispatch, localStorage }) => {
-        const name = localStorage.getItem('name');
-        const master = localStorage.getItem('master') === 'true';
-
-        if (name) {
-          dispatch(auth({ name, master }));
-        }
-      }],
-    },
-  };
-}
-
-export function logOut() {
-  return {
-    type: LOG_OUT,
-    meta: {
-      sideEffects: [({ localStorage }) => {
-        localStorage.removeItem('name');
-        localStorage.removeItem('master');
-
-        document.location.reload();
-      }],
-    },
-  };
-}
+import actionCreator from 'borex-actions/actionCreator';
+import commandCreator from 'borex-actions/commandCreator';
+import withSideEffect from 'borex-actions/withSideEffect';
+import createReducer from 'borex-reducers/createReducer';
+import setIn from 'borex-reducers/setIn';
 
 
-export default function reducer(state, action) {
-  if (action.type === AUTH) {
-    return {
-      ...state,
-      authenticating: true,
-    };
+export const auth = actionCreator(
+  withSideEffect((context, authData, remember = true) => {
+    const { ioSocket, localStorage } = context;
+
+    ioSocket.emit('auth', authData);
+
+    if (remember) {
+      localStorage.setItem('storedAuth', JSON.stringify(authData));
+    }
+  }),
+);
+
+export const setRestoredData = actionCreator();
+
+export const restoreAuth = commandCreator((context) => {
+  const { dispatch, localStorage } = context;
+  const authJSON = localStorage.getItem('storedAuth');
+
+  if (authJSON) {
+    dispatch(setRestoredData(JSON.parse(authJSON)));
   }
+});
 
-  return state || initialState.auth;
-}
+export const logOut = commandCreator(() => {
+  document.location.reload();
+});
+
+
+export default createReducer(on => {
+  on(auth, setIn('authenticating', () => true));
+  on(setRestoredData, setIn('restored'));
+});

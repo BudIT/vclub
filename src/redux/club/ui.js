@@ -1,21 +1,12 @@
-import initialState from 'vclub/redux/initialClubState';
+import actionCreator from 'borex-actions/actionCreator';
+import createReducer from 'borex-reducers/createReducer';
+import setIn from 'borex-reducers/setIn';
 
-export const TOGGLE_MEMBER_PANEL = 'club/ui/toggle-member-panel';
 
-export function toggleMemberPanel() {
-  return {
-    type: TOGGLE_MEMBER_PANEL,
-  };
-}
+export const toggleMemberPanel = actionCreator();
+export const toggleChat = actionCreator();
 
-export default function reducer(state, action) {
-  switch (action.type) {
-    case TOGGLE_MEMBER_PANEL:
-      return {
-        ...state,
-        showMemberPanel: !state.showMemberPanel,
-      };
-    default:
-      return state || initialState.ui;
-  }
-}
+export default createReducer(on => {
+  on(toggleMemberPanel, setIn('showMemberPanel', (_, flag) => !flag));
+  on(toggleChat, setIn('displayChat', (_, flag) => !flag));
+});

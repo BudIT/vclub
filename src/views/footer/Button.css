@@ -1,0 +1,49 @@
+.container {
+  display: inline-block;
+  position: relative;
+}
+
+.button {
+  display: inline-block;
+  vertical-align: top;
+  height: 48px;
+  width: 48px;
+  margin: 5px;
+
+  border-radius: 50%;
+  background-color: white;
+  color: #158A9E;
+  fill: #158A9E;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'Rubik', helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.active {
+  composes: button;
+  box-shadow: inset 0 0 1em rgba(0,0,0,0.5);
+}
+
+.badge {
+  display: block;
+  position: absolute;
+  min-width: 8px;
+  border-radius: 8px;
+  padding: 2px 6px;
+  bottom: 0;
+  right: 0;
+
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #FD6A60;
+  color: white;
+  cursor: default;
+
+  font-weight: bold;
+  font-size: 75%;
+  font-family: 'Rubik', helvetica, sans-serif;
+
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}

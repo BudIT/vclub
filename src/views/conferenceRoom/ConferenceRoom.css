@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.row {
+  flex-grow: 1;
+  justify-content: center;
+  display: flex;
+}
+
+.cell {
+  display: flex;
+  box-sizing: border-box;
+  border: solid #3D4044;
+  border-width: 0 1px 1px 0;
+}
+
+.cell:first-child {
+  border-left-width: 1px;
+}
+
+.avabox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  color: #97A6A6;
+}
+
+.name {
+  margin-top: 5px;
+  color: inherit;
+}
+
+.rowOf1 {
+  composes: row;
+  flex-basis: 100%;
+}
+
+.rowOf2 {
+  composes: row;
+  flex-basis: 50%;
+}
+
+.rowOf3 {
+  composes: row;
+  flex-basis: 33%;
+}
+
+.rowOf4 {
+  composes: row;
+  flex-basis: 25%;
+}
+
+.cellOf1 {
+  composes: cell;
+  flex-basis: 100%;
+  max-width: 100%;
+}
+
+.cellOf2 {
+  composes: cell;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+.cellOf3 {
+  composes: cell;
+  flex-basis: 33%;
+  max-width: 33%;
+}
+
+.cellOf4 {
+  composes: cell;
+  flex-basis: 25%;
+  max-width: 25%;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

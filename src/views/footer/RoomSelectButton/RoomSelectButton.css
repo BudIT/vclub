@@ -1,0 +1,10 @@
+.popup {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  overflow: hidden;
+
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.75);
+  background-color: #42454A;
+  border-radius: 4px;
+}

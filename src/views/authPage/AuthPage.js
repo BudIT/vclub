@@ -1,7 +1,10 @@
 import React from 'react';
+import uuid from 'uuid';
+import { createSelector } from 'reselect';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
+
+import composedComponent from 'vclub/utils/composedComponent';
 import { connect } from 'react-redux';
-import compose from 'recompose/compose';
 import withHandlers from 'recompose/withHandlers';
 
 import { auth } from 'vclub/redux/club/auth';
@@ -17,24 +20,38 @@ const validate = values => {
 
   if (!values.username) {
     errors.username = 'Пожалуйста, введите Ваше имя !!!';
-  } else if (values.username.length > 15) {
-    errors.username = 'Имя должно быть 15 символов или меньше';
   }
+
   return errors;
 };
 
-const selector = formValueSelector('auth');
+const authFormSelector = formValueSelector('auth');
 
-const enhance = compose(
+const initialValuesSelector = createSelector(
+  state => state.auth.restored,
+  restoredAuth => ({
+    name: restoredAuth ? restoredAuth.name : '',
+    master: restoredAuth ? restoredAuth.master : false,
+  })
+);
+
+export default composedComponent(
+  'AuthPage',
+
   connect(state => ({
-    master: selector(state, 'master'),
+    master: authFormSelector(state, 'master'),
+    restoredAuth: state.auth.restored,
+    initialValues: initialValuesSelector(state),
   })),
+
   withHandlers({
     onSubmit: (props) => (data) => {
-      const { dispatch } = props;
-      const { username, master, remember } = data;
+      const { dispatch, restoredAuth } = props;
+      const { name, master } = data;
+      const renewId = !restoredAuth || name !== restoredAuth.name;
+      const id = renewId ? uuid.v4() : restoredAuth.id;
 
-      dispatch(auth({ name: username, master }, remember));
+      dispatch(auth({ id, name, master }));
     },
 
     onVkLogin: (props) => (data) => {
@@ -42,22 +59,16 @@ const enhance = compose(
       const id = `VK-${data.id}`;
       const name = `${data.first_name} ${data.last_name}`;
       const photo = data.photo_50;
-      dispatch(auth({ name, photo, master, id }));
+      dispatch(auth({ name, photo, master, id }, false));
     },
   }),
+
   reduxForm({
     form: 'auth',
-    initialValues: {
-      username: '',
-      master: false,
-      remember: true,
-    },
     validate,
   }),
-);
-export const AuthPageComponent = (props) => {
-  const { handleSubmit, onVkLogin } = props;
-  return (
+
+  ({ handleSubmit, onVkLogin }) => (
     <div className={styles.authWrapper}>
       <div className={styles.centerContent}>
         <header className={styles.logo}>Онлайн клуб</header>
@@ -65,7 +76,7 @@ export const AuthPageComponent = (props) => {
           <form className={styles.login} onSubmit={handleSubmit}>
             <fieldset className={styles.form_group}>
               <Field
-                name="username"
+                name="name"
                 component={AuthInputField}
                 type="text"
                 placeholder="Имя..."
@@ -84,17 +95,6 @@ export const AuthPageComponent = (props) => {
                     <h3 className={styles.label_h3}>Ведущий</h3>
                   </label>
                 </div>
-                <div className={styles.round_checkbox}>
-                  <Field
-                    name="remember"
-                    id="remember"
-                    component="input"
-                    type="checkbox"
-                  />
-                  <label htmlFor="remember">
-                    <h3 className={styles.label_h3}>Запомнить</h3>
-                  </label>
-                </div>
               </div>
               <button
                 className={styles.btnSubmit}
@@ -110,12 +110,5 @@ export const AuthPageComponent = (props) => {
         </main>
       </div>
     </div>
-  );
-};
-
-AuthPageComponent.propTypes = {
-  handleSubmit: React.PropTypes.func.isRequired,
-  onVkLogin: React.PropTypes.func.isRequired,
-};
-
-export default enhance(AuthPageComponent);
+  )
+);

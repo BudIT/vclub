@@ -4,20 +4,26 @@ import { SocketStatusConnecting } from 'vclub/constants/socketStatus';
 
 
 export default {
-  members: [], // array of { id: String, name: String, master: Boolean }
+  members: {
+    online: [],
+    all: {},
+  },
   auth: {
     authenticated: false,
     authenticating: false,
     user: null, // { id: String, name: String, master: Boolean }
+    restored: null,
   },
   rooms: {
     currentRoom: ChatRoomType,
   },
   ui: {
     showMemberPanel: false,
+    displayChat: false,
   },
   chat: {
     messages: [],
+    unreadCount: 0,
   }, // array of { id: Number, user: String, date: String, message: String }
   sharingRoom: {
     ballPosition: null,
@@ -39,7 +45,7 @@ export default {
     errorName: null,
   },
   videoMedia: {
-    muted: false,
+    muted: true,
     status: MediaStatusPending,
     type: null,
     stream: null,

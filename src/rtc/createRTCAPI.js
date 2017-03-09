@@ -2,7 +2,7 @@ import { MediaStatusReady } from 'vclub/constants/mediaStatus';
 import { ChatRoomType, MediaRoomType } from 'vclub/constants/roomTypes';
 import { WebcamVideoType, ScreenVideoType } from 'vclub/constants/videoTypes';
 
-import { MEMBER_ENTER, MEMBER_LEAVE } from 'vclub/redux/club/members';
+import { memberEnter, memberLeave } from 'vclub/redux/club/members';
 import { INITIALIZE } from 'vclub/redux/club/init';
 import { setAudioStream } from 'vclub/redux/club/audioMedia';
 import { setVideoStream, unsetVideoStream } from 'vclub/redux/club/videoMedia';
@@ -31,12 +31,10 @@ export default function createRTCAPI(ioSocket, store) {
     const localStreams = [];
 
     if (audioMedia.stream) {
-      console.log('ADD audio stream');
       localStreams.push(audioMedia.stream);
     }
 
     if (videoMedia.stream) {
-      console.log('ADD video stream');
       localStreams.push(videoMedia.stream);
     }
 
@@ -52,10 +50,13 @@ export default function createRTCAPI(ioSocket, store) {
           const track = stream.getTracks()[0];
           const addRemoteStream = track.kind === 'video' ? addVideoStream : addAudioStream;
 
+          // console.log('added remote stream', track.kind, member.id);
+
           store.dispatch(addRemoteStream(member.id, stream));
         },
 
         handleRemoveStream(stream) {
+          // console.log('removed remote stream', member.id);
           store.dispatch(removeStream(member.id, stream));
         },
 
@@ -63,8 +64,14 @@ export default function createRTCAPI(ioSocket, store) {
           ioSocket.emit('RTC.SDP', { userId: member.id, sdp, offer });
         },
 
-        notifyNegotiation() {
+        sendNegReq() {
+          // console.log('SEND REQ for neg', member.id);
           ioSocket.emit('RTC.NegReq', { userId: member.id });
+        },
+
+        sendNegAccept() {
+          // console.log('SEND ACCEPT for neg', member.id);
+          ioSocket.emit('RTC.NegAccept', { userId: member.id });
         },
       },
     });
@@ -87,10 +94,7 @@ export default function createRTCAPI(ioSocket, store) {
   }
 
   function setupStream(stream) {
-    forEachPeer(peer => {
-      console.log('SETUP stream', stream.getTracks()[0].kind);
-      peer.attachStream(stream);
-    });
+    forEachPeer(peer => peer.attachStream(stream));
   }
 
   function manageAllowedStreams() {
@@ -150,8 +154,6 @@ export default function createRTCAPI(ioSocket, store) {
 
     const expectedVideoType = getExpectedVideoType();
 
-    console.log('check', type, expectedVideoType, type === expectedVideoType);
-
     if (type === expectedVideoType) {
       return;
     }
@@ -192,14 +194,14 @@ export default function createRTCAPI(ioSocket, store) {
     dispatchingDeep++; // eslint-disable-line no-plusplus
 
     if (action.type === INITIALIZE) {
-      initPeers(members);
+      initPeers(members.online);
     }
 
-    if (action.type === MEMBER_ENTER) {
+    if (action.type === memberEnter.type) {
       createPeer(action.payload, true);
     }
 
-    if (action.type === MEMBER_LEAVE) {
+    if (action.type === memberLeave.type) {
       destroyPeer(action.payload);
     }
 
@@ -250,7 +252,18 @@ export default function createRTCAPI(ioSocket, store) {
       return;
     }
 
-    peer.sendOffer();
+    peer.processNegReq();
+  });
+
+  ioSocket.on('RTC.NegAccept', ({ userId }) => {
+    const peer = peers[userId];
+
+    if (!peer) {
+      // TODO: track this place 'neg request race'
+      return;
+    }
+
+    peer.processNegAccept();
   });
 
   return { dispatch };

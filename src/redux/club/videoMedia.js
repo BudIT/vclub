@@ -2,6 +2,7 @@ import actionCreator from 'borex-actions/actionCreator';
 import setPayload from 'borex-actions/setPayload';
 import createReducer from 'borex-reducers/createReducer';
 import setIn from 'borex-reducers/setIn';
+import set from 'borex-reducers/set';
 import update from 'borex-reducers/update';
 
 import initialState from 'vclub/redux/initialClubState';
@@ -42,5 +43,8 @@ export default createReducer(on => {
 
   on(toggleVideo, setIn('muted', (_, muted) => !muted));
 
-  on(unsetVideoStream, () => initialState.videoMedia);
+  on(unsetVideoStream, set((_, state) => ({
+    ...initialState.videoMedia,
+    muted: state.muted,
+  })));
 });

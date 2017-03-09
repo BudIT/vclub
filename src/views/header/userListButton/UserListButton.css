@@ -1,0 +1,58 @@
+.container {
+  display: inline-block;
+  position: relative;
+  color: inherit;
+  fill: inherit;
+}
+
+.button {
+  display: inline-block;
+  height: 40px;
+  cursor: pointer;
+  padding: 0 8px;
+  text-align: center;
+  fill: inherit;
+  color: inherit;
+}
+
+.number {
+  vertical-align: bottom;
+  color: inherit;
+  margin-left: 5px;
+}
+
+.popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  overflow: hidden;
+
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.75);
+  background-color: #42454A;
+  border-radius: 4px;
+}
+
+.user {
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.user-master {
+  composes: user;
+  font-weight: bold;
+}
+
+.avatar {
+
+}
+
+.name {
+  flex: 1;
+  color: #FDFDFD;
+  font-family: 'Rubik', helvetica, sans-serif;
+  margin-left: 10px;
+  cursor: default;
+  font-weight: inherit;
+}

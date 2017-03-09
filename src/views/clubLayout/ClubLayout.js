@@ -1,48 +1,58 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-import compose from 'recompose/compose';
+import composedComponent from 'vclub/utils/composedComponent';
 import { connect } from 'react-redux';
 import fallback from 'vclub/utils/hoc/fallback';
 
 import { SocketStatusConnecting, SocketStatusDisconnected } from 'vclub/constants/socketStatus';
 
-import AuthedLayout from 'vclub/views/authedLayout/AuthedLayout';
 import AuthPage from 'vclub/views/authPage/AuthPage';
-import UserList from 'vclub/views/userList/UserList';
+import AudioStreams from 'vclub/views/audioStreams/AudioStreams';
+import Header from 'vclub/views/header/Header';
+import Footer from 'vclub/views/footer/Footer';
+import Dialog from 'vclub/views/dialog/Dialog';
+import ChatPanel from 'vclub/views/chatPanel/ChatPanel';
+
 
 import Disconnected from './Disconnected/Disconnected';
 import Loading from './Loading/Loading';
+import RoomContainer from './roomContainer/RoomContainer';
+
+import './ClubLayout.css';
 
 
-const enhance = compose(
+export default composedComponent(
+  'ClubLayout',
+
   connect(state => ({
     auth: state.auth,
-    currentRoom: state.rooms.currentRoom,
-    showMemberPanel: state.ui.showMemberPanel,
-    members: state.members,
     socket: state.socket,
+    displayChat: state.ui.displayChat,
   })),
+
   fallback(Disconnected, ({ socket }) => socket.status === SocketStatusDisconnected),
   fallback(Loading, ({ socket }) => socket.status === SocketStatusConnecting),
   fallback(Loading, ({ auth }) => auth.authenticating),
   fallback(AuthPage, ({ auth }) => !auth.authenticated),
-);
 
-function ClubLayout(props) {
-  const { currentRoom, members, showMemberPanel } = props;
-
-  return (
-    <main>
-      <AuthedLayout currentRoom={currentRoom} />
-      {showMemberPanel && <UserList members={members} />}
+  ({ displayChat }) => (
+    <main styleName="container">
+      <AudioStreams />
+      <Dialog />
+      <div styleName="content">
+        <Header />
+        <div styleName="room">
+          <div styleName="room-inner">
+            <RoomContainer />
+          </div>
+        </div>
+        <Footer />
+      </div>
+      {displayChat && (
+        <div styleName="sidebar">
+          <ChatPanel />
+        </div>
+      )}
     </main>
-  );
-}
-
-ClubLayout.propTypes = {
-  currentRoom: PropTypes.string.isRequired,
-  members: PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  showMemberPanel: PropTypes.bool.isRequired,
-};
-
-export default enhance(ClubLayout);
+  )
+);

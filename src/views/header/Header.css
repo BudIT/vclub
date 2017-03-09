@@ -1,19 +1,19 @@
-.header {
-  margin: 0;
-  padding: 0;
+.container {
   display: flex;
-  box-shadow: 0 0 10px black;
-  z-index: 10;
-  background-color: #FFD00B;
+  justify-content: space-between;
+  padding: 0 10px;
+  background-color: #353535;
+  color: #97A6A6;
+  fill: #97A6A6;
 }
 
-.roomTitle {
-  display: block;
+.title {
+  margin-top: 10px;
+  color: inherit;;
+  font-weight: bold;
+}
 
-  color: #33363A;
-  font-size: 22px;
-  font-family: 'Rubik', helvetica, sans-serif;
-
-  padding: 14px 16px;
-  cursor: default;
+.panel {
+  color: inherit;
+  fill: inherit;
 }

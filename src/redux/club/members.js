@@ -1,41 +1,21 @@
-import initialState from 'vclub/redux/initialClubState';
+import actionCreator from 'borex-actions/actionCreator';
+import createReducer from 'borex-reducers/createReducer';
+import appendIn from 'borex-reducers/appendIn';
+import rejectIn from 'borex-reducers/rejectIn';
+import updateIn from 'borex-reducers/updateIn';
+import broadcast from 'vclub/redux/enhancers/broadcast';
 
 
-export const MEMBER_ENTER = 'club/members/member-enter';
-export const MEMBER_LEAVE = 'club/members/member-leave';
+export const memberEnter = actionCreator(broadcast);
+export const memberLeave = actionCreator(broadcast);
 
 
-export function memberEnter(member) {
-  return {
-    type: MEMBER_ENTER,
-    payload: member,
-    meta: {
-      broadcast: true,
-    },
-  };
-}
-
-export function memberLeave(memberId) {
-  return {
-    type: MEMBER_LEAVE,
-    payload: memberId,
-    meta: {
-      broadcast: true,
-    },
-  };
-}
-
-export default function reducer(state, action) {
-  if (action.type === MEMBER_ENTER) {
-    const member = action.payload;
-    return [...state, member];
-  }
-
-  if (action.type === MEMBER_LEAVE) {
-    const memberId = action.payload;
-
-    return state.filter(member => member.id !== memberId);
-  }
-
-  return state || initialState.members;
-}
+export default createReducer(on => {
+  on(memberEnter,
+    appendIn('online'),
+    updateIn('all', member => ({ [member.id]: member })),
+  );
+  on(memberLeave,
+    rejectIn('online', (member, id) => member.id === id),
+  );
+});

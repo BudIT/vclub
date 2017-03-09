@@ -1,5 +1,30 @@
-/*.main {
-  min-height: 100vh;
-  margin: 0;
-  overflow: hidden;
-}*/
+.container
+{
+  display: flex;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  flex: 1;
+}
+
+.sidebar {
+  width: 400px;
+}
+
+.room {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+.room-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #292929;
+}

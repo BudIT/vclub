@@ -1,0 +1,65 @@
+.container {
+  flex: 1;
+  overflow-y: scroll;
+  background-color: #fafafa;
+  padding: 10px 0;
+}
+
+.message-box {
+  display: flex;
+  padding: 0 20px;
+  margin-bottom: 20px;
+
+  font-family: 'Rubik', helvetica, sans-serif;
+}
+
+.my-message-box {
+  composes: message-box;
+
+  flex-direction: row-reverse;
+  padding-left: 60px;
+  text-align: right;
+}
+
+.pic-column {
+}
+
+.content {
+  flex: 1;
+  padding: 3px 10px 0 10px;
+  font-family: inherit;
+  text-align: inherit;
+}
+
+.info {
+  display: flex;
+  margin-bottom: 5px;
+  font-family: inherit;
+  align-items: baseline;
+}
+
+.my-info {
+  composes: info;
+  flex-direction: row-reverse;
+}
+
+.name {
+  color: #158a9e;
+  font-family: inherit;
+}
+
+.time {
+  margin: 0 10px;
+  color: #97a6a6;
+
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.message {
+  display: block;
+  color: #292b2e;
+  text-align: inherit;
+
+  font-family: inherit;
+}

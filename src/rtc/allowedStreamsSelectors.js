@@ -5,12 +5,12 @@ import {
 
 
 const mastersSelector = createSelector(
-  state => state.members,
+  state => state.members.online,
   members => members.filter(member => member.master).map(member => member.id)
 );
 
 const allMembersSelector = createSelector(
-  state => state.members,
+  state => state.members.online,
   members => members.map(member => member.id)
 );
 

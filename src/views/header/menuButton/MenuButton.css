@@ -1,0 +1,53 @@
+.container {
+  display: inline-block;
+  position: relative;
+  color: inherit;
+  fill: inherit;
+}
+
+.button {
+  display: inline-block;
+  height: 40px;
+  cursor: pointer;
+  width: 40px;
+  text-align: center;
+  fill: inherit;
+  color: inherit;
+}
+
+.popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  overflow: hidden;
+
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.75);
+  background-color: #42454A;
+  border-radius: 4px;
+}
+
+.item-container {
+  display: block;
+}
+
+.item {
+  display: block;
+  position: relative;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  color: #FDFDFD;
+  font-family: 'Rubik', helvetica, sans-serif;
+  padding: 5px 20px;
+
+  transition: background 0.2s;
+
+  /*background-color: inherit;*/
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: rgba(255,255,255,0.3);
+}

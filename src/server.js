@@ -92,6 +92,14 @@ io.on('connection', (socket) => {
       remoteSocket.emit('RTC.NegReq', { userId: user.id });
     });
 
+    socket.on('RTC.NegAccept', ({ userId }) => {
+      const remoteSocket = authSockets[userId];
+
+      if (!remoteSocket) return;
+
+      remoteSocket.emit('RTC.NegAccept', { userId: user.id });
+    });
+
     socket.emit('dispatch', initialize(store.getState(), user));
   });
 

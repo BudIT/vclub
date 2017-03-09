@@ -15,7 +15,7 @@ import styles from './SharingRoom.css';
 
 const enhance = compose(
   connect(state => ({
-    members: state.members,
+    members: state.members.online,
     user: state.auth.user,
     ...state.sharingRoom,
   })),

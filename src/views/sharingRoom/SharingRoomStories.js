@@ -7,7 +7,7 @@ import initialState from 'vclub/redux/initialClubState';
 import SharingRoom from 'vclub/views/sharingRoom/SharingRoom';
 
 
-const members = [
+const memberList = [
   {
     id: '1',
     name: 'Моника',
@@ -40,6 +40,7 @@ const members = [
   },
 ];
 
+const members = { online: memberList, all: memberList };
 
 const book = storiesOf('SharingRoom', module);
 
@@ -49,11 +50,11 @@ book.addReduxStory('Initial state SharingRoom', dispatch => (
   <SharingRoom dispatch={dispatch} />
   ), {
     auth: {
-      user: members[0],
+      user: members.online[0],
     },
     members,
     sharingRoom: {
-      completesSession: members[0].master,
+      completesSession: members.online[0].master,
     },
   }
 );
@@ -62,11 +63,11 @@ book.addReduxStory('First user has a ball', dispatch => (
   <SharingRoom dispatch={dispatch} />
   ), {
     auth: {
-      user: members[1],
+      user: members.online[1],
     },
     members,
     sharingRoom: {
-      ballPosition: members[0].id,
+      ballPosition: members.online[0].id,
     },
   });
 
@@ -74,11 +75,11 @@ book.addReduxStory('User has a label completed', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user: members[1],
+    user: members.online[1],
   },
   members,
   sharingRoom: {
-    done: [members[0].id, members[3].id],
+    done: [members.online[0].id, members.online[3].id],
   },
 });
 
@@ -86,12 +87,12 @@ book.addReduxStory('Shows the menu "Pass ball"', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user: members[1],
+    user: members.online[1],
   },
   members,
   sharingRoom: {
-    ballPosition: members[1].id,
-    userMenuPosition: members[5].id,
+    ballPosition: members.online[1].id,
+    userMenuPosition: members.online[5].id,
   },
 });
 
@@ -99,12 +100,12 @@ book.addReduxStory('The time limit has expired', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user: members[1],
+    user: members.online[1],
   },
   members,
   sharingRoom: {
-    ballPosition: members[1].id,
-    done: [members[0].id, members[3].id],
+    ballPosition: members.online[1].id,
+    done: [members.online[0].id, members.online[3].id],
     timerStart: Date.now() - 300000,
   },
 });
@@ -113,11 +114,11 @@ book.addReduxStory('Shows the menu "Completes session"', dispatch => (
   <SharingRoom dispatch={dispatch} />
 ), {
   auth: {
-    user: members[1],
+    user: members.online[1],
   },
   members,
   sharingRoom: {
-    ballPosition: members[1].id,
+    ballPosition: members.online[1].id,
     showBallMenu: true,
   },
 });

@@ -35,7 +35,10 @@ module.exports = [
         {
           test: /\.css/,
           exclude: /node_modules/,
-          loaders: ['style', 'css?modules&importLoaders=1', 'postcss-loader'],
+          loaders: [
+            'style',
+            'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+            'postcss-loader'],
         },
         {
           test: /\.(png|gif|jpe?g)(\?[a-z0-9=.]+)?$/,
