@@ -1,5 +1,3 @@
-import uuid from 'uuid';
-
 import actionCreator from 'borex-actions/actionCreator';
 import commandCreator from 'borex-actions/commandCreator';
 import withSideEffect from 'borex-actions/withSideEffect';
@@ -9,9 +7,11 @@ import setIn from 'borex-reducers/setIn';
 
 export const auth = actionCreator(
   withSideEffect((context, authData, remember = true) => {
-    const { ioSocket, localStorage } = context;
+    const { ioSocket, localStorage, Raven } = context;
 
     ioSocket.emit('auth', authData);
+
+    Raven.setUserContext(authData);
 
     if (remember) {
       localStorage.setItem('storedAuth', JSON.stringify(authData));

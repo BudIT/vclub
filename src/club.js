@@ -22,11 +22,18 @@ import requestAudioStream from 'vclub/rtc/requestAudioStream';
 import setupSocketClient from 'vclub/socket/setupSocketClient';
 
 
-const ioSocket = io({ path: '/vclub-socket', forceNew: true, reconnection: false });
+const { Raven, APP_CONFIG } = window;
+const { instanceId } = APP_CONFIG;
+
+const ioSocket = io({
+  path: instanceId ? `/${instanceId}/vclub-socket` : '/vclub-socket',
+  forceNew: true,
+  reconnection: false,
+});
 
 const storeEnhancer = compose(
   applyMiddleware(
-    sideEffectProcessor({ context: { ioSocket, localStorage } }),
+    sideEffectProcessor({ context: { ioSocket, localStorage, Raven } }),
     clientActionBroker(ioSocket),
     rtcMiddleware(ioSocket),
   ),

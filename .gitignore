@@ -14,3 +14,5 @@ coverage
 
 # VSCode config file
 jsconfig.json
+
+config/local.json

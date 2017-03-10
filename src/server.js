@@ -1,8 +1,9 @@
+import http from 'http';
 import path from 'path';
 import express from 'express';
-import http from 'http';
 import ioServer from 'socket.io';
 import uuid from 'uuid';
+import Raven from 'raven';
 import { createStore, compose, applyMiddleware } from 'redux';
 
 import serverActionBroker from 'vclub/redux/middlewares/serverActionBroker';
@@ -12,8 +13,13 @@ import { memberEnter, memberLeave } from 'vclub/redux/club/members';
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
 
+import config from './config';
 
-const serverPort = process.env.PORT || 3000;
+
+if (config.get('raven.enabled')) {
+  Raven.config(config.get('raven.DSN')).install();
+}
+
 const publicDir = path.resolve(__dirname, 'public');
 const app = express();
 const httpServer = new http.Server(app);
@@ -28,79 +34,81 @@ const storeEnhancer = compose(
 
 const store = createStore(reducer, initialState, storeEnhancer);
 
-app.set('port', serverPort);
+app.set('view engine', 'hbs');
+app.use(Raven.requestHandler());
 app.use(express.static(publicDir));
 
 app.get('/club', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'club.html'));
+  res.render('club', {
+    raven: config.get('raven'),
+    instanceId: config.get('instanceId'),
+    title: config.get('title'),
+    vkAppId: config.get('vkAppId'),
+  });
 });
 
 app.get('*', (req, res) => {
   res.redirect('/club');
 });
 
-const authSockets = {};
+app.use(Raven.errorHandler());
 
+const authSockets = {};
 
 io.on('connection', (socket) => {
   socket.on('auth', (authData) => {
-    const user = {
-      id: authData.id || uuid.v4(),
-      name: authData.name,
-      master: !!authData.master,
-      photo: authData.photo,
-    };
-    store.dispatch(memberEnter(user));
-    authSockets[user.id] = socket;
-    socket.join('users');
+    Raven.context(() => {
+      const user = {
+        id: authData.id || uuid.v4(),
+        name: authData.name,
+        master: !!authData.master,
+        photo: authData.photo,
+      };
 
-    if (user.master) {
-      socket.join('masters');
-    }
+      Raven.setContext({
+        user,
+        tags: { submodule: 'socket-server' },
+      });
 
-    socket.on('disconnect', () => {
-      const memberLeaveAction = memberLeave(user.id);
+      store.dispatch(memberEnter(user));
+      authSockets[user.id] = socket;
+      socket.join('users');
 
-      delete authSockets[user.id];
-      socket.leave('users');
-      store.dispatch(memberLeaveAction);
+      if (user.master) {
+        socket.join('masters');
+      }
+
+      socket.on('disconnect', () => {
+        const memberLeaveAction = memberLeave(user.id);
+
+        delete authSockets[user.id];
+        socket.leave('users');
+        store.dispatch(memberLeaveAction);
+      });
+
+      socket.on('dispatch', action => store.dispatch(action));
+
+      function addRetranslateHandler(name) {
+        socket.on(name, ({ userId, ...params }) => {
+          const remoteSocket = userId && authSockets[userId];
+
+          if (!remoteSocket) {
+            Raven.captureMessage('No remote socket');
+
+            return;
+          }
+
+          remoteSocket.emit(name, { userId: user.id, ...params });
+        });
+      }
+
+      addRetranslateHandler('RTC.SDP');
+      addRetranslateHandler('RTC.ICECandidate');
+      addRetranslateHandler('RTC.NegReq');
+      addRetranslateHandler('RTC.NegAccept');
+
+      socket.emit('dispatch', initialize(store.getState(), user));
     });
-
-    socket.on('dispatch', action => store.dispatch(action));
-
-    socket.on('RTC.SDP', ({ userId, sdp, offer = false }) => {
-      const remoteSocket = authSockets[userId];
-
-      if (!remoteSocket) return;
-
-      remoteSocket.emit('RTC.SDP', { userId: user.id, sdp, offer });
-    });
-
-    socket.on('RTC.ICECandidate', ({ userId, candidate }) => {
-      const remoteSocket = authSockets[userId];
-
-      if (!remoteSocket) return;
-
-      remoteSocket.emit('RTC.ICECandidate', { userId: user.id, candidate });
-    });
-
-    socket.on('RTC.NegReq', ({ userId }) => {
-      const remoteSocket = authSockets[userId];
-
-      if (!remoteSocket) return;
-
-      remoteSocket.emit('RTC.NegReq', { userId: user.id });
-    });
-
-    socket.on('RTC.NegAccept', ({ userId }) => {
-      const remoteSocket = authSockets[userId];
-
-      if (!remoteSocket) return;
-
-      remoteSocket.emit('RTC.NegAccept', { userId: user.id });
-    });
-
-    socket.emit('dispatch', initialize(store.getState(), user));
   });
 
   socket.on('time:request', clientStartTime => {
@@ -111,6 +119,6 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(app.get('port'), () => {
-  process.stdout.write(`The server is running at http://localhost:${serverPort}\n`);
+httpServer.listen(config.get('port'), () => {
+  process.stdout.write(`The server is running at http://localhost:${config.get('port')}\n`);
 });

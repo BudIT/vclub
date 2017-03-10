@@ -17,6 +17,8 @@ import requestWebcamStream from './requestWebcamStream';
 import getScreenCaptureRequest from './getScreenCaptureRequest';
 import { ByRoomSelectors, DefaultStreamsSelector } from './allowedStreamsSelectors';
 
+const { Raven } = window;
+
 
 export default function createRTCAPI(ioSocket, store) {
   const requestScreenCapture = getScreenCaptureRequest(store);
@@ -50,13 +52,10 @@ export default function createRTCAPI(ioSocket, store) {
           const track = stream.getTracks()[0];
           const addRemoteStream = track.kind === 'video' ? addVideoStream : addAudioStream;
 
-          // console.log('added remote stream', track.kind, member.id);
-
           store.dispatch(addRemoteStream(member.id, stream));
         },
 
         handleRemoveStream(stream) {
-          // console.log('removed remote stream', member.id);
           store.dispatch(removeStream(member.id, stream));
         },
 
@@ -65,12 +64,10 @@ export default function createRTCAPI(ioSocket, store) {
         },
 
         sendNegReq() {
-          // console.log('SEND REQ for neg', member.id);
           ioSocket.emit('RTC.NegReq', { userId: member.id });
         },
 
         sendNegAccept() {
-          // console.log('SEND ACCEPT for neg', member.id);
           ioSocket.emit('RTC.NegAccept', { userId: member.id });
         },
       },
@@ -226,7 +223,10 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = peers[userId];
 
     if (!peer) {
-      // TODO: track this place 'ICE-JOIN race'
+      Raven.captureMessage('RTC.ICECandidate race', {
+        tags: { submodule: 'rtc' },
+      });
+
       return;
     }
 
@@ -237,7 +237,10 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = peers[userId];
 
     if (!peer) {
-      // TODO: track this place 'SDP-JOIN race'
+      Raven.captureMessage('RTC.SDP race', {
+        tags: { submodule: 'rtc' },
+      });
+
       return;
     }
 
@@ -248,7 +251,10 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = peers[userId];
 
     if (!peer) {
-      // TODO: track this place 'neg request race'
+      Raven.captureMessage('RTC.NegReq race', {
+        tags: { submodule: 'rtc' },
+      });
+
       return;
     }
 
@@ -259,7 +265,10 @@ export default function createRTCAPI(ioSocket, store) {
     const peer = peers[userId];
 
     if (!peer) {
-      // TODO: track this place 'neg request race'
+      Raven.captureMessage('RTC.NegAccept race', {
+        tags: { submodule: 'rtc' },
+      });
+
       return;
     }
 

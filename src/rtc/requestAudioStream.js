@@ -3,6 +3,8 @@ import {
   MediaStatusDismissed, MediaStatusDenied, MediaStatusNoTracks, MediaStatusUnknown,
 } from 'vclub/constants/mediaStatus';
 
+const { Raven } = window;
+
 
 const MediaRequestErrorsMap = {
   PermissionDismissedError: MediaStatusDismissed,
@@ -22,6 +24,13 @@ export default function requestMediaDevices(store) {
     store.dispatch(setAudioStream(localStream));
   }).catch(error => {
     const status = error.name && MediaRequestErrorsMap[error.name];
+
+    if (!status) {
+      Raven.captureException(error, {
+        tags: { submodule: 'audio' },
+      });
+    }
+
     store.dispatch(setAudioRequestStatus(status || MediaStatusUnknown, error.name));
   });
 }

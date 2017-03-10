@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <div id="AppRoot" style="height: 100%;"></div>
+
+    <script>
+      window.APP_CONFIG = {
+        instanceId: '{{instanceId}}',
+        title: '{{title}}',
+        basePath: '{{basePath}}',
+        vkAppId: '{{vkAppId}}'
+      };
+    </script>
+    <script src="https://cdn.ravenjs.com/3.12.1/raven.min.js"></script>
+    {{#if raven.enabled}}
+    <script>
+      Raven.config('{{raven.publicDSN}}').install();
+    </script>
+    {{/if}}
+    <script type="text/javascript" src="/club.bundle.js"></script>
+    <script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+  </body>
+</html>

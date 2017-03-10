@@ -3,6 +3,8 @@ import {
   MediaStatusDismissed, MediaStatusDenied, MediaStatusNoTracks, MediaStatusUnknown,
 } from 'vclub/constants/mediaStatus';
 
+const { Raven } = window;
+
 
 const MediaRequestErrorsMap = {
   PermissionDismissedError: MediaStatusDismissed,
@@ -27,6 +29,13 @@ export default function requestVideoStream(store, videoConstraints, videoType) {
     store.dispatch(setVideoStream(videoStream, videoType));
   }).catch(error => {
     const status = error.name && MediaRequestErrorsMap[error.name];
+
+    if (!status) {
+      Raven.captureException(error, {
+        tags: { submodule: `video(${videoType})` },
+      });
+    }
+
     store.dispatch(setVideoRequestStatus(status || MediaStatusUnknown, error.name));
   });
 }

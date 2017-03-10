@@ -1,0 +1,9 @@
+{
+  "ip": "127.0.0.1",
+  "raven": {
+    "enabled": true,
+    "DSN": "https://457fb9b14a2245a7820d9a147bf0996f:be74eb176387412092aa2388cde7ef96@sentry.io/146517",
+    "publicDSN": "https://457fb9b14a2245a7820d9a147bf0996f@sentry.io/146517"
+  },
+  "vkAppId": 5867149
+}
