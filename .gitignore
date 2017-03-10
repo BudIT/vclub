@@ -16,3 +16,6 @@ coverage
 jsconfig.json
 
 config/local.json
+
+browserExtensions/*.pem
+browserExtensions/*.crx
