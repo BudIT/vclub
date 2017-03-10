@@ -15,6 +15,7 @@ import rtcMiddleware from 'vclub/redux/middlewares/rtcMiddleware';
 
 import reducer from 'vclub/redux/clubReducer';
 import initialState from 'vclub/redux/initialClubState';
+import { setConfig } from 'vclub/redux/club/config';
 import { restoreAuth } from 'vclub/redux/club/auth';
 import { enableScreenCapture } from 'vclub/redux/club/features';
 
@@ -43,6 +44,7 @@ const storeEnhancer = compose(
 const store = createStore(reducer, initialState, storeEnhancer);
 
 setupSocketClient(ioSocket, store);
+store.dispatch(setConfig(APP_CONFIG));
 store.dispatch(restoreAuth());
 
 render((

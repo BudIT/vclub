@@ -4,6 +4,7 @@ import scopeReducer from 'borex-reducers/utils/scopeReducer';
 
 import initHOReducer from './club/init';
 
+import configReducer from './club/config';
 import authReducer from './club/auth';
 import membersReducer from './club/members';
 import roomsReducer from './club/rooms';
@@ -21,6 +22,7 @@ import voteReducer from './club/vote';
 
 
 const baseReducer = composeReducers(
+  scopeReducer('config', configReducer),
   scopeReducer('auth', authReducer),
   scopeReducer('members', membersReducer),
   scopeReducer('rooms', roomsReducer),

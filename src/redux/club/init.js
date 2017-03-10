@@ -15,6 +15,7 @@ export default function hoReducer(reducer) {
       serverState.auth.authenticating = false;
       serverState.auth.user = user;
 
+      delete serverState.config;
       delete serverState.ui;
       delete serverState.audioMedia;
       delete serverState.videoMedia;

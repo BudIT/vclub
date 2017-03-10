@@ -42,6 +42,7 @@ export default composedComponent(
     master: authFormSelector(state, 'master'),
     restoredAuth: state.auth.restored,
     initialValues: initialValuesSelector(state),
+    vkAppId: state.config.vkAppId,
   })),
 
   withHandlers({
@@ -68,7 +69,7 @@ export default composedComponent(
     validate,
   }),
 
-  ({ handleSubmit, onVkLogin }) => (
+  ({ handleSubmit, vkAppId, onVkLogin }) => (
     <div className={styles.authWrapper}>
       <div className={styles.centerContent}>
         <header className={styles.logo}>Онлайн клуб</header>
@@ -105,7 +106,7 @@ export default composedComponent(
             </fieldset>
           </form>
           <div className={styles.social}>
-            <VKLogin onLogin={onVkLogin} idApp={5820504} />
+            <VKLogin onLogin={onVkLogin} idApp={vkAppId} />
           </div>
         </main>
       </div>

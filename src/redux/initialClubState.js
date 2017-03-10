@@ -4,6 +4,7 @@ import { SocketStatusConnecting } from 'vclub/constants/socketStatus';
 
 
 export default {
+  config: {},
   members: {
     online: [],
     all: {},
