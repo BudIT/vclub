@@ -27,10 +27,6 @@ const config = convict({
     env: 'INSTANCE',
     arg: 'instance',
   },
-  basePath: {
-    format: '*',
-    default: '',
-  },
   title: {
     format: '*',
     default: 'Демонстрационная встреча',
@@ -61,7 +57,7 @@ config.loadFile(`./config/env/${env}.json`);
 
 const instanceId = config.get('instanceId');
 if (instanceId) {
-  config.loadFile(`./config/instance/${instanceId}.json`);
+  config.loadFile(`./config/instances/${instanceId}.json`);
 }
 
 const localConfFile = './config/local.json';
