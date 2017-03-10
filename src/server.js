@@ -19,7 +19,7 @@ import config from './config';
 if (config.get('raven.enabled')) {
   Raven.config(config.get('raven.DSN'), {
     tags: {
-      instance: config.get('instance') || 'main',
+      instance: config.get('instanceId') || 'main',
     },
   }).install();
 }
