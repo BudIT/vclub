@@ -18,7 +18,7 @@
     <script>
       Raven.config('{{raven.publicDSN}}', {
         tags: {
-          instance: {{instanceId}} || 'main',
+          instance: '{{instanceId}}' || 'main',
         },
       }).install();
     </script>
