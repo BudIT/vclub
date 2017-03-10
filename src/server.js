@@ -17,7 +17,11 @@ import config from './config';
 
 
 if (config.get('raven.enabled')) {
-  Raven.config(config.get('raven.DSN')).install();
+  Raven.config(config.get('raven.DSN'), {
+    tags: {
+      instance: config.get('instance') || 'main',
+    },
+  }).install();
 }
 
 const publicDir = path.resolve(__dirname, 'public');
