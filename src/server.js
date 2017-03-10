@@ -123,6 +123,6 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(config.get('port'), () => {
-  process.stdout.write(`The server is running at http://localhost:${config.get('port')}\n`);
+httpServer.listen(config.get('port'), config.get('ip'), () => {
+  process.stdout.write(`The server is running at ${config.get('ip')}:${config.get('port')}\n`);
 });
