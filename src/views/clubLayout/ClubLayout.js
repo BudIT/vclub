@@ -10,7 +10,7 @@ import AuthPage from 'vclub/views/authPage/AuthPage';
 import AudioStreams from 'vclub/views/audioStreams/AudioStreams';
 import Header from 'vclub/views/header/Header';
 import Footer from 'vclub/views/footer/Footer';
-import Dialog from 'vclub/views/dialog/Dialog';
+import QuickVoteDialog from 'vclub/views/quickVoteDialog/QuickVoteDialog';
 import ChatPanel from 'vclub/views/chatPanel/ChatPanel';
 
 
@@ -38,7 +38,7 @@ export default composedComponent(
   ({ displayChat }) => (
     <main styleName="container">
       <AudioStreams />
-      <Dialog />
+      <QuickVoteDialog />
       <div styleName="content">
         <Header />
         <div styleName="room">
