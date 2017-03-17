@@ -69,6 +69,13 @@ io.on('connection', (socket) => {
         photo: authData.photo,
       };
 
+      const onlineMembers = store.getState().members.online;
+      const sameUser = onlineMembers.find(member => member.id === user.id);
+
+      if (sameUser) {
+        user.id = uuid.v4();
+      }
+
       Raven.setContext({
         user,
         tags: { submodule: 'socket-server' },
