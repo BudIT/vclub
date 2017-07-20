@@ -13,7 +13,7 @@ export const auth = actionCreator(
 
     Raven.setUserContext(authData);
 
-    Raven.captureMessage('Authenticated', {
+    Raven.captureMessage(`${authData.name} authenticated`, {
       level: 'info',
       logger: 'auth',
       extra: authData,
