@@ -2,7 +2,9 @@ const IceServers = [
   {
     url: 'stun:stun.l.google.com:19302',
   }, {
-    url: 'stun:stun.anyfirewall.com:3478',
+    url: 'turns:vclub.ga',
+    username: 'vclub',
+    credential: 'superSecret',
   },
 ];
 
