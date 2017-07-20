@@ -13,6 +13,12 @@ export const auth = actionCreator(
 
     Raven.setUserContext(authData);
 
+    Raven.captureMessage('Authenticated', {
+      level: 'info',
+      logger: 'auth',
+      extra: authData,
+    });
+
     if (remember) {
       localStorage.setItem('storedAuth', JSON.stringify(authData));
     }
