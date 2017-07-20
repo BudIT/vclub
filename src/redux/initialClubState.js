@@ -38,6 +38,12 @@ export default {
   streamRoom: {
     source: null,
     ownerId: null,
+    sourceData: null,
+    playback: {
+      startedAt: null,
+      pos: 0,
+      playing: false,
+    },
   },
   audioMedia: {
     muted: false,

@@ -1,11 +1,10 @@
 .container {
   display: block;
   height: 100%;
-  background-color: #111;
   color: white;
 }
 
-.resetButton {
+.reset-btn {
   position: absolute;
   top: 0;
   left: 20px;
@@ -15,4 +14,11 @@
   cursor: pointer;
   padding: 5px 10px;
   z-index: 2;
+  opacity: 0.33;
+
+  transition: opacity .2s;
+}
+
+.reset-btn:hover {
+  opacity: 1;
 }

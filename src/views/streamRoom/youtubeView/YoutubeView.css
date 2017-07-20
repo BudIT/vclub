@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+}
+
+.player {
+  flex: 1;
+  display: flex;
+}
+
+.bar {
+  height: 30px;
+}
+
+.seek-bar {
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.seek-bar-active {
+  composes: seek-bar;
+  cursor: pointer;
+}
+
+.seek-bar-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background-color: #158A9E;
+  cursor: inherit;
+}
+
+.time-display {
+  display: inline-block;
+  height: 100%;
+  padding: 0 5px;
+  line-height: 30px;
+  vertical-align: top;
+  color: white;
+}
+
+.button {
+  display: inline-block;
+  height: 100%;
+  padding: 0 5px;
+
+
+  background: transparent;
+  border: 0 none;
+  color: white;
+  fill: white;
+  cursor: pointer;
+}

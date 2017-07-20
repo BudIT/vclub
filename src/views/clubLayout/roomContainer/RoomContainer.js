@@ -14,7 +14,9 @@ import StreamRoom from 'vclub/views/streamRoom/StreamRoom';
 import ConferenceRoom from 'vclub/views/conferenceRoom/ConferenceRoom';
 
 
-export default composedComponent('Header',
+export default composedComponent(
+  'RoomContainer',
+
   connect(state => ({
     room: state.rooms.currentRoom,
   })),

@@ -1,73 +1,56 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-import compose from 'recompose/compose';
+import composedComponent from 'vclub/utils/composedComponent';
 import withHandlers from 'recompose/withHandlers';
 import { connect } from 'react-redux';
 
 import { resetStreaming, setVideoSource } from 'vclub/redux/club/streamRoom';
 
-import SourceSelect from './SourceSelect/SourceSelect';
-import StatusMessage from './StatusMessage/StatusMessage';
-import LocalMediaView from './LocalMediaView/LocalMediaView';
-import RemoteMediaView from './RemoteMediaView/RemoteMediaView';
+import SourceSelect from './sourceSelect/SourceSelect';
+import StreamView from './StreamView';
 
-import styles from './StreamRoom.css';
+import './StreamRoom.css';
 
 
-const enhance = compose(
+export default composedComponent(
+  'StreamRoom',
+
   connect(state => ({
     source: state.streamRoom.source,
     ownerId: state.streamRoom.ownerId,
-    currentUser: state.auth.user,
-    videoStreams: state.rtc.videoStreams,
-    videoMedia: state.videoMedia,
+    me: state.auth.user,
     features: state.features,
   })),
+
   withHandlers({
     onResetStreaming: (props) => () => {
       props.dispatch(resetStreaming());
     },
     onSourceSelected: (props) => (source) => {
-      props.dispatch(setVideoSource(source, props.currentUser.id));
+      props.dispatch(setVideoSource(source, props.me.id));
     },
   }),
-);
 
-function StreamRoom(props) {
-  const {
-    source, currentUser, ownerId, videoStreams, videoMedia, features,
-    onSourceSelected, onResetStreaming,
-  } = props;
-  const owner = currentUser.id === ownerId;
+  (props) => {
+    const {
+      source, me, ownerId, features,
+      onSourceSelected, onResetStreaming,
+    } = props;
+    const owner = me.id === ownerId;
 
-  if (!source) {
-    return <SourceSelect onSelected={onSourceSelected} features={features} />;
+    if (!source) {
+      return <SourceSelect onSelected={onSourceSelected} features={features} />;
+    }
+
+    return (
+      <div styleName="container">
+        {(me.master || owner) && (
+          <button styleName="reset-btn" onClick={onResetStreaming}>
+            Отключить вещание
+          </button>
+        )}
+        <StreamView source={source} owner={owner} />
+      </div>
+    );
   }
-
-  return (
-    <div className={styles.container}>
-      {(currentUser.master || currentUser.id === ownerId) && (
-        <button className={styles.resetButton} onClick={onResetStreaming}>
-          Отключить вещание
-        </button>
-      )}
-      {owner
-        ? <LocalMediaView {...videoMedia} />
-        : <RemoteMediaView stream={videoStreams[ownerId]} />
-      }
-    </div>
-  );
-}
-
-StreamRoom.propTypes = {
-  source: PropTypes.string,
-  ownerId: PropTypes.string,
-  currentUser: PropTypes.object.isRequired,
-  videoStreams: PropTypes.object.isRequired,
-  videoMedia: PropTypes.object.isRequired,
-  features: PropTypes.object.isRequired,
-  onResetStreaming: PropTypes.func.isRequired,
-  onSourceSelected: PropTypes.func.isRequired,
-};
-
-export default enhance(StreamRoom);
+);

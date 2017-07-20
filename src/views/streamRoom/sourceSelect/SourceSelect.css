@@ -21,7 +21,7 @@
   position: relative;
 }
 
-.buttonGap {
+.gap {
   width: 200px;
   height: 200px;
   margin: 3px;
@@ -40,21 +40,25 @@
   cursor: pointer;
 }
 
-.buttonDisabled {
+.button-disabled {
   composes: button;
   background-color: #888;
   cursor: default;
 }
 
-
-.buttonDisabled .icon {
+.button-disabled .icon {
   fill: #999;
 }
 
-.buttonDisabled .label {
+.button-disabled .label {
   position: absolute;
   bottom: 5px;
   left: 15px;
   color: #999;
   cursor: default;
+}
+
+.button-red {
+  composes: button;
+  background-color: #CC181E;
 }
